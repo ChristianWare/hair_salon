@@ -1,0 +1,77 @@
+.container {
+  position: relative;
+}
+
+.imgOverlay {
+  background-color: rgba(0, 0, 0, 0.5);
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
+}
+
+.imgContainer {
+  min-height: calc(100vh - 2rem);
+  position: relative;
+  width: 100%;
+}
+
+.img {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.content {
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: auto;
+}
+
+.heading {
+  z-index: 5;
+  color: var(--tan);
+  text-align: center;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.copy {
+  color: var(--tan);
+  line-height: 1.2;
+  font-size: 1.4rem;
+  max-width: 500px;
+  text-align: center;
+}
+
+.btnContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 2rem;
+  margin-top: 3rem;
+}
+
+@media screen and (max-width: 768px) {
+  .content {
+    gap: 1rem;
+  }
+
+  .copy {
+    max-width: 95%;
+  }
+}

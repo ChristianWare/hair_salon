@@ -1,15 +1,25 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Poppins } from "next/font/google";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+import localFont from "next/font/local";
+
+const poppins = Poppins({
+  variable: "--poppins",
   subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "800", "900"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+const ButlerRegular = localFont({
+  src: "../../public/fonts/ButlerRegular.woff",
+  variable: "--ButlerRegular",
+  display: "swap",
+});
+
+const ButlerUltraLight = localFont({
+  src: "../../public/fonts/ButlerUltraLight.woff",
+  variable: "--ButlerUltraLight",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -23,8 +33,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable}`}>
+    <html lang='en'>
+      <body
+        className={`${poppins.variable} ${ButlerRegular.variable} ${ButlerUltraLight.variable}`}
+      >
         {children}
       </body>
     </html>
