@@ -138,6 +138,11 @@
   .right .heading {
     text-align: center;
   }
+
+  .socialsContainer {
+    align-items: center;
+    justify-content: center;
+  }
 }
 
 @media screen and (max-width: 568px) {
@@ -147,11 +152,6 @@
     width: 100%;
     display: grid;
     grid-template-columns: repeat(1, 1fr);
-  }
-
-  .socialsContainer {
-    align-items: center;
-    justify-content: center;
   }
 
   .br {
