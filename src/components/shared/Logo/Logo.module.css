@@ -1,0 +1,11 @@
+.text {
+  font-family: var(--ButlerUltraLight);
+  text-transform: uppercase;
+  font-size: 3.2rem;
+  line-height: 3.2rem;
+  color: var(--black);
+}
+
+.tan {
+  color: var(--tan);
+}

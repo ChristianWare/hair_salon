@@ -1,13 +1,18 @@
+// Hero.tsx
 import LayoutWrapper from "@/components/shared/LayoutWrapper";
 import styles from "./Hero.module.css";
 import Image from "next/image";
 import Img1 from "../../../../public/images/hero.jpg";
 import Button from "@/components/shared/Button/Button";
+import Nav from "@/components/shared/Nav/Nav";
 
 export default function Hero() {
   return (
     <section className={styles.container}>
       <div className={styles.imgContainer}>
+        <div className={styles.navContainer}>
+          <Nav />
+        </div>
         <div className={styles.imgOverlay}></div>
         <Image
           src={Img1}

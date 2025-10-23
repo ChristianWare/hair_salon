@@ -1,15 +1,14 @@
-/* eslint-disable react-hooks/set-state-in-effect */
 "use client";
 
 import Link from "next/link";
 import styles from "./Nav.module.css";
 import Button from "../Button/Button";
-import { useEffect, useState, MouseEvent, useRef } from "react";
+import { useEffect, useState, MouseEvent, useRef, useMemo } from "react";
 import { createPortal } from "react-dom";
 import Image from "next/image";
-import Img1 from "../../../../public/images/road.jpg";
+import Img1 from "../../../../public/images/hero.jpg";
 import { usePathname } from "next/navigation";
-// import Logo from "../Logo/Logo";
+import Logo from "../Logo/Logo";
 
 export interface NavProps {
   navItemColor?: string;
@@ -19,8 +18,6 @@ export interface NavProps {
 
 export default function Nav({ color = "", hamburgerColor = "" }: NavProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const [showNav, setShowNav] = useState(true);
-  const [scrolled, setScrolled] = useState(false);
   const navRef = useRef<HTMLElement | null>(null);
   const pathname = usePathname();
 
@@ -45,9 +42,6 @@ export default function Nav({ color = "", hamburgerColor = "" }: NavProps) {
   };
 
   useEffect(() => {
-    let lastScrollY = window.scrollY;
-    let ticking = false;
-
     const setProgress = () => {
       const doc = document.documentElement;
       const max = doc.scrollHeight - window.innerHeight;
@@ -56,89 +50,48 @@ export default function Nav({ color = "", hamburgerColor = "" }: NavProps) {
       if (navRef.current)
         navRef.current.style.setProperty("--progress", `${p}%`);
     };
-
-    const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-      if (!isOpen && currentScrollY > lastScrollY && currentScrollY > 100) {
-        setShowNav(false);
-      } else if (currentScrollY < lastScrollY) {
-        setShowNav(true);
-      }
-      setScrolled(currentScrollY > 0);
-      lastScrollY = currentScrollY;
-      setProgress();
-    };
-
-    const optimizedHandleScroll = () => {
-      if (!ticking) {
-        window.requestAnimationFrame(() => {
-          handleScroll();
-          ticking = false;
-        });
-        ticking = true;
-      }
-    };
-
     setProgress();
-    setScrolled(window.scrollY > 0);
-
-    window.addEventListener("scroll", optimizedHandleScroll);
-    window.addEventListener("resize", optimizedHandleScroll);
-    return () => {
-      window.removeEventListener("scroll", optimizedHandleScroll);
-      window.removeEventListener("resize", optimizedHandleScroll);
+    const onScrollResize = () => {
+      window.requestAnimationFrame(setProgress);
     };
-  }, [isOpen]);
+    window.addEventListener("scroll", onScrollResize);
+    window.addEventListener("resize", onScrollResize);
+    return () => {
+      window.removeEventListener("scroll", onScrollResize);
+      window.removeEventListener("resize", onScrollResize);
+    };
+  }, []);
 
   const isActive = (href: string) => {
     if (href === "/") return pathname === "/";
     return pathname === href || pathname.startsWith(`${href}/`);
   };
 
-  const items = [
-    { text: "Home", href: "/" },
-    { text: "Services", href: "/services" },
-    { text: "Fleet", href: "/fleet" },
-    { text: "About", href: "/about" },
-    { text: "Blog", href: "/blog" },
-    { text: "My Account", href: "/reservations" },
-    { text: "Contact", href: "/contact" },
-  ];
-
-  const shouldBlend = !scrolled && !isOpen;
+  const items = useMemo(
+    () => [
+      { text: "Home", href: "/" },
+      { text: "About", href: "/about" },
+      { text: "Services", href: "/services" },
+      { text: "Gallery", href: "/fleet" },
+      { text: "Policies", href: "/blog" },
+      { text: "Contact", href: "/contact" },
+      { text: "Login", href: "/login" },
+    ],
+    []
+  );
 
   return (
-    <header
-      className={`${styles.header} ${
-        scrolled ? styles.scrolled : styles.transparent
-      } ${showNav || isOpen ? styles.show : styles.hide} ${
-        isOpen ? styles.open : ""
-      }`}
-      ref={navRef}
-    >
-      <nav className={styles.navbar}>
+    <header className={styles.header} ref={navRef}>
+      <nav className={styles.navbar} aria-label='Primary'>
         <Link
           href='/'
-          className={`${styles.logoContainer} ${
-            shouldBlend ? styles.blend : ""
-          }`}
+          className={styles.logoContainer}
+          aria-label='Go to homepage'
         >
-          {/* <Logo
-            className={`${styles.logo} ${shouldBlend ? styles.blend : ""}`}
-          />
-          <span
-            className={`${styles.logoText} ${shouldBlend ? styles.blend : ""}`}
-          >
-            Nier Transportation
-          </span> */}
-          Logo Here
+          <Logo color='tan' />
         </Link>
 
-        <div
-          className={
-            isOpen ? `${styles.navItems} ${styles.active}` : styles.navItems
-          }
-        >
+        <div className={styles.navItems}>
           {items.map((item) => {
             const active = isActive(item.href);
             return (
@@ -147,72 +100,84 @@ export default function Nav({ color = "", hamburgerColor = "" }: NavProps) {
                 href={item.href}
                 className={`${styles.navItem} ${styles[color]} ${
                   active ? styles.navItemActive : ""
-                } ${shouldBlend ? styles.blend : ""}`}
-                onClick={closeMenu}
+                }`}
                 aria-current={active ? "page" : undefined}
               >
                 {item.text}
               </Link>
             );
           })}
-
-          <div className={styles.menuImage}>
-            <Image src={Img1} alt='Menu image' fill className={styles.img} />
-            <div className={styles.menuImageOverlay}>
-              {/* <Logo className={styles.logoii} /> */}
-              LOGO HERE
-            </div>
-          </div>
-
-          <div className={styles.btnContainerii}>
-            <Button
-              href='/'
-              text='Book your Ride'
-              btnType='navYellowBlackOutline'
-              arrow
-              onClick={closeMenu}
-            />
-          </div>
         </div>
 
         {isOpen &&
           createPortal(
-            <div className={styles.overlay} onClick={closeMenu} />,
+            <div
+              className={`${styles.overlay} ${styles.overlayVisible}`}
+              onClick={closeMenu}
+            />,
             document.body
           )}
 
-        <div className={styles.btnContainer}>
-          <Button
-            href='/'
-            text='Book your Ride'
-            btnType='navYellowBlackOutline'
-            arrow
-          />
-        </div>
+        {isOpen &&
+          createPortal(
+            <aside
+              id='mobile-menu'
+              className={`${styles.navItemsii} ${isOpen ? styles.active : ""}`}
+              aria-hidden={!isOpen}
+            >
+              <div className={styles.navItemsiiList}>
+                {items.map((item) => {
+                  const active = isActive(item.href);
+                  return (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      className={`${styles.navItemPanel} ${styles[color]} ${
+                        active ? styles.navItemPanelActive : ""
+                      }`}
+                      onClick={closeMenu}
+                      aria-current={active ? "page" : undefined}
+                    >
+                      {item.text}
+                    </Link>
+                  );
+                })}
+              </div>
+
+              <div className={styles.menuImage}>
+                <Image
+                  src={Img1}
+                  alt='Menu image'
+                  fill
+                  className={styles.img}
+                />
+                <div className={styles.menuImageOverlay}>
+                  <Logo color='tan' />
+                </div>
+              </div>
+
+              <div className={styles.btnContainerii}>
+                <Button
+                  href='/'
+                  text='Book your Ride'
+                  btnType='tan'
+                  onClick={closeMenu}
+                />
+              </div>
+            </aside>,
+            document.body
+          )}
 
         <span
-          className={
-            isOpen ? `${styles.hamburger} ${styles.active}` : styles.hamburger
-          }
+          className={`${styles.hamburger} ${isOpen ? styles.active : ""}`}
           onClick={handleHamburgerClick}
           aria-expanded={isOpen}
+          aria-controls='mobile-menu'
           role='button'
         >
-          <span
-            className={`${styles.whiteBar} ${styles[hamburgerColor]} ${
-              shouldBlend ? styles.blend : ""
-            }`}
-          ></span>
-          <span
-            className={`${styles.whiteBar} ${styles[hamburgerColor]} ${
-              shouldBlend ? styles.blend : ""
-            }`}
-          ></span>
-          <span
-            className={`${styles.whiteBar} ${styles[hamburgerColor]} ${
-              shouldBlend ? styles.blend : ""
-            }`}
-          ></span>
+          <span className={`${styles.whiteBar} ${styles[hamburgerColor]}`} />
+          <span className={`${styles.whiteBar} ${styles[hamburgerColor]}`} />
+          <span className={`${styles.whiteBar} ${styles[hamburgerColor]}`} />
         </span>
       </nav>
     </header>
