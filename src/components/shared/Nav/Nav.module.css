@@ -161,6 +161,7 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  justify-content: space-between;
   /* gap: 5rem; */
   overflow-y: auto;
   transform: translateX(110%);
@@ -291,6 +292,16 @@
     max-width: none;
     min-width: 0;
   }
+
+  .mobileLogo {
+    text-align: center;
+    font-size: 5.6rem;
+    width: 100%;
+    margin-top: 5rem;
+    letter-spacing: -2px;
+    line-height: 1em;
+  }
+
   .btnContainerii {
     display: grid;
     width: 100%;
