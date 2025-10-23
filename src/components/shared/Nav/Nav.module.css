@@ -74,7 +74,7 @@
   margin-left: auto;
   cursor: pointer;
   background-color: var(--tan);
-  padding: 4rem 2.5rem;
+  padding: 2.8rem 2.5rem;
   width: fit-content;
   z-index: 10005;
   transition: transform 220ms ease-out, background-color 220ms ease-out,

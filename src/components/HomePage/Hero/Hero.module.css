@@ -16,7 +16,7 @@
 }
 
 .imgContainer {
-  min-height: calc(100vh - 2rem);
+  min-height: 100vh;
   position: relative;
   width: 100%;
 }
