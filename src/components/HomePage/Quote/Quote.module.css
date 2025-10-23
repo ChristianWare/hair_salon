@@ -1,7 +1,7 @@
 .container {
   background-color: var(--white);
-  padding: 10rem 0rem;
-  padding-top: 20rem;
+  padding: 20rem 0rem;
+  
 }
 
 .content {
@@ -45,6 +45,7 @@
 @media screen and (max-width: 768px) {
   .copy {
     font-size: 4rem;
+    max-width: 90%;
   }
   .icon {
     font-size: 20rem;

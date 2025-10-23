@@ -1,5 +1,6 @@
 import AboutUs from "@/components/HomePage/AboutUs/AboutUs";
 import Hero from "@/components/HomePage/Hero/Hero";
+import OurTeam from "@/components/HomePage/OurTeam/OurTeam";
 import Quote from "@/components/HomePage/Quote/Quote";
 import ServicesPreview from "@/components/HomePage/ServicesPreview/ServicesPreview";
 import Welcome from "@/components/HomePage/Welcome/Welcome";
@@ -12,6 +13,7 @@ export default function Home() {
       <AboutUs />
       <ServicesPreview />
       <Quote />
+      <OurTeam />
     </main>
   );
 }
