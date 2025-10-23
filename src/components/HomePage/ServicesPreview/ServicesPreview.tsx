@@ -54,7 +54,7 @@ export default function ServicesPreview() {
         <div className={styles.top}>
           <SectionHeading text='What we do' />
           <h2 className={styles.heading}>
-            Our most <br className={styles.br} /> requested services
+            Our most <br className={styles.br} /> <span className={styles.accent}>requested services</span>
           </h2>
         </div>
         <div className={styles.bottom}>

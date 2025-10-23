@@ -13,7 +13,9 @@ export default function AboutUs() {
         <div className={styles.content}>
           <div className={styles.left}>
             <SectionHeading text='About' />
-            <h2 className={styles.heading}>Meet Velvet & Vine</h2>
+            <h2 className={styles.heading}>
+              Meet <br /> <span className={styles.accent}>Velvet & Vine</span>
+            </h2>
             <SectionHeading text='Hair Stylists' />
             <p className={styles.copy}>
               At Velvet & Vine, we believe in the power of nature to transform

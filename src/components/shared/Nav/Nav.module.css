@@ -173,7 +173,7 @@
 .mobileLogo {
   font-size: 9rem;
   line-height: 0.9;
-  font-family: var(--ButlerUltraLight);
+  font-family: var(--ButlerRegular);
   color: var(--brown);
   text-transform: uppercase;
   letter-spacing: -3.8px;

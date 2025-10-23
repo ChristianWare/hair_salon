@@ -17,6 +17,11 @@
   width: 60%;
 }
 
+.accent {
+  font-family: var(--ButlerRegular);
+  color: var(--brown)
+}
+
 .bottom {
   width: 80%;
   margin-left: auto;

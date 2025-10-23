@@ -17,6 +17,10 @@
   gap: 2rem;
 }
 
+.accent {
+  font-family: var(--ButlerRegular);
+}
+
 .copy {
   font-size: 1.7rem;
 }

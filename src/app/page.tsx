@@ -1,4 +1,5 @@
 import AboutUs from "@/components/HomePage/AboutUs/AboutUs";
+import FinalCTA from "@/components/HomePage/FinalCTA/FinalCTA";
 import Hero from "@/components/HomePage/Hero/Hero";
 import Locations from "@/components/HomePage/Locations/Locations";
 import OurTeam from "@/components/HomePage/OurTeam/OurTeam";
@@ -18,6 +19,7 @@ export default function Home() {
       <OurTeam />
       <Locations />
       <Values />
+      <FinalCTA />
     </main>
   );
 }
