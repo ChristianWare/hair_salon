@@ -70,7 +70,7 @@
   font-size: 11.4em;
   line-height: 0.6em;
   z-index: 5;
-  -webkit-text-stroke: 1px var(--darkGrayii);
+  /* -webkit-text-stroke: 1px var(--darkGrayii); */
 }
 
 .cardBottom {
@@ -91,6 +91,35 @@
   text-align: center;
   width: 100%;
   color: var(--darkGray);
+}
+
+.bottomii {
+  margin-top: 5rem;
+}
+
+.mapDataContainerii {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10rem;
+  border-top: 1px solid var(--darkGrayii);
+  border-bottom: 1px solid var(--darkGrayii);
+  padding: 2.5rem 3rem 1rem;
+  
+}
+
+.cardii {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.number span {
+  line-height: 1;
+  color: var(--brown);
 }
 
 @media screen and (max-width: 1368px) {

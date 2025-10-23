@@ -110,8 +110,9 @@ textarea:focus {
 }
 
 .stat {
-  font-size: 8rem;
+  font-size: 9rem;
   font-weight: 600;
+  line-height: 1;
 }
 
 .h2 {
