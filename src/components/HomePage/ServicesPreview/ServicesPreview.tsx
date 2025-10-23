@@ -76,7 +76,7 @@ export default function ServicesPreview() {
                   <div className={styles.btnContainer}>
                     <Button
                       href='/'
-                      text='Book your appointment'
+                      text='Explore'
                       btnType='tanBorder'
                     />
                   </div>
