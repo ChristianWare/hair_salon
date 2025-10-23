@@ -1,0 +1,52 @@
+.container {
+  background-color: var(--white);
+  padding: 10rem 0rem;
+  padding-top: 20rem;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3rem;
+}
+
+.icon {
+  font-size: 40rem;
+  color: var(--tan);
+}
+
+.quote {
+  position: relative;
+  isolation: isolate;
+}
+
+.quoteIconBox {
+  position: absolute;
+  top: -20rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 0;
+  pointer-events: none;
+}
+
+.copy {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  max-width: 800px;
+  font-size: 6rem;
+  font-family: var(--ButlerUltraLight);
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1em;
+}
+@media screen and (max-width: 768px) {
+  .copy {
+    font-size: 4rem;
+  }
+  .icon {
+    font-size: 20rem;
+  }
+}
