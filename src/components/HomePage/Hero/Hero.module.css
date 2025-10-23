@@ -68,6 +68,13 @@
 }
 
 @media screen and (max-width: 768px) {
-  .content { gap: 1rem; }
-  .copy { max-width: 95%; }
+  .content {
+    gap: 1rem;
+  }
+}
+
+@media screen and (max-width: 568px) {
+  .copy {
+    max-width: 90%;
+  }
 }
