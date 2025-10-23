@@ -1,14 +1,25 @@
 .container {
-  background-color: var(--tan);
+  background-color: var(--white);
   padding: 10rem 0rem;
 }
 
 .top {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.heading {
+  text-align: center;
+  width: 70%;
+}
+
+.copy {
+  max-width: 500px;
+  text-align: center;
+  color: var(--darkGray);
 }
 
 .spanImage {
@@ -18,9 +29,82 @@
   background-position: 50% 100%;
   background-size: cover;
   border-radius: 40px;
-  width: 85px;
-  height: 85px;
+  width: 90px;
+  height: 45px;
   margin-left: 10px;
   margin-right: 10px;
   display: inline-block;
+}
+
+.squiggly {
+  color: var(--brown);
+  font-family: var(--ButlerRegular);
+}
+
+.btnContainer {
+  margin-top: 1rem;
+}
+
+.asSeenIn {
+  text-align: center;
+  display: block;
+  margin-top: 5rem;
+  margin-bottom: 1rem;
+}
+
+.iconContainer {
+  --iconSize: 10rem;
+  --gap: 5rem;
+  --speed: 28s;
+  position: relative;
+  overflow: hidden;
+  margin-top: 5rem;
+  width: 100%;
+  height: var(--iconSize);
+}
+
+.iconTrack {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  gap: var(--gap);
+  will-change: transform;
+  animation: marquee var(--speed) linear infinite;
+}
+
+.iconTrackAlt {
+  animation-name: marqueeAlt;
+}
+
+.icon {
+  font-size: var(--iconSize);
+  flex: 0 0 auto;
+}
+
+@keyframes marquee {
+  0% { transform: translate3d(0, -50%, 0); }
+  100% { transform: translate3d(-100%, -50%, 0); }
+}
+
+@keyframes marqueeAlt {
+  0% { transform: translate3d(100%, -50%, 0); }
+  100% { transform: translate3d(0, -50%, 0); }
+}
+
+@media screen and (max-width: 1268px) {
+  .heading { width: 90%; }
+  .iconContainer { --iconSize: 8rem; --gap: 4rem; --speed: 26s; }
+}
+
+@media screen and (max-width: 768px) {
+  .heading { width: 100%; }
+  .iconContainer { --iconSize: 6rem; --gap: 3rem; --speed: 22s; }
+}
+
+@media screen and (max-width: 568px) {
+  .spanImage { height: 30px; width: 30px; }
+  .iconContainer { --iconSize: 4.5rem; --gap: 2.25rem; --speed: 18s; }
 }

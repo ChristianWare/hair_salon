@@ -5,18 +5,13 @@
   gap: 1rem;
 }
 
-.dot {
-  background-color: var(--yellow);
-  width: 12px;
-  height: 12px;
-  border-radius: 2px;
-}
-
 .text {
-  font-size: 16px;
-  font-weight: 500;
+  font-size: 14px;
+  font-weight: 300;
+  letter-spacing: 5.5px;
+  font-family: var(--poppins);
+  text-transform: uppercase;
   white-space: nowrap;
-  text-transform: capitalize;
 }
 
 .tan {

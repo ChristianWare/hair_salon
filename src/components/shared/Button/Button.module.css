@@ -46,3 +46,14 @@
   background-color: var(--brown);
   color: var(--tan) !important;
 }
+
+.tanBorder {
+  /* background-color: var(--tan); */
+  color: var(--brown) !important;
+  border: 1px solid var(--brown);
+}
+
+.tanBorder:hover {
+  background-color: var(--brown);
+  color: var(--tan) !important;
+}

@@ -85,6 +85,14 @@ export default function Nav({ color = "", hamburgerColor = "" }: NavProps) {
     };
   }, [isOpen]);
 
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setIsOpen(false);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, []);
+
   const toggleMenu = () => setIsOpen((s) => !s);
   const closeMenu = () => setIsOpen(false);
 
@@ -140,60 +148,60 @@ export default function Nav({ color = "", hamburgerColor = "" }: NavProps) {
           })}
         </div>
 
-        {isOpen &&
-          createPortal(
-            <div
-              className={`${styles.overlay} ${styles.overlayVisible}`}
-              onClick={closeMenu}
-            />,
-            document.body
-          )}
+        {createPortal(
+          <div
+            className={`${styles.overlay} ${
+              isOpen ? styles.overlayVisible : ""
+            }`}
+            onClick={closeMenu}
+          />,
+          document.body
+        )}
 
-        {isOpen &&
-          createPortal(
-            <aside
-              id='mobile-menu'
-              className={`${styles.navItemsii} ${isOpen ? styles.active : ""}`}
-              aria-hidden={!isOpen}
-            >
-              <div className={styles.mobileLogo}>
-                Velvet <br /> & Vine
+        {createPortal(
+          <aside
+            id='mobile-menu'
+            className={`${styles.navItemsii} ${isOpen ? styles.active : ""}`}
+            aria-hidden={!isOpen}
+          >
+            <div className={styles.mobileLogo}>
+              Velvet <br /> & Vine
+            </div>
+            <div className={styles.navItemsiiList}>
+              {items.map((item) => {
+                const active = isActive(item.href);
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    className={`${styles.navItemPanel} ${styles[color]} ${
+                      active ? styles.navItemPanelActive : ""
+                    }`}
+                    onClick={closeMenu}
+                    aria-current={active ? "page" : undefined}
+                  >
+                    {item.text}
+                  </Link>
+                );
+              })}
+            </div>
+            <div className={styles.socialsContainer}>
+              <div className={styles.iconBox}>
+                <Instagram className={styles.icon} />
               </div>
-              <div className={styles.navItemsiiList}>
-                {items.map((item) => {
-                  const active = isActive(item.href);
-                  return (
-                    <Link
-                      key={item.href}
-                      href={item.href}
-                      className={`${styles.navItemPanel} ${styles[color]} ${
-                        active ? styles.navItemPanelActive : ""
-                      }`}
-                      onClick={closeMenu}
-                      aria-current={active ? "page" : undefined}
-                    >
-                      {item.text}
-                    </Link>
-                  );
-                })}
+              <div className={styles.iconBox}>
+                <LinkedIn className={styles.icon} />
               </div>
-              <div className={styles.socialsContainer}>
-                <div className={styles.iconBox}>
-                  <Instagram className={styles.icon} />
-                </div>
-                <div className={styles.iconBox}>
-                  <LinkedIn className={styles.icon} />
-                </div>
-                <div className={styles.iconBox}>
-                  <Facebook className={styles.icon} />
-                </div>
-                <div className={styles.iconBox}>
-                  <Yelp className={styles.icon} />
-                </div>
+              <div className={styles.iconBox}>
+                <Facebook className={styles.icon} />
               </div>
-            </aside>,
-            document.body
-          )}
+              <div className={styles.iconBox}>
+                <Yelp className={styles.icon} />
+              </div>
+            </div>
+          </aside>,
+          document.body
+        )}
 
         <span
           className={`${styles.hamburger} ${isOpen ? styles.active : ""}`}
