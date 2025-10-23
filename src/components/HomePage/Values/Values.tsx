@@ -186,7 +186,8 @@ export default function Values() {
           <div className={styles.left}>
             <SectionHeading text='Gallery' />
             <h2 className={styles.heading}>
-              Our portfolio speaks louder than words
+              Our portfolio speaks{" "}
+              <span className={styles.squiggly}>louder than words</span>
             </h2>
             <p className={`${styles.copy} subheading`}>
               We are committed to delivering exceptional service and value. Our

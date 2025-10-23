@@ -1,7 +1,7 @@
 .container {
   padding: 10rem 0rem;
   padding-top: 20rem;
-  background-color: var(--white);
+  background-color: var(--tan);
   overflow: hidden;
 }
 
@@ -23,6 +23,13 @@
   margin-top: 2rem;
   margin-bottom: 3rem;
 }
+
+
+.squiggly {
+  color: var(--brown);
+  font-family: var(--ButlerRegular);
+}
+
 
 .copy {
   margin-bottom: 3rem;

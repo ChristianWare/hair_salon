@@ -1,5 +1,6 @@
 import AboutUs from "@/components/HomePage/AboutUs/AboutUs";
 import Hero from "@/components/HomePage/Hero/Hero";
+import Locations from "@/components/HomePage/Locations/Locations";
 import OurTeam from "@/components/HomePage/OurTeam/OurTeam";
 import Quote from "@/components/HomePage/Quote/Quote";
 import ServicesPreview from "@/components/HomePage/ServicesPreview/ServicesPreview";
@@ -15,6 +16,7 @@ export default function Home() {
       <ServicesPreview />
       <Quote />
       <OurTeam />
+      <Locations />
       <Values />
     </main>
   );
