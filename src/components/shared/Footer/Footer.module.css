@@ -131,6 +131,10 @@
     justify-content: center;
   }
 
+  .copy {
+    text-align: center;
+  }
+
   .right .heading {
     text-align: center;
   }
@@ -143,10 +147,6 @@
     width: 100%;
     display: grid;
     grid-template-columns: repeat(1, 1fr);
-  }
-
-  .copy {
-    text-align: center;
   }
 
   .socialsContainer {

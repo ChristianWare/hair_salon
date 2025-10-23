@@ -1,6 +1,6 @@
 .container {
   background-color: var(--white);
-  padding: 10rem 0rem;
+  padding: 5rem 0rem;
 }
 
 .top {
@@ -62,18 +62,18 @@
   width: 100%;
   height: var(--iconSize);
   mask-image: linear-gradient(
-   to right,
-   transparent 0%,
-   var(--white) 10%,
-   var(--white) 90%,
-   transparent 100%
+    to right,
+    transparent 0%,
+    var(--white) 10%,
+    var(--white) 90%,
+    transparent 100%
   );
   -webkit-mask-image: linear-gradient(
-   to right,
-   transparent 0%,
-   var(--white) 10%,
-   var(--white) 90%,
-   transparent 100%
+    to right,
+    transparent 0%,
+    var(--white) 10%,
+    var(--white) 90%,
+    transparent 100%
   );
 }
 
@@ -87,6 +87,7 @@
   gap: var(--gap);
   will-change: transform;
   animation: marquee var(--speed) linear infinite;
+  margin-right: 5rem;
 }
 
 .iconTrackAlt {
