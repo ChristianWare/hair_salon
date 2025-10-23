@@ -35,7 +35,7 @@ export default function Welcome() {
             <h2 className={styles.heading}>
               We believe great hair <span className={styles.spanImage} /> is
               more than just a look! Our team of{" "}
-              <span className={styles.squiggly}>skilled stylists </span> is
+              <span className={styles.squiggly}>skilled stylists </span> are
               ready to make your hair goals a reality.
             </h2>
             <p className={styles.copy}>
