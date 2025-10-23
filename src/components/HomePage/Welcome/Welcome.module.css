@@ -61,6 +61,7 @@
   margin-top: 5rem;
   width: 100%;
   height: var(--iconSize);
+  display: flex;
 }
 
 .iconTrack {
@@ -73,6 +74,9 @@
   gap: var(--gap);
   will-change: transform;
   animation: marquee var(--speed) linear infinite;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .iconTrackAlt {

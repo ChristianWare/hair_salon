@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/set-state-in-effect */
 "use client";
 
 import Link from "next/link";
@@ -19,8 +20,13 @@ export interface NavProps {
 
 export default function Nav({ color = "", hamburgerColor = "" }: NavProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const [portalNode, setPortalNode] = useState<HTMLElement | null>(null);
   const navRef = useRef<HTMLElement | null>(null);
   const pathname = usePathname();
+
+  useEffect(() => {
+    setPortalNode(document.body);
+  }, []);
 
   useEffect(() => {
     const setProgress = () => {
@@ -148,60 +154,62 @@ export default function Nav({ color = "", hamburgerColor = "" }: NavProps) {
           })}
         </div>
 
-        {createPortal(
-          <div
-            className={`${styles.overlay} ${
-              isOpen ? styles.overlayVisible : ""
-            }`}
-            onClick={closeMenu}
-          />,
-          document.body
-        )}
+        {portalNode &&
+          createPortal(
+            <div
+              className={`${styles.overlay} ${
+                isOpen ? styles.overlayVisible : ""
+              }`}
+              onClick={closeMenu}
+            />,
+            portalNode
+          )}
 
-        {createPortal(
-          <aside
-            id='mobile-menu'
-            className={`${styles.navItemsii} ${isOpen ? styles.active : ""}`}
-            aria-hidden={!isOpen}
-          >
-            <div className={styles.mobileLogo}>
-              Velvet <br /> & Vine
-            </div>
-            <div className={styles.navItemsiiList}>
-              {items.map((item) => {
-                const active = isActive(item.href);
-                return (
-                  <Link
-                    key={item.href}
-                    href={item.href}
-                    className={`${styles.navItemPanel} ${styles[color]} ${
-                      active ? styles.navItemPanelActive : ""
-                    }`}
-                    onClick={closeMenu}
-                    aria-current={active ? "page" : undefined}
-                  >
-                    {item.text}
-                  </Link>
-                );
-              })}
-            </div>
-            <div className={styles.socialsContainer}>
-              <div className={styles.iconBox}>
-                <Instagram className={styles.icon} />
+        {portalNode &&
+          createPortal(
+            <aside
+              id='mobile-menu'
+              className={`${styles.navItemsii} ${isOpen ? styles.active : ""}`}
+              aria-hidden={!isOpen}
+            >
+              <div className={styles.mobileLogo}>
+                Velvet <br /> & Vine
               </div>
-              <div className={styles.iconBox}>
-                <LinkedIn className={styles.icon} />
+              <div className={styles.navItemsiiList}>
+                {items.map((item) => {
+                  const active = isActive(item.href);
+                  return (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      className={`${styles.navItemPanel} ${styles[color]} ${
+                        active ? styles.navItemPanelActive : ""
+                      }`}
+                      onClick={closeMenu}
+                      aria-current={active ? "page" : undefined}
+                    >
+                      {item.text}
+                    </Link>
+                  );
+                })}
               </div>
-              <div className={styles.iconBox}>
-                <Facebook className={styles.icon} />
+              <div className={styles.socialsContainer}>
+                <div className={styles.iconBox}>
+                  <Instagram className={styles.icon} />
+                </div>
+                <div className={styles.iconBox}>
+                  <LinkedIn className={styles.icon} />
+                </div>
+                <div className={styles.iconBox}>
+                  <Facebook className={styles.icon} />
+                </div>
+                <div className={styles.iconBox}>
+                  <Yelp className={styles.icon} />
+                </div>
               </div>
-              <div className={styles.iconBox}>
-                <Yelp className={styles.icon} />
-              </div>
-            </div>
-          </aside>,
-          document.body
-        )}
+            </aside>,
+            portalNode
+          )}
 
         <span
           className={`${styles.hamburger} ${isOpen ? styles.active : ""}`}
