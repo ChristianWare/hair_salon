@@ -9,7 +9,7 @@ export default function Yelp(props: SVGProps<SVGSVGElement>) {
       height='1em'
       fill='currentColor'
       stroke='currentColor'
-      strokeWidth={20}
+      strokeWidth={3}
       strokeLinecap='round'
       strokeLinejoin='round'
       xmlns='http://www.w3.org/2000/svg'

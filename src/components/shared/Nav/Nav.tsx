@@ -2,13 +2,14 @@
 
 import Link from "next/link";
 import styles from "./Nav.module.css";
-import Button from "../Button/Button";
 import { useEffect, useState, MouseEvent, useRef, useMemo } from "react";
 import { createPortal } from "react-dom";
-import Image from "next/image";
-import Img1 from "../../../../public/images/hero.jpg";
 import { usePathname } from "next/navigation";
 import Logo from "../Logo/Logo";
+import Instagram from "../icons/Instagram/Instagram";
+import LinkedIn from "../icons/LinkedIn/LinkedIn";
+import Facebook from "../icons/Facebook/Facebook";
+import Yelp from "../icons/Yelp/Yelp";
 
 export interface NavProps {
   navItemColor?: string;
@@ -20,26 +21,6 @@ export default function Nav({ color = "", hamburgerColor = "" }: NavProps) {
   const [isOpen, setIsOpen] = useState(false);
   const navRef = useRef<HTMLElement | null>(null);
   const pathname = usePathname();
-
-  useEffect(() => {
-    const body = document.body;
-    body.style.overflow =
-      window.innerWidth <= 1068 && isOpen ? "hidden" : "auto";
-    const handleResize = () => setIsOpen(false);
-    window.addEventListener("resize", handleResize);
-    return () => {
-      window.removeEventListener("resize", handleResize);
-      body.style.overflow = "auto";
-    };
-  }, [isOpen]);
-
-  const toggleMenu = () => setIsOpen((s) => !s);
-  const closeMenu = () => setIsOpen(false);
-
-  const handleHamburgerClick = (e: MouseEvent<HTMLSpanElement>) => {
-    e.stopPropagation();
-    toggleMenu();
-  };
 
   useEffect(() => {
     const setProgress = () => {
@@ -61,6 +42,56 @@ export default function Nav({ color = "", hamburgerColor = "" }: NavProps) {
       window.removeEventListener("resize", onScrollResize);
     };
   }, []);
+
+  useEffect(() => {
+    const body = document.body;
+    const html = document.documentElement;
+    if (isOpen) {
+      const y = window.scrollY;
+      body.setAttribute("data-lock-scroll-y", String(y));
+      body.style.position = "fixed";
+      body.style.top = `-${y}px`;
+      body.style.left = "0";
+      body.style.right = "0";
+      body.style.width = "100%";
+      html.style.overflow = "hidden";
+      body.style.overflow = "hidden";
+      body.style.touchAction = "none";
+    } else {
+      const y = parseInt(body.getAttribute("data-lock-scroll-y") || "0", 10);
+      body.style.position = "";
+      body.style.top = "";
+      body.style.left = "";
+      body.style.right = "";
+      body.style.width = "";
+      body.style.overflow = "";
+      body.style.touchAction = "";
+      document.documentElement.style.overflow = "";
+      window.scrollTo(0, y);
+      body.removeAttribute("data-lock-scroll-y");
+    }
+    return () => {
+      const y = parseInt(body.getAttribute("data-lock-scroll-y") || "0", 10);
+      body.style.position = "";
+      body.style.top = "";
+      body.style.left = "";
+      body.style.right = "";
+      body.style.width = "";
+      body.style.overflow = "";
+      body.style.touchAction = "";
+      html.style.overflow = "";
+      if (y) window.scrollTo(0, y);
+      body.removeAttribute("data-lock-scroll-y");
+    };
+  }, [isOpen]);
+
+  const toggleMenu = () => setIsOpen((s) => !s);
+  const closeMenu = () => setIsOpen(false);
+
+  const handleHamburgerClick = (e: MouseEvent<HTMLSpanElement>) => {
+    e.stopPropagation();
+    toggleMenu();
+  };
 
   const isActive = (href: string) => {
     if (href === "/") return pathname === "/";
@@ -125,6 +156,9 @@ export default function Nav({ color = "", hamburgerColor = "" }: NavProps) {
               className={`${styles.navItemsii} ${isOpen ? styles.active : ""}`}
               aria-hidden={!isOpen}
             >
+              <div className={styles.mobileLogo}>
+                Velvet <br /> & Vine
+              </div>
               <div className={styles.navItemsiiList}>
                 {items.map((item) => {
                   const active = isActive(item.href);
@@ -143,26 +177,19 @@ export default function Nav({ color = "", hamburgerColor = "" }: NavProps) {
                   );
                 })}
               </div>
-
-              <div className={styles.menuImage}>
-                <Image
-                  src={Img1}
-                  alt='Menu image'
-                  fill
-                  className={styles.img}
-                />
-                <div className={styles.menuImageOverlay}>
-                  <Logo color='tan' />
+              <div className={styles.socialsContainer}>
+                <div className={styles.iconBox}>
+                  <Instagram className={styles.icon} />
                 </div>
-              </div>
-
-              <div className={styles.btnContainerii}>
-                <Button
-                  href='/'
-                  text='Book your Ride'
-                  btnType='tan'
-                  onClick={closeMenu}
-                />
+                <div className={styles.iconBox}>
+                  <LinkedIn className={styles.icon} />
+                </div>
+                <div className={styles.iconBox}>
+                  <Facebook className={styles.icon} />
+                </div>
+                <div className={styles.iconBox}>
+                  <Yelp className={styles.icon} />
+                </div>
               </div>
             </aside>,
             document.body

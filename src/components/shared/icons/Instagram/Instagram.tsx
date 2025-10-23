@@ -8,7 +8,7 @@ export default function Instagram(props: SVGProps<SVGSVGElement>) {
       height='1em'
       fill='none'
       stroke='currentColor'
-      strokeWidth={2}
+      strokeWidth={1}
       strokeLinecap='round'
       strokeLinejoin='round'
       className='lucide lucide-instagram-icon'
