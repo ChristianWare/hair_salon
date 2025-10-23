@@ -3,6 +3,7 @@ import Hero from "@/components/HomePage/Hero/Hero";
 import OurTeam from "@/components/HomePage/OurTeam/OurTeam";
 import Quote from "@/components/HomePage/Quote/Quote";
 import ServicesPreview from "@/components/HomePage/ServicesPreview/ServicesPreview";
+import Values from "@/components/HomePage/Values/Values";
 import Welcome from "@/components/HomePage/Welcome/Welcome";
 
 export default function Home() {
@@ -14,6 +15,7 @@ export default function Home() {
       <ServicesPreview />
       <Quote />
       <OurTeam />
+      <Values />
     </main>
   );
 }
