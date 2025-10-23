@@ -57,3 +57,13 @@
   background-color: var(--brown);
   color: var(--tan) !important;
 }
+
+.tanBorderii {
+  color: var(--tan) !important;
+  border: 1px solid var(--tan);
+}
+
+.tanBorderii:hover {
+  background-color: var(--tan);
+  color: var(--brown) !important;
+}

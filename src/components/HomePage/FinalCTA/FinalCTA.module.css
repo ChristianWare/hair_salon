@@ -24,7 +24,20 @@
   z-index: 5;
 }
 
-.heading, .desc {
+.sectionHeadingContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sectionHeadingContainer,
+.heading,
+.desc {
   color: var(--tan);
   z-index: 5;
+  text-align: center;
+}
+
+.desc {
+    max-width: 400px;
 }
