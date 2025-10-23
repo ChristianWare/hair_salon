@@ -1,0 +1,160 @@
+.container {
+  background-color: var(--tan);
+}
+
+.content {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.left {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 2rem;
+}
+
+.heading {
+  font-size: 4rem;
+  font-family: var(--ButlerRegular);
+  /* -webkit-font-smoothing: antialiased; */
+}
+
+.copy {
+  max-width: 450px;
+  color: var(--darkGray);
+}
+
+.inputContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.input {
+  position: relative;
+  overflow: hidden;
+  gap: 2rem;
+  border-radius: 50px;
+  padding: 16px 20px;
+  font-size: 14px;
+  line-height: 1.1em;
+  padding: 22px 32px;
+  border: 1px solid var(--brown);
+  background-color: var(--tan);
+}
+
+.right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: flex-start;
+  gap: 3rem;
+}
+
+.right .heading {
+  text-align: right;
+  font-size: 3rem;
+  font-family: var(--ButlerUltraLight);
+  text-transform: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.socialsContainer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 2rem;
+  width: 100%;
+}
+
+.iconBox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  height: fit-content;
+  border: 1px solid var(--brown);
+  border-radius: 50%;
+  width: 5rem;
+  height: 5rem;
+  cursor: pointer;
+  transition: all 0.3s ease-in;
+}
+
+.icon {
+  font-size: 2.5rem;
+  color: var(--brown);
+  transition: all 0.3s ease-in;
+}
+
+.iconBox:hover {
+  background-color: var(--brown);
+}
+
+.iconBox:hover .icon {
+  color: var(--tan);
+}
+
+.bottom {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  border-top: 1px solid var(--darkGrayii);
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
+.disclosureBox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3rem;
+  flex-wrap: wrap;
+}
+
+@media screen and (max-width: 1268px) {
+  .content {
+    grid-template-columns: 1fr;
+    gap: 4rem;
+  }
+
+  .left,
+  .right {
+    align-items: center;
+    justify-content: center;
+  }
+
+  .right .heading {
+    text-align: center;
+  }
+}
+
+@media screen and (max-width: 568px) {
+  .inputContainer,
+  .btnContainer {
+    gap: 1rem;
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+  }
+
+  .copy {
+    text-align: center;
+  }
+
+  .socialsContainer {
+    align-items: center;
+    justify-content: center;
+  }
+
+  .br {
+    display: none;
+  }
+}
