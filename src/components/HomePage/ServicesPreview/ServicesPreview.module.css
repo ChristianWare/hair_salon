@@ -1,0 +1,141 @@
+.container {
+  background-color: var(--white);
+  padding: 10rem 0rem;
+}
+
+.top {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  margin-bottom: 5rem;
+}
+
+.heading {
+  text-align: center;
+  width: 60%;
+}
+
+.bottom {
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.mapDataContainer {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 5rem;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 7rem;
+}
+
+.imgContainer {
+  position: relative;
+  width: 100%;
+  height: 430px;
+}
+
+.imgContainer:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 2;
+}
+
+.img {
+  object-fit: cover;
+}
+
+.index {
+  position: absolute;
+  bottom: -5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  width: 100%;
+  color: var(--tan);
+  font-family: var(--ButlerRegular);
+  font-size: 11.4em;
+  line-height: 0.6em;
+  z-index: 5;
+  -webkit-text-stroke: 1px var(--darkGrayii);
+}
+
+.cardBottom {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.title {
+  text-transform: uppercase;
+  text-align: center;
+  width: 100%;
+}
+
+.desc {
+  text-align: center;
+  width: 100%;
+  color: var(--darkGray);
+}
+
+@media screen and (max-width: 1368px) {
+  .bottom {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 1068px) {
+  .heading {
+    width: 80%;
+  }
+
+  .mapDataContainer {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 3rem;
+  }
+
+  .card:last-child {
+    grid-column: span 2;
+  }
+
+  .cardBottom {
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    /* background-color: red; */
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .heading {
+    width: 100%;
+  }
+
+  .mapDataContainer {
+    grid-template-columns: repeat(1, 1fr);
+    grid-gap: 5rem;
+  }
+
+  .card:last-child {
+    grid-column: span 1;
+  }
+
+  .imgContainer {
+    height: 300px;
+  }
+}

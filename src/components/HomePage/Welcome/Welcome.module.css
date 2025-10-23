@@ -61,7 +61,20 @@
   margin-top: 5rem;
   width: 100%;
   height: var(--iconSize);
-  display: flex;
+  mask-image: linear-gradient(
+   to right,
+   transparent 0%,
+   var(--white) 10%,
+   var(--white) 90%,
+   transparent 100%
+  );
+  -webkit-mask-image: linear-gradient(
+   to right,
+   transparent 0%,
+   var(--white) 10%,
+   var(--white) 90%,
+   transparent 100%
+  );
 }
 
 .iconTrack {
@@ -74,9 +87,6 @@
   gap: var(--gap);
   will-change: transform;
   animation: marquee var(--speed) linear infinite;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 .iconTrackAlt {
@@ -89,26 +99,53 @@
 }
 
 @keyframes marquee {
-  0% { transform: translate3d(0, -50%, 0); }
-  100% { transform: translate3d(-100%, -50%, 0); }
+  0% {
+    transform: translate3d(0, -50%, 0);
+  }
+  100% {
+    transform: translate3d(-100%, -50%, 0);
+  }
 }
 
 @keyframes marqueeAlt {
-  0% { transform: translate3d(100%, -50%, 0); }
-  100% { transform: translate3d(0, -50%, 0); }
+  0% {
+    transform: translate3d(100%, -50%, 0);
+  }
+  100% {
+    transform: translate3d(0, -50%, 0);
+  }
 }
 
 @media screen and (max-width: 1268px) {
-  .heading { width: 90%; }
-  .iconContainer { --iconSize: 8rem; --gap: 4rem; --speed: 26s; }
+  .heading {
+    width: 90%;
+  }
+  .iconContainer {
+    --iconSize: 8rem;
+    --gap: 4rem;
+    --speed: 26s;
+  }
 }
 
 @media screen and (max-width: 768px) {
-  .heading { width: 100%; }
-  .iconContainer { --iconSize: 6rem; --gap: 3rem; --speed: 22s; }
+  .heading {
+    width: 100%;
+  }
+  .iconContainer {
+    --iconSize: 6rem;
+    --gap: 3rem;
+    --speed: 22s;
+  }
 }
 
 @media screen and (max-width: 568px) {
-  .spanImage { height: 30px; width: 30px; }
-  .iconContainer { --iconSize: 4.5rem; --gap: 2.25rem; --speed: 18s; }
+  .spanImage {
+    height: 30px;
+    width: 30px;
+  }
+  .iconContainer {
+    --iconSize: 4.5rem;
+    --gap: 2.25rem;
+    --speed: 18s;
+  }
 }
