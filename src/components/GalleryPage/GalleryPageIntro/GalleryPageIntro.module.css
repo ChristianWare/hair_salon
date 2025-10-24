@@ -1,0 +1,23 @@
+.container {
+  background-color: var(--white);
+  background: #fffdf9;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 253, 249, 1) 50%,
+    rgba(242, 239, 232, 1) 100%
+  );
+  padding: 10rem 0rem;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.copy {
+  text-align: center;
+  max-width: 500px;
+}
