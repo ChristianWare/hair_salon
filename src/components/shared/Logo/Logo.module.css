@@ -4,8 +4,16 @@
   font-size: 3.2rem;
   line-height: 3.2rem;
   color: var(--black);
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 1.5rem;
 }
 
 .tan {
   color: var(--tan);
+}
+
+.icon {
+  font-size: 2.5rem;
 }

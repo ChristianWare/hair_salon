@@ -1,0 +1,98 @@
+.container {
+  background-color: var(--white);
+  padding: 10rem 0rem;
+}
+
+.top {
+  padding-bottom: 2rem;
+  border-bottom: 1px solid var(--brown);
+}
+
+.bottom {
+  margin-top: 5rem;
+}
+
+.mapDataContainer {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 5rem;
+  /* width: 80%; */
+  margin: 0 auto;
+}
+
+.imgContainer {
+  position: relative;
+  width: 100%;
+  height: 370px;
+}
+
+.img {
+  object-fit: cover;
+}
+
+.meta {
+  background-color: var(--white);
+  border: 1px solid var(--brownii);
+  width: 90%;
+  margin: 0 auto;
+  padding: 3rem;
+  padding-top: 5rem;
+  position: relative;
+  margin-top: -5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  text-align: center;
+  z-index: 5;
+}
+
+.title {
+  font-family: var(--ButlerRegular);
+  font-size: 3rem;
+  border-bottom: 1px solid var(--brown);
+  width: 100%;
+  padding-bottom: 1rem;
+}
+
+.desc {
+  width: 80%;
+}
+
+.btnContainer {
+  margin-top: 1rem;
+}
+
+@media screen and (max-width: 1268) {
+  .mapDataContainer {
+    width: 100%;
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+.top {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.desc {
+  width: 100%;
+}
+
+@media screen and (max-width: 768px) {
+  .mapDataContainer {
+    grid-template-columns: 1fr;
+    grid-gap: 5rem;
+  }
+
+  .card {
+    background-color: var(--tan);
+    padding: 2rem;
+    border: 1px solid var(--brownii);
+  }
+
+  .meta {
+    width: 95%;
+  }
+}
