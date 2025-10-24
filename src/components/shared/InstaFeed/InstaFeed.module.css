@@ -23,9 +23,11 @@
 }
 
 .bottom {
+  width: 80%;
+  margin: 0 auto;
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
-
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 2rem;
   align-items: stretch;
   justify-items: stretch;
   margin-top: 3rem;
@@ -68,5 +70,6 @@
   .bottom {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
+    width: 100%;
   }
 }
