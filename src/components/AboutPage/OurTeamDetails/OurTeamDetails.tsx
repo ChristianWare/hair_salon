@@ -45,6 +45,13 @@ export default function OurTeamDetails() {
         <div className={styles.content}>
           <div className={styles.top}>
             <h2 className={styles.heading}>Meet our team</h2>
+            <p className={styles.copy}>
+              Our team is a group of passionate and skilled stylists who are
+              dedicated to making you look and feel your best. With expertise in
+              everything from cutting-edge hair trends to timeless styles, each
+              stylist brings their unique creativity and precision to every
+              client.
+            </p>
           </div>
           <div className={styles.mapDataContainer}>
             {data.map((member) => (
