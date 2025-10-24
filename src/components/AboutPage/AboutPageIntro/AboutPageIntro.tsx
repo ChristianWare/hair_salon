@@ -5,6 +5,7 @@ import Img1 from "../../../../public/images/hug.jpg";
 import Img2 from "../../../../public/images/curls.jpg";
 import Nav from "@/components/shared/Nav/Nav";
 import SectionHeading from "@/components/shared/SectionHeading/SectionHeading";
+import Stats from "@/components/shared/Stats/Stats";
 
 export default function AboutPageIntro() {
   return (
@@ -76,6 +77,7 @@ export default function AboutPageIntro() {
           </div>
         </div>
       </LayoutWrapper>
+      <Stats />
     </section>
   );
 }

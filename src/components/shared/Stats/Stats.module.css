@@ -1,0 +1,44 @@
+.bottomii {
+  margin-top: 5rem;
+}
+
+.mapDataContainerii {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 5rem;
+  border-top: 1px solid var(--darkGrayii);
+  border-bottom: 1px solid var(--darkGrayii);
+  padding: 2.5rem 3rem 1rem;
+}
+
+.cardii {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.number span {
+  line-height: 1;
+  color: var(--brown);
+}
+
+@media screen and (max-width: 1068px) {
+  .mapDataContainerii {
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 1rem;
+    padding-top: 1rem;
+  }
+
+  .cardii {
+    background-color: var(--tan);
+    padding: 2rem;
+  }
+}
+
+@media screen and (max-width: 568px) {
+  .mapDataContainerii {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
