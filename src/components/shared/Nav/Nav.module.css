@@ -3,13 +3,17 @@
   top: 0;
   left: 0;
   right: 0;
-  z-index: 10006;
+  z-index: 30000;
   transform: translateY(0);
   transition: transform 180ms ease-out;
 }
 
 .hidden {
   transform: translateY(-100%);
+}
+
+.menuOpen .navItems {
+  visibility: hidden;
 }
 
 .navbar {
@@ -27,20 +31,7 @@
   align-items: center;
   justify-content: flex-start;
   gap: 0.8rem;
-  z-index: 10002;
-}
-
-.logo {
-  font-size: 2.1rem;
-  color: var(--tan);
-}
-
-.logoText {
-  font-size: 1.4rem;
-  font-weight: 400;
-  letter-spacing: 0.3px;
-  color: var(--tan);
-  line-height: 1;
+  z-index: 30001;
 }
 
 .navItems {
@@ -49,16 +40,16 @@
   justify-content: center;
   gap: 3rem;
   list-style: none;
+  z-index: 1;
 }
 
 .navItem {
   text-transform: uppercase;
   font-size: 1.4rem;
   line-height: 1;
-  color: var(--tan);
+  color: var(--nav-color, var(--tan));
   font-family: var(--poppins);
   font-weight: 300;
-  z-index: 999;
   white-space: nowrap;
   position: relative;
   transition: color 200ms ease;
@@ -76,22 +67,15 @@
   margin: 0 auto;
 }
 
-.btnContainer {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-}
-
 .hamburger {
   margin-left: auto;
   cursor: pointer;
   background-color: var(--tan);
   padding: 2.8rem 2.5rem;
   width: fit-content;
-  z-index: 10005;
+  z-index: 30002;
   transition: transform 220ms ease-out, background-color 220ms ease-out,
     opacity 220ms ease-out;
-  will-change: transform, opacity;
   position: relative;
 }
 
@@ -126,18 +110,10 @@
   transform: translateY(-8px) rotate(-45deg);
 }
 
-.hamburgerBlack {
-  background-color: var(--black);
-}
-
-.btnContainerii {
-  display: none;
-}
-
 .overlay {
   position: fixed;
   inset: 0;
-  z-index: 10000;
+  z-index: 20000;
   background: rgba(0, 0, 0, 0.35);
   -webkit-backdrop-filter: blur(14px) saturate(120%);
   backdrop-filter: blur(14px) saturate(120%);
@@ -157,7 +133,7 @@
   position: fixed;
   top: 0;
   right: 0;
-  height: 100vh;
+  height: 100dvh;
   width: 40vw;
   max-width: 720px;
   min-width: 280px;
@@ -172,7 +148,7 @@
   transition: transform 420ms cubic-bezier(0.2, 0.7, 0.2, 1),
     opacity 320ms ease-out;
   opacity: 0.96;
-  z-index: 10002;
+  z-index: 20010;
   box-sizing: border-box;
   will-change: transform, opacity;
 }
@@ -189,7 +165,7 @@
   color: var(--brown);
   text-transform: uppercase;
   letter-spacing: -3.8px;
-  margin-top: 5rem;
+  /* margin-top: 5rem; */
 }
 
 .navItemsiiList {
@@ -215,8 +191,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: fit-content;
-  height: fit-content;
   border: 1px solid var(--brown);
   border-radius: 50%;
   width: 5rem;
@@ -230,7 +204,6 @@
   color: var(--brown);
   transition: all 0.3s ease-in;
 }
-
 .iconBox:hover {
   background-color: var(--brown);
 }
@@ -252,19 +225,17 @@
 }
 
 .scrolled .navbar {
-  background-color: var(--white);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+  background-color: var(--nav-scrolled-bg, var(--white));
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
 }
 
 .scrolled .navItem {
-  color: var(--black);
+  color: var(--nav-scrolled-color, var(--black));
 }
 
 .scrolled .hamburger {
-  /* background-color: transparent; */
   box-shadow: none;
 }
-
 .scrolled .whiteBar {
   background-color: var(--black);
 }
@@ -279,10 +250,6 @@
   }
   .navItems {
     display: none;
-  }
-  .btnContainerii {
-    display: grid;
-    width: 100%;
   }
   .hamburger {
     display: block;
@@ -312,20 +279,5 @@
     width: 100vw;
     max-width: none;
     min-width: 0;
-  }
-  .navItemPanel {
-    font-size: 3.8rem;
-  }
-  .mobileLogo {
-    text-align: center;
-    font-size: 5.6rem;
-    width: 100%;
-    margin-top: 5rem;
-    letter-spacing: -2px;
-    line-height: 1em;
-  }
-  .btnContainerii {
-    display: grid;
-    width: 100%;
   }
 }

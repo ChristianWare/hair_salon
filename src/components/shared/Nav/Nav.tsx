@@ -1,4 +1,4 @@
-/* eslint-disable react-hooks/set-state-in-effect */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import Link from "next/link";
@@ -13,12 +13,18 @@ import Facebook from "../icons/Facebook/Facebook";
 import Yelp from "../icons/Yelp/Yelp";
 
 export interface NavProps {
-  navItemColor?: string;
-  color?: string;
+  navColor?: string;
+  scrolledNavColor?: string;
+  scrolledBg?: string;
   hamburgerColor?: string;
 }
 
-export default function Nav({ color = "", hamburgerColor = "" }: NavProps) {
+export default function Nav({
+  navColor = "var(--tan)",
+  scrolledNavColor = "var(--black)",
+  scrolledBg = "var(--white)",
+  hamburgerColor = "",
+}: NavProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [portalNode, setPortalNode] = useState<HTMLElement | null>(null);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -27,6 +33,9 @@ export default function Nav({ color = "", hamburgerColor = "" }: NavProps) {
   const lastYRef = useRef(0);
   const tickingRef = useRef(false);
   const pathname = usePathname();
+
+  const logoTop = /black/i.test(navColor) ? "black" : "tan";
+  const logoScrolled = /tan/i.test(scrolledNavColor) ? "tan" : "black";
 
   useEffect(() => {
     setPortalNode(document.body);
@@ -168,8 +177,15 @@ export default function Nav({ color = "", hamburgerColor = "" }: NavProps) {
     <header
       className={`${styles.header} ${isScrolled ? styles.scrolled : ""} ${
         isHidden ? styles.hidden : ""
-      }`}
+      } ${isOpen ? styles.menuOpen : ""}`}
       ref={navRef}
+      style={
+        {
+          ["--nav-color" as any]: navColor,
+          ["--nav-scrolled-color" as any]: scrolledNavColor,
+          ["--nav-scrolled-bg" as any]: scrolledBg,
+        } as React.CSSProperties
+      }
     >
       <nav className={styles.navbar} aria-label='Primary'>
         <Link
@@ -177,7 +193,7 @@ export default function Nav({ color = "", hamburgerColor = "" }: NavProps) {
           className={styles.logoContainer}
           aria-label='Go to homepage'
         >
-          <Logo color={isScrolled ? "black" : "tan"} />
+          <Logo color={isScrolled ? logoScrolled : logoTop} />
         </Link>
 
         <div className={styles.navItems}>
@@ -187,7 +203,7 @@ export default function Nav({ color = "", hamburgerColor = "" }: NavProps) {
               <Link
                 key={item.href}
                 href={item.href}
-                className={`${styles.navItem} ${styles[color]} ${
+                className={`${styles.navItem} ${
                   active ? styles.navItemActive : ""
                 }`}
                 aria-current={active ? "page" : undefined}
@@ -226,7 +242,7 @@ export default function Nav({ color = "", hamburgerColor = "" }: NavProps) {
                     <Link
                       key={item.href}
                       href={item.href}
-                      className={`${styles.navItemPanel} ${styles[color]} ${
+                      className={`${styles.navItemPanel} ${
                         active ? styles.navItemPanelActive : ""
                       }`}
                       onClick={closeMenu}

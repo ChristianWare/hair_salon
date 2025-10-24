@@ -52,7 +52,6 @@ h6,
 span {
   color: var(--black);
   font-family: var(--ButlerUltraLight);
-  /* hyphens: auto; */
   font-weight: 500;
 }
 
@@ -62,8 +61,13 @@ h1 {
   line-height: 0.9;
   letter-spacing: -0.6vw;
   font-weight: 500;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  /* -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale; */
+}
+
+.h1ii {
+  font-size: 7.9rem;
+  letter-spacing: -3px;
 }
 
 h2 {
@@ -192,6 +196,12 @@ textarea:focus {
   h1 {
     font-size: 13vw;
   }
+
+  .h1ii {
+  font-size: 5.1rem;
+  letter-spacing: -1.5px;
+  line-height: 1.1;
+}
 
   h2 {
     font-size: 4.1rem;
