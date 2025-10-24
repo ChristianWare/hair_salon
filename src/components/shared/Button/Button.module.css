@@ -21,7 +21,7 @@
   letter-spacing: 1.4px;
   padding: 22px 32px;
   text-transform: uppercase;
-  z-index: 999999;
+  /* z-index: 999999; */
 }
 
 .btn:link,

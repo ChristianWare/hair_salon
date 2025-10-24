@@ -10,8 +10,8 @@ export default function Hero() {
   return (
     <section className={styles.container}>
       <div className={styles.imgContainer}>
-        <div className={styles.navContainer}>
           <Nav />
+        <div className={styles.navContainer}>
         </div>
         <div className={styles.imgOverlay}></div>
         <Image

@@ -21,7 +21,11 @@ export interface NavProps {
 export default function Nav({ color = "", hamburgerColor = "" }: NavProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [portalNode, setPortalNode] = useState<HTMLElement | null>(null);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isHidden, setIsHidden] = useState(false);
   const navRef = useRef<HTMLElement | null>(null);
+  const lastYRef = useRef(0);
+  const tickingRef = useRef(false);
   const pathname = usePathname();
 
   useEffect(() => {
@@ -29,25 +33,55 @@ export default function Nav({ color = "", hamburgerColor = "" }: NavProps) {
   }, []);
 
   useEffect(() => {
-    const setProgress = () => {
+    const setNavHeightVar = () => {
+      if (navRef.current) {
+        const h = navRef.current.offsetHeight || 0;
+        document.documentElement.style.setProperty("--nav-h", `${h}px`);
+      }
+    };
+    setNavHeightVar();
+    const ro = new ResizeObserver(setNavHeightVar);
+    if (navRef.current) ro.observe(navRef.current);
+    window.addEventListener("load", setNavHeightVar);
+    window.addEventListener("resize", setNavHeightVar);
+    return () => {
+      ro.disconnect();
+      window.removeEventListener("load", setNavHeightVar);
+      window.removeEventListener("resize", setNavHeightVar);
+    };
+  }, []);
+
+  useEffect(() => {
+    const update = () => {
       const doc = document.documentElement;
       const max = doc.scrollHeight - window.innerHeight;
-      const p =
-        max > 0 ? Math.min(100, Math.max(0, (window.scrollY / max) * 100)) : 0;
+      const y = window.scrollY || 0;
+      const p = max > 0 ? Math.min(100, Math.max(0, (y / max) * 100)) : 0;
       if (navRef.current)
         navRef.current.style.setProperty("--progress", `${p}%`);
+      const atTop = y <= 2;
+      setIsScrolled(!atTop);
+      const goingDown = y > lastYRef.current;
+      const pastThreshold = y > 100;
+      if (!isOpen) setIsHidden(goingDown && pastThreshold);
+      if (!goingDown) setIsHidden(false);
+      lastYRef.current = y;
+      tickingRef.current = false;
     };
-    setProgress();
     const onScrollResize = () => {
-      window.requestAnimationFrame(setProgress);
+      if (!tickingRef.current) {
+        tickingRef.current = true;
+        window.requestAnimationFrame(update);
+      }
     };
-    window.addEventListener("scroll", onScrollResize);
+    update();
+    window.addEventListener("scroll", onScrollResize, { passive: true });
     window.addEventListener("resize", onScrollResize);
     return () => {
       window.removeEventListener("scroll", onScrollResize);
       window.removeEventListener("resize", onScrollResize);
     };
-  }, []);
+  }, [isOpen]);
 
   useEffect(() => {
     const body = document.body;
@@ -63,6 +97,7 @@ export default function Nav({ color = "", hamburgerColor = "" }: NavProps) {
       html.style.overflow = "hidden";
       body.style.overflow = "hidden";
       body.style.touchAction = "none";
+      setIsHidden(false);
     } else {
       const y = parseInt(body.getAttribute("data-lock-scroll-y") || "0", 10);
       body.style.position = "";
@@ -99,6 +134,10 @@ export default function Nav({ color = "", hamburgerColor = "" }: NavProps) {
     return () => window.removeEventListener("keydown", onKey);
   }, []);
 
+  useEffect(() => {
+    setIsOpen(false);
+  }, [pathname]);
+
   const toggleMenu = () => setIsOpen((s) => !s);
   const closeMenu = () => setIsOpen(false);
 
@@ -126,14 +165,19 @@ export default function Nav({ color = "", hamburgerColor = "" }: NavProps) {
   );
 
   return (
-    <header className={styles.header} ref={navRef}>
+    <header
+      className={`${styles.header} ${isScrolled ? styles.scrolled : ""} ${
+        isHidden ? styles.hidden : ""
+      }`}
+      ref={navRef}
+    >
       <nav className={styles.navbar} aria-label='Primary'>
         <Link
           href='/'
           className={styles.logoContainer}
           aria-label='Go to homepage'
         >
-          <Logo color='tan' />
+          <Logo color={isScrolled ? "black" : "tan"} />
         </Link>
 
         <div className={styles.navItems}>

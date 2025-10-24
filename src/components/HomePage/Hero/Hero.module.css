@@ -3,10 +3,7 @@
   position: relative;
 }
 
-.navContainer {
-  border-bottom: 1px solid var(--border);
-  width: 100%;
-}
+
 
 .imgOverlay {
   background-color: rgba(0, 0, 0, 0.5);

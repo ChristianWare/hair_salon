@@ -32,7 +32,7 @@
 
 .sectionHeadingContainer,
 .heading,
-.desc {
+.desc, .btnContainer {
   color: var(--tan);
   z-index: 5;
   text-align: center;

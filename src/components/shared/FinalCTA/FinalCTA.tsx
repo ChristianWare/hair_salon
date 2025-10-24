@@ -19,7 +19,9 @@ export default function FinalCTA() {
             Book an appointment with our expert stylists today and experience
             the Velvet & Vine difference.
           </p>
-          <Button href='/' text='Get Started' btnType='tanBorderii' />
+          <div className={styles.btnContainer}>
+            <Button href='/' text='Get Started' btnType='tanBorderii' />
+          </div>
         </div>
       </div>
     </section>
