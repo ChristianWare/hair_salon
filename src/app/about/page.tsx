@@ -1,5 +1,6 @@
 import AboutPageIntro from "@/components/AboutPage/AboutPageIntro/AboutPageIntro";
 import AboutUsDetails from "@/components/AboutPage/AboutUsDetails/AboutUsDetails";
+import OurTeamDetails from "@/components/AboutPage/OurTeamDetails/OurTeamDetails";
 import WhyUs from "@/components/AboutPage/WhyUs/WhyUs";
 import FinalCTA from "@/components/shared/FinalCTA/FinalCTA";
 import Footer from "@/components/shared/Footer/Footer";
@@ -11,6 +12,7 @@ export default function AboutPage() {
       <AboutPageIntro />
       <AboutUsDetails />
       <WhyUs />
+      <OurTeamDetails />
       <InstaFeed />
       <FinalCTA />
       <Footer />
