@@ -1,0 +1,80 @@
+.container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background-image: url(/images/salon2.jpg);
+  background-attachment: fixed;
+  background-position: 50%;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.imgOverlay {
+  background-color: rgba(0, 0, 0, 0.5);
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.imgContainer {
+  min-height: 100vh;
+  position: relative;
+  width: 100%;
+}
+
+.img {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.content {
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: auto;
+}
+
+.heading {
+  z-index: 5;
+  color: var(--tan);
+  text-align: center;
+  /* -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale; */
+}
+
+.copy {
+  color: var(--tan);
+  max-width: 550px;
+  text-align: center;
+}
+
+.btnContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 2rem;
+  margin-top: 1rem;
+}
+
+@media screen and (max-width: 768px) {
+  .content {
+    gap: 1rem;
+  }
+}
+
+@media screen and (max-width: 568px) {
+  .copy {
+    max-width: 90%;
+  }
+}

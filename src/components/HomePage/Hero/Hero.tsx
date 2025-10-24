@@ -1,8 +1,8 @@
 // Hero.tsx
 import LayoutWrapper from "@/components/shared/LayoutWrapper";
 import styles from "./Hero.module.css";
-import Image from "next/image";
-import Img1 from "../../../../public/images/hero.jpg";
+// import Image from "next/image";
+// import Img1 from "../../../../public/images/hero.jpg";
 import Button from "@/components/shared/Button/Button";
 import Nav from "@/components/shared/Nav/Nav";
 
@@ -14,7 +14,7 @@ export default function Hero() {
         <div className={styles.navContainer}>
         </div>
         <div className={styles.imgOverlay}></div>
-        <Image
+        {/* <Image
           src={Img1}
           alt='Nier Transportation'
           title='Nier Transportation'
@@ -23,7 +23,7 @@ export default function Hero() {
           priority
           placeholder='blur'
           loading='eager'
-        />
+        /> */}
         <LayoutWrapper>
           <div className={styles.content}>
             <h1 className={styles.heading}>
