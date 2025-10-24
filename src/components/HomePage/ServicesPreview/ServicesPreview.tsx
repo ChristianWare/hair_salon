@@ -67,6 +67,9 @@ export default function ServicesPreview() {
             ))}
           </div>
         </div>
+        <div className={styles.btnContainerii}>
+          <Button href='/' text='See all services' btnType='brown' />
+        </div>
       </LayoutWrapper>
       <Stats />
     </section>
