@@ -1,0 +1,52 @@
+.container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background-image: url(/images/hero.jpg);
+  background-attachment: fixed;
+  background-position: 50%;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.imgOverlay {
+  background-color: rgba(0, 0, 0, 0.5);
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 100%;
+  z-index: 2;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3rem;
+  z-index: 3;
+  padding: 10rem 0rem;
+}
+
+.sectionHeadingContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 4;
+}
+
+.heading {
+  z-index: 4;
+  color: var(--tan);
+  text-align: center;
+  max-width: 1050px;
+}
+
+.copy {
+  color: var(--tan);
+  text-align: center;
+  z-index: 4;
+  max-width: 600px;
+}
