@@ -1,6 +1,4 @@
 import styles from "./FinalCTA.module.css";
-import Image from "next/image";
-import Img1 from "../../../../public/images/location2.jpg";
 import Button from "@/components/shared/Button/Button";
 import SectionHeading from "@/components/shared/SectionHeading/SectionHeading";
 
@@ -9,7 +7,6 @@ export default function FinalCTA() {
     <section className={styles.parent}>
       <div className={styles.container}>
         <div className={styles.imgOverlay} />
-        <Image src={Img1} alt='Hero Image' fill className={styles.img} />
         <div className={styles.content}>
           <div className={styles.sectionHeadingContainer}>
             <SectionHeading text='Velvet & Vine' color='tan' />

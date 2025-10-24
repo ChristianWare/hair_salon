@@ -1,7 +1,13 @@
 .container {
   position: relative;
+  width: 100%;
+  height: 100%;
+  background-image: url(/images/location2.jpg);
+  background-attachment: fixed;
+  background-position: 50%;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
-
 .imgOverlay {
   z-index: 2;
   position: absolute;
@@ -10,9 +16,6 @@
   background: linear-gradient(rgba(10, 7, 27, 0.5), rgba(10, 7, 27, 0.7));
 }
 
-.img {
-  object-fit: cover;
-}
 
 .content {
   display: flex;

@@ -1,0 +1,133 @@
+.container {
+  background-color: var(--white);
+  padding: 5rem 0rem;
+}
+
+.top {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.heading {
+  text-align: center;
+}
+
+.copy {
+  text-align: center;
+  max-width: 750px;
+  color: var(--darkGray);
+}
+
+.bottom {
+  margin-top: 5rem;
+}
+
+.mapDataContainer {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  width: 80%;
+  margin: 0 auto;
+}
+
+.card {
+  padding: 4rem 3rem;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 3rem;
+  padding-left: 5rem;
+}
+
+.card:nth-child(even) {
+  border-left: 1px solid var(--brown);
+}
+
+.iconContainer {
+  width: 7rem;
+  height: 7rem;
+  border: 1px solid var(--brown);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon {
+  font-size: 4rem;
+  color: var(--brown);
+}
+
+.cardRight {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 0.5rem;
+}
+
+.title {
+  font-family: var(--ButlerRegular);
+  color: var(--darkBrown);
+  font-size: 3rem;
+}
+
+.desc {
+  width: 80%;
+  color: var(--darkGray);
+}
+
+.btnContainer {
+  margin-top: 5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media screen and (max-width: 1268px) {
+  .mapDataContainer {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 1068px) {
+  .card {
+    flex-direction: column;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .mapDataContainer {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .copy {
+    text-align: left;
+  }
+
+  .card {
+    padding: 3rem;
+    background-color: var(--tan);
+    border: 1px solid var(--brownii);
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .card:nth-child(even) {
+    border-left: 1px solid var(--brownii);
+  }
+
+  .title {
+    text-align: center;
+    width: 100%;
+  }
+
+  .desc {
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}

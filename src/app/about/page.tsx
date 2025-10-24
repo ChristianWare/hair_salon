@@ -1,4 +1,5 @@
 import AboutPageIntro from "@/components/AboutPage/AboutPageIntro/AboutPageIntro";
+import AboutServicesPreview from "@/components/AboutPage/AboutServicesPreview/AboutServicesPreview";
 import AboutUsDetails from "@/components/AboutPage/AboutUsDetails/AboutUsDetails";
 import OurTeamDetails from "@/components/AboutPage/OurTeamDetails/OurTeamDetails";
 import WhyUs from "@/components/AboutPage/WhyUs/WhyUs";
@@ -13,6 +14,7 @@ export default function AboutPage() {
       <AboutUsDetails />
       <WhyUs />
       <OurTeamDetails />
+      <AboutServicesPreview />
       <InstaFeed />
       <FinalCTA />
       <Footer />
