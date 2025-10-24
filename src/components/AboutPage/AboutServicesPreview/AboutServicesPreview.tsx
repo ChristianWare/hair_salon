@@ -90,7 +90,7 @@ export default function AboutServicesPreview() {
             </div>
           </div>
           <div className={styles.btnContainer}>
-            <Button href='/' text='See All Services' btnType='tan' />
+            <Button href='/' text='See All Services' btnType='brown' />
           </div>
         </div>
       </LayoutWrapper>

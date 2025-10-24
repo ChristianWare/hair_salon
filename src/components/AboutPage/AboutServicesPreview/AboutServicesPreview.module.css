@@ -1,5 +1,6 @@
 .container {
-  background-color: var(--white);
+  background: #FFFDF9;
+background: linear-gradient(180deg, rgba(255, 253, 249, 1) 50%, rgba(242, 239, 232, 1) 100%);
   padding: 5rem 0rem;
 }
 
