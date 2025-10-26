@@ -1,8 +1,8 @@
 import LayoutWrapper from "@/components/shared/LayoutWrapper";
 import styles from "./Locations.module.css";
 import Image from "next/image";
-import Img1 from "../../../../public/images/location1.jpg";
-import Img2 from "../../../../public/images/location2.jpg";
+import Img1 from "../../../../public/images/salon4.jpg";
+import Img2 from "../../../../public/images/salon5.jpg";
 import SectionHeading from "@/components/shared/SectionHeading/SectionHeading";
 import Button from "@/components/shared/Button/Button";
 

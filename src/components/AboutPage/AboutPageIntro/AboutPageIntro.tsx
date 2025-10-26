@@ -2,7 +2,7 @@ import styles from "./AboutPageIntro.module.css";
 import LayoutWrapper from "@/components/shared/LayoutWrapper";
 import Image from "next/image";
 import Img1 from "../../../../public/images/hug.jpg";
-import Img2 from "../../../../public/images/curls.jpg";
+import Img2 from "../../../../public/images/salon4.jpg";
 import Nav from "@/components/shared/Nav/Nav";
 import SectionHeading from "@/components/shared/SectionHeading/SectionHeading";
 import Stats from "@/components/shared/Stats/Stats";
@@ -23,7 +23,7 @@ export default function AboutPageIntro() {
               We create beautiful hairstyles
             </h1>
             <p className={styles.copy}>
-              At Curl and Co. we believe that great hair is more than just a
+              At Velvet & Vine we believe that great hair is more than just a
               style. That&apos;s why we are committed to delivering not only
               exceptional results but also an unforgettable experience.
             </p>
