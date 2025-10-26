@@ -4,11 +4,11 @@ import Hero from "@/components/HomePage/Hero/Hero";
 import Locations from "@/components/HomePage/Locations/Locations";
 import OurTeam from "@/components/HomePage/OurTeam/OurTeam";
 import Quote from "@/components/HomePage/Quote/Quote";
-import ServicesPreview from "@/components/HomePage/ServicesPreview/ServicesPreview";
 import Values from "@/components/HomePage/Values/Values";
 import Welcome from "@/components/HomePage/Welcome/Welcome";
 import InstaFeed from "@/components/shared/InstaFeed/InstaFeed";
 import Footer from "@/components/shared/Footer/Footer";
+import AboutServicesPreview from "@/components/AboutPage/AboutServicesPreview/AboutServicesPreview";
 
 export default function Home() {
   return (
@@ -16,7 +16,7 @@ export default function Home() {
       <Hero />
       <Welcome />
       <AboutUs />
-      <ServicesPreview />
+      <AboutServicesPreview />
       <Quote />
       <OurTeam />
       <Locations />

@@ -1,8 +1,8 @@
 import AboutPageIntro from "@/components/AboutPage/AboutPageIntro/AboutPageIntro";
-import AboutServicesPreview from "@/components/AboutPage/AboutServicesPreview/AboutServicesPreview";
 import AboutUsDetails from "@/components/AboutPage/AboutUsDetails/AboutUsDetails";
 import OurTeamDetails from "@/components/AboutPage/OurTeamDetails/OurTeamDetails";
 import WhyUs from "@/components/AboutPage/WhyUs/WhyUs";
+import ServicesPreview from "@/components/HomePage/ServicesPreview/ServicesPreview";
 import FinalCTA from "@/components/shared/FinalCTA/FinalCTA";
 import Footer from "@/components/shared/Footer/Footer";
 import InstaFeed from "@/components/shared/InstaFeed/InstaFeed";
@@ -14,7 +14,7 @@ export default function AboutPage() {
       <AboutUsDetails />
       <WhyUs />
       <OurTeamDetails />
-      <AboutServicesPreview />
+      <ServicesPreview />
       <InstaFeed />
       <FinalCTA />
       <Footer />

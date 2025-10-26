@@ -148,7 +148,7 @@ export default function ContactSection() {
                   </button> */}
               <Button
                 text={loading ? "Sending..." : "Submit"}
-                btnType='navYellowBlackOutline'
+                btnType='brown'
                 
               />
             </div>

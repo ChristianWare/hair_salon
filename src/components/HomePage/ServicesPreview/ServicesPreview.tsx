@@ -6,7 +6,7 @@ import Img1 from "../../../../public/images/service1.jpg";
 import Img2 from "../../../../public/images/service2.jpg";
 import Img3 from "../../../../public/images/service3.jpg";
 import Button from "@/components/shared/Button/Button";
-import Stats from "@/components/shared/Stats/Stats";
+// import Stats from "@/components/shared/Stats/Stats";
 
 const data = [
   {
@@ -71,7 +71,7 @@ export default function ServicesPreview() {
           <Button href='/' text='See all services' btnType='brown' />
         </div>
       </LayoutWrapper>
-      <Stats />
+      {/* <Stats /> */}
     </section>
   );
 }
