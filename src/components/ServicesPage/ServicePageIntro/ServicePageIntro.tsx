@@ -1,8 +1,7 @@
-import Nav from '@/components/shared/Nav/Nav';
-import styles from './ServicePageIntro.module.css'
-import LayoutWrapper from '@/components/shared/LayoutWrapper';
-import Button from '@/components/shared/Button/Button';
-
+import Nav from "@/components/shared/Nav/Nav";
+import styles from "./ServicePageIntro.module.css";
+import LayoutWrapper from "@/components/shared/LayoutWrapper";
+import Button from "@/components/shared/Button/Button";
 
 export default function ServicePageIntro() {
   return (
@@ -13,8 +12,8 @@ export default function ServicePageIntro() {
         <div className={styles.imgOverlay}></div>
         <LayoutWrapper>
           <div className={styles.content}>
-            <h1 className={`${styles.heading} h2`}>
-              Elevate Your Style <br /> with Our Expert Hair Services
+            <h1 className={`${styles.heading} `}>
+              Our <br />  hair services
             </h1>
             <p className={styles.copy}>
               Discover the perfect look for any occasion with our professional

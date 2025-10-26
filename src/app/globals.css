@@ -9,6 +9,7 @@
   --border: #ffffff1c;
   --darkGray: #646464;
   --darkGrayii: rgb(194, 192, 192);
+  --gold: #d09d02;
 }
 
 * {
@@ -79,7 +80,7 @@ h2 {
 }
 
 .h2 {
-  font-size: 6.4rem;
+  font-size: 6rem;
   line-height: 1em;
   letter-spacing: -2.5px;
 }
