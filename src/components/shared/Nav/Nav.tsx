@@ -10,7 +10,10 @@ import Logo from "../Logo/Logo";
 import Instagram from "../icons/Instagram/Instagram";
 import LinkedIn from "../icons/LinkedIn/LinkedIn";
 import Facebook from "../icons/Facebook/Facebook";
-import Yelp from "../icons/Yelp/Yelp";
+import Twitter from "../icons/Twitter/Twitter";
+import Youtube from "../icons/Youtube/Youtube";
+import Pinterest from "../icons/Pinterest/Pinterest";
+import Tiktok from "../icons/Tiktok/Tiktok";
 
 export interface NavProps {
   navColor?: string;
@@ -254,16 +257,25 @@ export default function Nav({
               </div>
               <div className={styles.socialsContainer}>
                 <div className={styles.iconBox}>
-                  <Instagram className={styles.icon} />
+                  <Facebook className={styles.icon} />
+                </div>
+                <div className={styles.iconBox}>
+                  <Twitter className={styles.icon} />
+                </div>
+                <div className={styles.iconBox}>
+                  <Youtube className={styles.icon} />
+                </div>
+                <div className={styles.iconBox}>
+                  <Pinterest className={styles.icon} />
+                </div>
+                <div className={styles.iconBox}>
+                  <Tiktok className={styles.icon} />
                 </div>
                 <div className={styles.iconBox}>
                   <LinkedIn className={styles.icon} />
                 </div>
                 <div className={styles.iconBox}>
-                  <Facebook className={styles.icon} />
-                </div>
-                <div className={styles.iconBox}>
-                  <Yelp className={styles.icon} />
+                  <Instagram className={styles.icon} />
                 </div>
               </div>
             </aside>,
