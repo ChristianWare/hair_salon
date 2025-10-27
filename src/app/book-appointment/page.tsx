@@ -1,5 +1,9 @@
+import BookAppointmentIntro from "@/components/BookAppointment/BookAppointmentIntro/BookAppointmentIntro";
+
 export default function BookAppointmentPage() {
   return (
-    <div>Book Appointment Page</div>
-  )
+    <main>
+      <BookAppointmentIntro />
+    </main>
+  );
 }

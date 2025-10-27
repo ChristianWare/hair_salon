@@ -55,6 +55,13 @@
 @media screen and (max-width: 768px) {
   .withLeft::before,
   .withRight::after {
+    width: 100px;
+  }
+}
+
+@media screen and (max-width: 568px) {
+  .withLeft::before,
+  .withRight::after {
     width: 50px;
   }
 }
