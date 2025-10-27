@@ -1,8 +1,9 @@
 .text {
-  font-family: var(--ButlerRegular);
-  text-transform: uppercase;
+  font-family: var(--Voyage);
+  /* text-transform: uppercase; */
   font-size: 3.2rem;
-  line-height: 3.2rem;
+  font-weight: 700;
+  /* line-height: 3.2rem; */
   color: var(--black);
   display: flex;
   align-items: flex-start;

@@ -53,30 +53,31 @@ h4,
 h5,
 h6,
 span {
-  color: var(--black);
+  color: var(--darkBrown);
   font-family: var(--ButlerUltraLight);
   font-weight: 500;
 }
 
 h1 {
   font-size: 8vw;
-  font-family: var(--ButlerRegular);
+  font-family: var(--Voyage);
   line-height: 0.9;
-  letter-spacing: -0.6vw;
-  font-weight: 500;
+  letter-spacing: -0.1vw;
+  /* font-weight: 500; */
   /* -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale; */
 }
 
 .h1ii {
   font-size: 7.9rem;
-  letter-spacing: -3px;
+  letter-spacing: -1.5px;
 }
 
 h2 {
-  font-size: 6rem;
+  font-family: var(--Voyage);
+  font-size: 5rem;
   line-height: 1em;
-  letter-spacing: -2.5px;
+  letter-spacing: -.8px;
 }
 
 .h2 {
@@ -87,6 +88,8 @@ h2 {
 
 h3 {
   font-size: 3.4rem;
+    font-family: var(--Voyage);
+
 }
 
 h4 {
@@ -188,43 +191,44 @@ textarea:focus {
     /* font-size: 4rem;
   } */
 
-  /* h1 {
+    /* h1 {
     font-size: 5rem;
   } */
 
-  /* h2 {
+    /* h2 {
     font-size: 6rem;
   } */
 
-  p {
-    font-size: 113.7%;
-  }
-}
-
-@media screen and (max-width: 768px) {
-  h1 {
-    font-size: 13vw;
+    p {
+      font-size: 113.7%;
+    }
   }
 
-  .h1ii {
-    font-size: 5.1rem;
-    letter-spacing: -1.5px;
-    line-height: 1.1;
+  @media screen and (max-width: 768px) {
+    h1 {
+      font-size: 13vw;
+    }
+
+    .h1ii {
+      font-size: 5.1rem;
+      letter-spacing: -1.5px;
+      line-height: 1.1;
+    }
+
+    h2,
+    .h2 {
+      font-size: 4.1rem;
+      /* letter-spacing: -1.4px; */
+      line-height: 1.2;
+    }
   }
 
-  h2, .h2 {
-    font-size: 4.1rem;
-    letter-spacing: -1.4px;
-    line-height: 1.2;
-  }
-}
+  @media screen and (max-width: 568px) {
+    html {
+      font-size: 50%;
+    }
 
-@media screen and (max-width: 568px) {
-  html {
-    font-size: 50%;
-  }
-
-  /* h1 {
+    /* h1 {
     font-size: 8vw;
   }
 
@@ -244,13 +248,13 @@ textarea:focus {
   .stat {
     font-size: 7.5rem;
   } */
-}
+  }
 
-/* .toastFont {
+  /* .toastFont {
 } */
 
-/* Only use in production */
-/* @media screen and (max-width: 480px) {
+  /* Only use in production */
+  /* @media screen and (max-width: 480px) {
   h1 {
     letter-spacing: -2.5px;
   }
@@ -260,7 +264,7 @@ textarea:focus {
   }
 } */
 
-/* .toastFont {
+  /* .toastFont {
   font-family: var(--roboto);
 } */
 }

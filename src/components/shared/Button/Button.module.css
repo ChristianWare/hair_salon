@@ -6,7 +6,7 @@
   justify-content: center;
   gap: 2rem;
   text-align: center;
-  border-radius: 50px;
+  border-radius: 5px;
   font-size: 14px;
   transition: all 0.2s ease-in-out;
   white-space: nowrap;
@@ -21,6 +21,7 @@
   padding-left: 25px;
   padding-right: 25px;
   border: 1px solid transparent;
+  font-family: var(--poppins);
 }
 
 .btn * {
@@ -85,6 +86,32 @@ a.btn.tanBorder:hover {
   border-color: var(--brown);
 }
 
+.brownBorder {
+  background: transparent;
+  color: var(--darkBrown);
+  border: 1px solid var(--darkBrown);
+}
+
+.brownBorder:hover,
+.btn.brownBorder:hover,
+a.btn.brownBorder:hover {
+  background-color: var(--darkBrown);
+  color: var(--tan);
+}
+
+.darkBrown {
+  background: var(--darkBrown);
+  color: var(--tan);
+  border: 1px solid var(--darkBrown);
+}
+
+.darkBrown:hover,
+.btn.darkBrown:hover,
+a.btn.darkBrown:hover {
+  background-color: var(--tan);
+  color: var(--darkBrown);
+}
+
 .tanBorderii {
   background: transparent;
   color: var(--tan);
@@ -133,6 +160,8 @@ a.btn.tanBorderii:hover {
   display: inline-block;
   height: 1lh;
   backface-visibility: hidden;
+  font-family: var(--poppins);
+  letter-spacing: 0.5px;
 }
 
 .secondFace {
@@ -141,6 +170,8 @@ a.btn.tanBorderii:hover {
   left: 0;
   height: 1lh;
   backface-visibility: hidden;
+  font-family: var(--poppins);
+  letter-spacing: 0.5px;
 }
 
 .srOnly {

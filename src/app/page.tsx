@@ -16,8 +16,8 @@ export default function Home() {
       <Hero />
       <Welcome />
       <AboutUs />
-      <AboutServicesPreview />
       <Quote />
+      <AboutServicesPreview />
       <OurTeam />
       <Locations />
       <Values />

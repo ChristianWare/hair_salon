@@ -161,9 +161,9 @@
 .mobileLogo {
   font-size: 9rem;
   line-height: 0.9;
-  font-family: var(--ButlerRegular);
+  font-family: var(--Voyage);
   color: var(--brown);
-  text-transform: uppercase;
+  /* text-transform: uppercase; */
   letter-spacing: -3.8px;
   /* margin-top: 5rem; */
 }

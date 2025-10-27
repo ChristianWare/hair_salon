@@ -1,6 +1,10 @@
 .container {
-  background: #FFFDF9;
-background: linear-gradient(180deg, rgba(255, 253, 249, 1) 50%, rgba(242, 239, 232, 1) 100%);
+  background: #fffdf9;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 253, 249, 1) 50%,
+    rgba(242, 239, 232, 1) 100%
+  );
   padding: 5rem 0rem;
 }
 
@@ -69,9 +73,10 @@ background: linear-gradient(180deg, rgba(255, 253, 249, 1) 50%, rgba(242, 239, 2
 }
 
 .title {
-  font-family: var(--ButlerRegular);
+  font-family: var(--poppins);
+  font-weight: 500;
   color: var(--darkBrown);
-  font-size: 3rem;
+  font-size: 1.6rem;
 }
 
 .desc {

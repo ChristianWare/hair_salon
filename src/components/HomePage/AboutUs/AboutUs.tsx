@@ -14,9 +14,8 @@ export default function AboutUs() {
           <div className={styles.left}>
             <SectionHeading text='About' />
             <h2 className={styles.heading}>
-              Meet <br /> <span className={styles.accent}>Velvet & Vine</span>
+              Meet <br /> Velvet & Vine
             </h2>
-            <SectionHeading text='Hair Stylists' />
             <p className={styles.copy}>
               At Velvet & Vine, we believe in the power of nature to transform
               your hair. Our products are crafted with the finest botanical
@@ -24,7 +23,7 @@ export default function AboutUs() {
               deserves.
             </p>
             <div className={styles.btnContainer}>
-              <Button href='/' text='Moer About Us' btnType='tanBorder' />
+              <Button href='/' text='More About Us' btnType='darkBrown' />
             </div>
           </div>
           <div className={styles.right}>
@@ -43,9 +42,7 @@ export default function AboutUs() {
                 />
               </div>
               <div className={styles.box}>
-                <h3 className={styles.subheading}>
-                  Empowering your <br className={styles.br} /> vision
-                </h3>
+                <h3 className={styles.subheading}>Empowering your vision</h3>
                 <br />
                 <p className={styles.copyii}>
                   Transforming challenges into opportunities

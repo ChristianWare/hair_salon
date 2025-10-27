@@ -1,7 +1,26 @@
 .container {
   background-color: var(--white);
-  padding: 20rem 0rem;
-  
+  /* padding: 20rem 0rem; */
+}
+
+.parent {
+  background-color: var(--white);
+}
+
+.container {
+  position: relative;
+}
+
+.imgOverlay {
+  z-index: 2;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(rgba(10, 7, 27, 0.7), rgba(10, 7, 27, 0.7));
+}
+
+.img {
+  object-fit: cover;
 }
 
 .content {
@@ -10,18 +29,22 @@
   align-items: center;
   justify-content: center;
   gap: 3rem;
+  padding: 10rem 0rem;
+  z-index: 5;
 }
 
 .icon {
-  font-size: 40rem;
+  font-size: 20rem;
   color: var(--tan);
+  opacity: 0.3;
 }
 
 .quote {
   position: relative;
   isolation: isolate;
+  z-index: 5;
 }
-
+/* 
 .quoteIconBox {
   position: absolute;
   top: -20rem;
@@ -29,19 +52,27 @@
   transform: translateX(-50%);
   z-index: 0;
   pointer-events: none;
-}
+} */
 
 .copy {
   position: relative;
   z-index: 1;
   text-align: center;
-  max-width: 800px;
-  font-size: 6rem;
-  font-family: var(--ButlerUltraLight);
+  max-width: 700px;
+  letter-spacing: -0.8px;
+  font-size: 5rem;
+  font-family: var(--Voyage);
+  color: var(--tan);
   margin-left: auto;
   margin-right: auto;
-  line-height: 1em;
+  line-height: 1.2em;
+  z-index: 5;
 }
+
+.sectionHeadingContainer {
+  z-index: 5;
+}
+
 @media screen and (max-width: 768px) {
   .copy {
     font-size: 4rem;

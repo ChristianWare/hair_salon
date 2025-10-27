@@ -34,7 +34,7 @@ export default function Welcome() {
             <SectionHeading text='Welcome' />
             <h2 className={styles.heading}>
               We believe great hair <span className={styles.spanImage} /> is
-              more than just a look! Our team of{" "}
+              more than just a look. Our team of{" "}
               <span className={styles.squiggly}>skilled stylists </span> are
               ready to make your hair goals a reality.
             </h2>
@@ -47,14 +47,11 @@ export default function Welcome() {
               <Button
                 href='/'
                 text='Book your appointment'
-                btnType='tanBorder'
+                btnType='brown'
               />
             </div>
           </div>
-
           <div className={styles.bottom}>
-            {/* <span className={styles.asSeenIn}>As seen in:</span> */}
-
             <div className={styles.iconContainer}>
               <LogosRow className={styles.iconTrack} />
               <LogosRow
