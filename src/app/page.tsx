@@ -7,8 +7,8 @@ import Quote from "@/components/HomePage/Quote/Quote";
 import Values from "@/components/HomePage/Values/Values";
 import Welcome from "@/components/HomePage/Welcome/Welcome";
 import InstaFeed from "@/components/shared/InstaFeed/InstaFeed";
-import Footer from "@/components/shared/Footer/Footer";
 import AboutServicesPreview from "@/components/AboutPage/AboutServicesPreview/AboutServicesPreview";
+import Footerii from "@/components/shared/Footerii/Footerii";
 
 export default function Home() {
   return (
@@ -23,7 +23,7 @@ export default function Home() {
       <Values />
       <FinalCTA />
       <InstaFeed />
-      <Footer />
+      <Footerii />
     </main>
   );
 }

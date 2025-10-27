@@ -11,7 +11,7 @@ export default function AboutUsDetails() {
         <div className={styles.content}>
           <Luxury className={styles.icon} />
           <div className={styles.sectionHeadingContainer}>
-            <SectionHeading text='More About Us' color='tan' left right />
+            <SectionHeading text='Our mission' color='tan' left right />
           </div>
           <h2 className={styles.heading}>
             &ldquo;We are passionate about creating beautiful hair. We believe
