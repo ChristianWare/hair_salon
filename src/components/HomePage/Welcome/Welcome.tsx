@@ -31,7 +31,7 @@ export default function Welcome() {
       <LayoutWrapper>
         <div className={styles.content}>
           <div className={styles.top}>
-            <SectionHeading text='Welcome' />
+            <SectionHeading text='Welcome' left right />
             <h2 className={styles.heading}>
               We believe great hair <span className={styles.spanImage} /> is
               more than just a look. Our team of{" "}

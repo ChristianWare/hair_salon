@@ -7,6 +7,7 @@ import Image from "next/image";
 import Button from "@/components/shared/Button/Button";
 import Modal from "@/components/shared/Modal/Modal";
 import { useState, MouseEvent } from "react";
+import SectionHeading from "@/components/shared/SectionHeading/SectionHeading";
 
 type Service = (typeof servicesData)[number];
 
@@ -34,7 +35,8 @@ export default function AllServices() {
       <LayoutWrapper>
         <div className={styles.content}>
           <div className={styles.top}>
-            <h2 className={styles.heading}>All Services</h2>
+            {/* <h2 className={styles.heading}>All Services</h2> */}
+            <SectionHeading text='All Services' left right />
           </div>
           <div className={styles.bottom}>
             <div className={styles.mapDataContainer}>

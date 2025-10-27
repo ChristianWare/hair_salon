@@ -44,6 +44,8 @@ export default function OurTeamDetails() {
       <LayoutWrapper>
         <div className={styles.content}>
           <div className={styles.top}>
+            <SectionHeading text='Our Stylists' left right />
+
             <h2 className={styles.heading}>Meet our team</h2>
             <p className={styles.copy}>
               Our team is a group of passionate and skilled stylists who are

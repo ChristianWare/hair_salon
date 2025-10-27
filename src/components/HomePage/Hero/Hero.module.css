@@ -9,7 +9,6 @@
   background-size: cover;
 }
 
-
 .imgOverlay {
   background-color: rgba(0, 0, 0, 0.5);
   position: absolute;
@@ -44,6 +43,9 @@
   width: 100%;
   height: auto;
 }
+.sectionHeadingContainer {
+  z-index: 5;
+}
 
 .heading {
   z-index: 5;
@@ -65,13 +67,6 @@
   justify-content: center;
   flex-wrap: wrap;
   gap: 2rem;
-  /* margin-top: 3rem; */
-}
-
-@media screen and (max-width: 768px) {
-  .content {
-    gap: 1rem;
-  }
 }
 
 @media screen and (max-width: 568px) {

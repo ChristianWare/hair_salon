@@ -9,6 +9,12 @@
   padding: 10rem 0rem;
 }
 
+.icon {
+  color: var(--darkBrown);
+  z-index: 5;
+  font-size: 3rem;
+}
+
 .content {
   display: flex;
   flex-direction: column;

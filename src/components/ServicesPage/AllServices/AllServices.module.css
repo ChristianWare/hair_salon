@@ -4,12 +4,7 @@
 }
 
 .top {
-  padding-bottom: 2rem;
-  border-bottom: 1px solid var(--brown);
-}
-
-.bottom {
-  margin-top: 5rem;
+  margin-bottom: 4rem;
 }
 
 .mapDataContainer {
@@ -48,7 +43,8 @@
 }
 
 .title {
-  font-family: var(--ButlerRegular);
+  font-family: var(--Voyage);
+  text-transform: uppercase;
   font-size: 3rem;
   border-bottom: 1px solid var(--brown);
   width: 100%;
@@ -110,7 +106,7 @@
 }
 
 .modalImgWrap::after {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
@@ -132,6 +128,7 @@
 }
 
 .modalTitle {
+  text-transform: uppercase;
   font-size: 2.4rem;
   line-height: 1.2;
 }

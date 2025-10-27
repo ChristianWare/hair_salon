@@ -58,7 +58,7 @@
   position: fixed;
   inset: 0;
   background: rgba(10, 10, 10, 0.85);
-  z-index: 999;
+  z-index: 30001;
   display: grid;
   place-items: center;
   padding: 4rem 2rem;

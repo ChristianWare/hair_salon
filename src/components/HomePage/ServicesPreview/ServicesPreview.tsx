@@ -1,6 +1,6 @@
 import LayoutWrapper from "@/components/shared/LayoutWrapper";
 import styles from "./ServicesPreview.module.css";
-import SectionHeading from "@/components/shared/SectionHeading/SectionHeading";
+// import SectionHeading from "@/components/shared/SectionHeading/SectionHeading";
 import Image from "next/image";
 import Img1 from "../../../../public/images/service1.jpg";
 import Img2 from "../../../../public/images/service2.jpg";
@@ -37,7 +37,7 @@ export default function ServicesPreview() {
     <section className={styles.container}>
       <LayoutWrapper>
         <div className={styles.top}>
-          <SectionHeading text='What we do' />
+          {/* <SectionHeading text='What we do' /> */}
           <h2 className={styles.heading}>
             Our most <br className={styles.br} />{" "}
             <span className={styles.accent}>requested services</span>

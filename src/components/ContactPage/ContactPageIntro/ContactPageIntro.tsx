@@ -3,6 +3,7 @@ import styles from "./ContactPageIntro.module.css";
 import LayoutWrapper from "@/components/shared/LayoutWrapper";
 import ContactSection from "@/components/shared/ContactSection/ContactSection";
 import Nav from "@/components/shared/Nav/Nav";
+import Luxury from "@/components/shared/icons/Luxury/Luxury";
 
 export default function ContactPageIntro() {
   return (
@@ -15,7 +16,14 @@ export default function ContactPageIntro() {
       <LayoutWrapper>
         <div className={styles.content}>
           <div className={styles.left}>
-            <SectionHeading text='Contact' />
+            <Luxury className={styles.icon} />
+            <div className={styles.desktop}>
+              <SectionHeading text='Contact' right />
+            </div>
+            <div className={styles.mobile}>
+              <SectionHeading text='Contact' left right />
+            </div>
+
             <h1 className={`${styles.heading} h2`}>
               Any Questions? <br />
               Get in Touch!
@@ -24,8 +32,8 @@ export default function ContactPageIntro() {
               We are here to assist you with any questions or concerns you may
               have. Feel free to reach out to us anytime.
             </p>
-            <p className={styles.copy}>480-456-36455</p>
-            <p className={styles.copy}>helloclara@mauvestudio.co</p>
+            <strong className={styles.copy}>480-456-36455</strong>
+            <strong className={styles.copy}>helloclara@mauvestudio.co</strong>
           </div>
           <div className={styles.right}>
             <ContactSection />

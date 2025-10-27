@@ -37,6 +37,12 @@
   z-index: 4;
 }
 
+.icon {
+  color: var(--tan);
+  z-index: 5;
+  font-size: 3rem;
+}
+
 .heading {
   z-index: 4;
   color: var(--tan);

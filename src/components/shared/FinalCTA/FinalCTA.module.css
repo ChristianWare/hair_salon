@@ -16,7 +16,6 @@
   background: linear-gradient(rgba(10, 7, 27, 0.5), rgba(10, 7, 27, 0.7));
 }
 
-
 .content {
   display: flex;
   flex-direction: column;
@@ -27,6 +26,12 @@
   z-index: 5;
 }
 
+.icon {
+  color: var(--tan);
+  z-index: 5;
+  font-size: 3rem;
+}
+
 .sectionHeadingContainer {
   display: flex;
   align-items: center;
@@ -35,12 +40,13 @@
 
 .sectionHeadingContainer,
 .heading,
-.desc, .btnContainer {
+.desc,
+.btnContainer {
   color: var(--tan);
   z-index: 5;
   text-align: center;
 }
 
 .desc {
-    max-width: 400px;
+  max-width: 400px;
 }

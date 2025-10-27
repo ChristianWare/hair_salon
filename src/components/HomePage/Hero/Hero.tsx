@@ -5,14 +5,14 @@ import styles from "./Hero.module.css";
 // import Img1 from "../../../../public/images/hero.jpg";
 import Button from "@/components/shared/Button/Button";
 import Nav from "@/components/shared/Nav/Nav";
+import SectionHeading from "@/components/shared/SectionHeading/SectionHeading";
 
 export default function Hero() {
   return (
     <section className={styles.container}>
       <div className={styles.imgContainer}>
-          <Nav />
-        <div className={styles.navContainer}>
-        </div>
+        <Nav />
+        <div className={styles.navContainer}></div>
         <div className={styles.imgOverlay}></div>
         {/* <Image
           src={Img1}
@@ -26,6 +26,9 @@ export default function Hero() {
         /> */}
         <LayoutWrapper>
           <div className={styles.content}>
+            <div className={styles.sectionHeadingContainer}>
+              <SectionHeading text='Velvet & Vine' color='tan' left right />
+            </div>
             <h1 className={styles.heading}>
               Dream. Style. <br />
               Shine.

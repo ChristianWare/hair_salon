@@ -60,7 +60,7 @@ export default function AboutServicesPreview() {
       <LayoutWrapper>
         <div className={styles.content}>
           <div className={styles.top}>
-            <SectionHeading text='What we do' />
+            <SectionHeading text='What we do' left right />
             <h2 className={styles.heading}>
               Learn more about <br className={styles.br} /> Our Services
             </h2>

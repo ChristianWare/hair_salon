@@ -2,6 +2,7 @@ import LayoutWrapper from "@/components/shared/LayoutWrapper";
 import styles from "./GalleryPageIntro.module.css";
 import SectionHeading from "@/components/shared/SectionHeading/SectionHeading";
 import Nav from "@/components/shared/Nav/Nav";
+import Luxury from "@/components/shared/icons/Luxury/Luxury";
 
 export default function GalleryPageIntro() {
   return (
@@ -13,7 +14,8 @@ export default function GalleryPageIntro() {
       />
       <LayoutWrapper>
         <div className={styles.content}>
-          <SectionHeading text='Portfolio' />
+          <Luxury className={styles.icon} />
+          <SectionHeading text='Portfolio' left right />
           <h1 className={`${styles.heading} h2`}>Our recent works</h1>
           <p className={styles.copy}>
             Explore our portfolio showcasing a variety of hairstyles and

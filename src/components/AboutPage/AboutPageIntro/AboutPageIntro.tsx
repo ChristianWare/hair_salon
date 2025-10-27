@@ -18,7 +18,12 @@ export default function AboutPageIntro() {
       <LayoutWrapper>
         <div className={styles.content}>
           <div className={styles.left}>
-            <SectionHeading text='About Us' />
+            <div className={styles.desktop}>
+              <SectionHeading text='About Us' />
+            </div>
+            <div className={styles.mobile}>
+              <SectionHeading text='About Us' left right />
+            </div>
             <h1 className={`${styles.heading} h1ii`}>
               We create beautiful hairstyles
             </h1>

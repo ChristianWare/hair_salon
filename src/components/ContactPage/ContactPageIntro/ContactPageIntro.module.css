@@ -17,6 +17,49 @@
   gap: 2rem;
 }
 
-.heading {
-  font-family: var(--ButlerUltraLight);
+.icon {
+  color: var(--darkBrown);
+  z-index: 5;
+  font-size: 3rem;
+}
+
+.copy {
+  width: 80%;
+}
+
+.left strong {
+  font-weight: 500;
+}
+
+.mobile {
+  display: none;
+}
+
+@media screen and (max-width: 1068px) {
+  .content {
+    grid-template-columns: repeat(1, 1fr);
+  }
+
+  .left {
+    align-items: center;
+    text-align: center;
+  }
+
+  .copy {
+    width: 60%;
+  }
+
+  .desktop {
+    display: none;
+  }
+
+  .mobile {
+    display: block;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .copy {
+    width: 100%;
+  }
 }

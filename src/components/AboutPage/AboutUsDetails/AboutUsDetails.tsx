@@ -1,6 +1,7 @@
 import SectionHeading from "@/components/shared/SectionHeading/SectionHeading";
 import styles from "./AboutUsDetails.module.css";
 import LayoutWrapper from "@/components/shared/LayoutWrapper";
+import Luxury from "@/components/shared/icons/Luxury/Luxury";
 
 export default function AboutUsDetails() {
   return (
@@ -8,8 +9,9 @@ export default function AboutUsDetails() {
       <div className={styles.imgOverlay} />
       <LayoutWrapper>
         <div className={styles.content}>
+          <Luxury className={styles.icon} />
           <div className={styles.sectionHeadingContainer}>
-            <SectionHeading text='More About Us' color='tan' />
+            <SectionHeading text='More About Us' color='tan' left right />
           </div>
           <h2 className={styles.heading}>
             &ldquo;We are passionate about creating beautiful hair. We believe

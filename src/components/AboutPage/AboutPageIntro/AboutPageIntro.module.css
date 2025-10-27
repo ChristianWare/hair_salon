@@ -19,6 +19,10 @@
   gap: 3rem;
 }
 
+.mobile {
+  display: none;
+}
+
 .copy {
   width: 80%;
   color: var(--darkGray);
@@ -57,7 +61,7 @@
   position: relative;
   width: 100%;
   aspect-ratio: 3 / 4;
-    border: 1px solid var(--darkBrown);
+  border: 1px solid var(--darkBrown);
   padding: 1rem;
 }
 
@@ -85,8 +89,13 @@
 
   .left .imgContainer,
   .right .imgContainerii,
-  .left .r1 {
+  .left .r1,
+  .desktop {
     display: none;
+  }
+
+  .mobile {
+    display: block;
   }
 
   .mobileHidden {
@@ -111,7 +120,7 @@
   }
 
   .subHeading {
-    text-align: center; 
+    text-align: center;
     width: 95%;
     margin-left: auto;
     margin-right: auto;

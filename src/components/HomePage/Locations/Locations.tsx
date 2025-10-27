@@ -11,7 +11,7 @@ export default function Locations() {
     <div className={styles.container}>
       <LayoutWrapper>
         <div className={styles.top}>
-          <SectionHeading text='Locations' />
+          <SectionHeading text='Locations' left right />
           <h2 className={styles.heading}>Where you can find us</h2>
           <div className={styles.btnContainer}>
             <Button href='/' text='Book your appointment' btnType='tanBorder' />

@@ -12,7 +12,12 @@ export default function AboutUs() {
       <LayoutWrapper>
         <div className={styles.content}>
           <div className={styles.left}>
-            <SectionHeading text='About' />
+            <div className={styles.desktop}>
+              <SectionHeading text='About' right />
+            </div>
+            <div className={styles.mobile}>
+              <SectionHeading text='About' right left />
+            </div>
             <h2 className={styles.heading}>
               Meet <br /> Velvet & Vine
             </h2>
