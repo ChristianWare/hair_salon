@@ -55,6 +55,12 @@
   transition: color 200ms ease;
 }
 
+.navItem:last-child {
+  font-weight: 600;
+  letter-spacing: 1px;
+  /* margin-right: 5rem; */
+}
+
 .navItemActive::after {
   content: "";
   position: absolute;
