@@ -22,6 +22,8 @@
 .number span {
   line-height: 1;
   color: var(--brown);
+  font-family: var(--Voyage);
+  /* font-weight: 700; */
 }
 
 @media screen and (max-width: 1068px) {

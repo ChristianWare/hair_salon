@@ -27,14 +27,16 @@ export default function AboutPageIntro() {
               style. That&apos;s why we are committed to delivering not only
               exceptional results but also an unforgettable experience.
             </p>
-            <div className={styles.imgContainer}>
-              <Image
-                src={Img2}
-                alt='stylist hugging client'
-                fill
-                className={styles.img}
-                sizes='(max-width: 1168px) 100vw, 50vw'
-              />
+            <div className={styles.r1}>
+              <div className={styles.imgContainer}>
+                <Image
+                  src={Img2}
+                  alt='stylist hugging client'
+                  fill
+                  className={styles.img}
+                  sizes='(max-width: 1168px) 100vw, 50vw'
+                />
+              </div>
             </div>
           </div>
           <div className={styles.right}>
@@ -47,32 +49,36 @@ export default function AboutPageIntro() {
                 sizes='(max-width: 1168px) 100vw, 50vw'
               />
             </div>
-            <h2 className={styles.subHeading}>
+            {/* <h2 className={styles.subHeading}>
               From the moment you walk through our doors, our goal is to make
               you feel welcomed, pampered, and confident in your own beauty. We
               take the time to understand your unique needs and preferences,
               ensuring that every service is tailored to enhance your individual
               style.
-            </h2>
+            </h2> */}
           </div>
           <div className={styles.mobileHidden}>
-            <div className={styles.imgContainer}>
-              <Image
-                src={Img2}
-                alt='stylist hugging client'
-                fill
-                className={styles.img}
-                sizes='(max-width: 1168px) 100vw, 50vw'
-              />
+            <div className={styles.r1}>
+              <div className={styles.imgContainer}>
+                <Image
+                  src={Img2}
+                  alt='stylist hugging client'
+                  fill
+                  className={styles.img}
+                  sizes='(max-width: 1168px) 100vw, 50vw'
+                />
+              </div>
             </div>
-            <div className={styles.imgContainerii}>
-              <Image
-                src={Img1}
-                alt='stylist hugging client'
-                fill
-                className={styles.img}
-                sizes='(max-width: 1168px) 100vw, 50vw'
-              />
+            <div className={styles.r1}>
+              <div className={styles.imgContainerii}>
+                <Image
+                  src={Img1}
+                  alt='stylist hugging client'
+                  fill
+                  className={styles.img}
+                  sizes='(max-width: 1168px) 100vw, 50vw'
+                />
+              </div>
             </div>
           </div>
         </div>

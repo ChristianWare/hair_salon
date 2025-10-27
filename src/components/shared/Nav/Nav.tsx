@@ -167,7 +167,7 @@ export default function Nav({
       { text: "Services", href: "/services" },
       { text: "Gallery", href: "/gallery" },
       { text: "Contact", href: "/contact" },
-      { text: "Login", href: "/login" },
+      { text: "Book Appointment", href: "/book-appointment" },
     ],
     []
   );

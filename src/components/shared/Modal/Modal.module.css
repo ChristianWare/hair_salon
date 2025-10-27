@@ -51,7 +51,7 @@
 .icon {
   width: 4rem;
   height: 4rem;
-  color: var(--black);
+  color: var(--tan);
 }
 
 @media (max-width: 768px) {

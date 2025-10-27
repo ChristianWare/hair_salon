@@ -1,5 +1,5 @@
 .header {
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   right: 0;
@@ -8,9 +8,9 @@
   transition: transform 180ms ease-out;
 }
 
-.hidden {
+/* .hidden {
   transform: translateY(-100%);
-}
+} */
 
 .menuOpen .navItems {
   visibility: hidden;
