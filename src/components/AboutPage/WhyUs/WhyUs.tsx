@@ -39,7 +39,7 @@ export default function WhyUs() {
         <div className={styles.content}>
           <div className={styles.left}>
             <SectionHeading text='Why Choose Us?' color='tan' />
-            <h2 className={styles.heading}>Choose us because...</h2>
+            {/* <h2 className={styles.heading}>Choose us because...</h2> */}
             <p className={styles.copy}>
               We are dedicated to providing the best hair care experience. Our
               team of skilled stylists is committed to staying up-to-date with

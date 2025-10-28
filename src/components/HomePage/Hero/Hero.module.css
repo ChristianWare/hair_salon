@@ -43,6 +43,13 @@
   width: 100%;
   height: auto;
 }
+
+.icon {
+  color: var(--tan);
+  z-index: 5;
+  font-size: 3rem;
+}
+
 .sectionHeadingContainer {
   z-index: 5;
 }

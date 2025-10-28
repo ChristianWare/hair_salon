@@ -19,7 +19,7 @@ export default function FinalCTA() {
             the Velvet & Vine difference.
           </p>
           <div className={styles.btnContainer}>
-            <Button href='/' text='Get Started' btnType='tanBorderii' />
+            <Button href='/book-appointment' text='Get Started' btnType='tanBorderii' />
           </div>
         </div>
       </div>

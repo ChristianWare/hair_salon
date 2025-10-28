@@ -186,7 +186,7 @@ export default function Values() {
           <div className={styles.left}>
             <SectionHeading text='Gallery' />
             <h2 className={styles.heading}>
-              Our portfolio speaks{" "} <br />
+              Our portfolio speaks <br />
               <span className={styles.squiggly}>louder than words</span>
             </h2>
             <p className={`${styles.copy} subheading`}>
@@ -195,7 +195,7 @@ export default function Values() {
             </p>
 
             <div className={styles.btnContainer}>
-              <Button href='/contact' text='Gallery' btnType='tanBorder' />
+              <Button href='/gallery' text='Gallery' btnType='tanBorder' />
             </div>
           </div>
 

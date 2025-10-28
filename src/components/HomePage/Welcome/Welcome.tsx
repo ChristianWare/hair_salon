@@ -45,8 +45,8 @@ export default function Welcome() {
             </p>
             <div className={styles.btnContainer}>
               <Button
-                href='/'
-                text='Book your appointment'
+                href='/services'
+                text='See all services'
                 btnType='brown'
               />
             </div>

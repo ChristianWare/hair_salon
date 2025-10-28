@@ -27,7 +27,8 @@
 
 .squiggly {
   color: var(--brown);
-  font-family: var(--ButlerRegular);
+  font-family: inherit;
+  font-weight: 700;
 }
 
 

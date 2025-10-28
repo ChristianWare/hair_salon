@@ -80,7 +80,7 @@ export default function Footerii() {
             </p>
             <div className={styles.btnContainer}>
               <Button
-                href='/'
+                href='/book-appointment'
                 text='Book your appointment'
                 btnType='tanBorder'
               />

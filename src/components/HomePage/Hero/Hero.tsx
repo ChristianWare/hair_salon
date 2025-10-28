@@ -6,6 +6,7 @@ import styles from "./Hero.module.css";
 import Button from "@/components/shared/Button/Button";
 import Nav from "@/components/shared/Nav/Nav";
 import SectionHeading from "@/components/shared/SectionHeading/SectionHeading";
+import Luxury from "@/components/shared/icons/Luxury/Luxury";
 
 export default function Hero() {
   return (
@@ -26,9 +27,11 @@ export default function Hero() {
         /> */}
         <LayoutWrapper>
           <div className={styles.content}>
+            <Luxury className={styles.icon} />
             <div className={styles.sectionHeadingContainer}>
               <SectionHeading text='Velvet & Vine' color='tan' left right />
             </div>
+
             <h1 className={styles.heading}>
               Dream. Style. <br />
               Shine.
@@ -40,7 +43,11 @@ export default function Hero() {
               you go!
             </p>
             <div className={styles.btnContainer}>
-              <Button href='/' text='Book your appointment' btnType='tan' />
+              <Button
+                href='/book-appointment'
+                text='Book your appointment'
+                btnType='tan'
+              />
             </div>
           </div>
         </LayoutWrapper>

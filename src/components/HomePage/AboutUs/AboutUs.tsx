@@ -28,7 +28,7 @@ export default function AboutUs() {
               deserves.
             </p>
             <div className={styles.btnContainer}>
-              <Button href='/' text='More About Us' btnType='darkBrown' />
+              <Button href='/about' text='More About Us' btnType='darkBrown' />
             </div>
           </div>
           <div className={styles.right}>

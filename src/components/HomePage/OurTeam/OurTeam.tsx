@@ -38,7 +38,7 @@ export default function OurTeam() {
                 We can’t wait to meet you and show you what we can do.
               </p>
               <div className={styles.btnContainer}>
-                <Button href='/' text='Learn more' btnType='tanBorder' />
+                <Button href='/about' text='Learn more' btnType='brown' />
               </div>
             </LayoutWrapper>
           </div>

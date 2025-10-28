@@ -13,9 +13,9 @@ export default function Locations() {
         <div className={styles.top}>
           <SectionHeading text='Locations' left right />
           <h2 className={styles.heading}>Where you can find us</h2>
-          <div className={styles.btnContainer}>
+          {/* <div className={styles.btnContainer}>
             <Button href='/' text='Book your appointment' btnType='tanBorder' />
-          </div>
+          </div> */}
         </div>
         <div className={styles.bottom}>
           <div className={styles.card}>
@@ -34,7 +34,11 @@ export default function Locations() {
               </p>
 
               <div className={styles.btnContainer}>
-                <Button href='/' text='Get Directions' btnType='tanBorder' />
+                <Button
+                  href='/contact'
+                  text='Get Directions'
+                  btnType='tanBorder'
+                />
               </div>
             </div>
           </div>
@@ -54,7 +58,11 @@ export default function Locations() {
               </p>
 
               <div className={styles.btnContainer}>
-                <Button href='/' text='Get Directions' btnType='tanBorder' />
+                <Button
+                  href='/contact'
+                  text='Get Directions'
+                  btnType='tanBorder'
+                />
               </div>
             </div>
           </div>
