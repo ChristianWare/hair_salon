@@ -60,7 +60,11 @@ export default function ServicesPreview() {
                   <h3 className={styles.title}>{item.title}</h3>
                   <p className={styles.desc}>{item.description}</p>
                   <div className={styles.btnContainer}>
-                    <Button href='/' text='Explore' btnType='tanBorder' />
+                    <Button
+                      href='/services'
+                      text='Explore'
+                      btnType='tanBorder'
+                    />
                   </div>
                 </div>
               </div>
@@ -68,7 +72,7 @@ export default function ServicesPreview() {
           </div>
         </div>
         <div className={styles.btnContainerii}>
-          <Button href='/' text='See all services' btnType='brown' />
+          <Button href='/services' text='See all services' btnType='brown' />
         </div>
       </LayoutWrapper>
       {/* <Stats /> */}

@@ -7,6 +7,12 @@ import FinalCTA from "@/components/shared/FinalCTA/FinalCTA";
 import Footerii from "@/components/shared/Footerii/Footerii";
 import InstaFeed from "@/components/shared/InstaFeed/InstaFeed";
 
+export const metadata = {
+  title: "About Us",
+  description:
+    "Learn about Velvet & Vine, our mission to simplify booking, and how we help businesses reduce no-shows and increase revenue with custom booking websites.",
+};
+
 export default function AboutPage() {
   return (
     <main>

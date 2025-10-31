@@ -12,8 +12,8 @@ export default function ServicePageIntro() {
         <div className={styles.imgOverlay}></div>
         <LayoutWrapper>
           <div className={styles.content}>
-            <h1 className={`${styles.heading} `}>
-              Our <br />  hair services
+            <h1 className={`${styles.heading}`}>
+              Our  services
             </h1>
             <p className={styles.copy}>
               Discover the perfect look for any occasion with our professional
@@ -22,7 +22,7 @@ export default function ServicePageIntro() {
             </p>
             <div className={styles.btnContainer}>
               <Button
-                href='/'
+                href='/book-appointment'
                 text='Book your appointment'
                 btnType='tanBorderii'
               />
