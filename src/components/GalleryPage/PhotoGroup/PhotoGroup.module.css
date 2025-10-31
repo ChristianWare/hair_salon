@@ -39,20 +39,6 @@
   grid-column: span 2;
 }
 
-@media screen and (max-width: 568px) {
-  .vStretch {
-    grid-row: span 1;
-  }
-
-  .hStretch {
-    grid-column: span 1;
-  }
-
-  .bigStretch {
-    grid-row: span 1;
-    grid-column: span 1;
-  }
-}
 
 .modalOverlay {
   position: fixed;
@@ -71,6 +57,7 @@
   grid-template-columns: auto 1fr auto;
   align-items: center;
   gap: 1rem;
+  position: relative;
 }
 
 .modalMain {
@@ -171,4 +158,24 @@
   width: 36px;
   height: 36px;
   display: block;
+}
+
+@media screen and (max-width: 568px) {
+  .vStretch {
+    grid-row: span 1;
+  }
+
+  .hStretch {
+    grid-column: span 1;
+  }
+
+  .bigStretch {
+    grid-row: span 1;
+    grid-column: span 1;
+  }
+
+  .navBtn {
+    position: absolute;
+    display: none;
+  }
 }
