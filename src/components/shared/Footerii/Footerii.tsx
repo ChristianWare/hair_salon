@@ -3,7 +3,6 @@ import Button from "../Button/Button";
 import Facebook from "../icons/Facebook/Facebook";
 import Instagram from "../icons/Instagram/Instagram";
 import LinkedIn from "../icons/LinkedIn/LinkedIn";
-import Luxury from "../icons/Luxury/Luxury";
 import Pinterest from "../icons/Pinterest/Pinterest";
 import Tiktok from "../icons/Tiktok/Tiktok";
 import Twitter from "../icons/Twitter/Twitter";
@@ -66,13 +65,50 @@ const dataii = [
   },
 ];
 
+const socialMediaData = [
+  {
+    id: 45,
+    icon: <Facebook />,
+    href: "https://www.facebook.com",
+  },
+  {
+    id: 46,
+    icon: <Twitter />,
+    href: "https://www.twitter.com",
+  },
+  {
+    id: 47,
+    icon: <Youtube />,
+    href: "https://www.youtube.com",
+  },
+  {
+    id: 48,
+    icon: <Pinterest />,
+    href: "https://www.pinterest.com",
+  },
+  {
+    id: 49,
+    icon: <Tiktok />,
+    href: "https://www.tiktok.com",
+  },
+  {
+    id: 50,
+    icon: <LinkedIn />,
+    href: "https://www.linkedin.com",
+  },
+  {
+    id: 51,
+    icon: <Instagram />,
+    href: "https://www.instagram.com",
+  },
+];
+
 export default function Footerii() {
   return (
     <footer className={styles.container}>
       <LayoutWrapper>
         <div className={styles.content}>
           <div className={styles.one}>
-            <Luxury className={styles.logoIcon} />
             <Logo />
             <p className={styles.copy}>
               We are committed to providing top-notch hair care services with a
@@ -88,27 +124,17 @@ export default function Footerii() {
             <br className={styles.br} />
             <SectionHeading text='Social Media' />
             <div className={styles.socialsContainer}>
-              <div className={styles.iconBox}>
-                <Facebook className={styles.icon} />
-              </div>
-              <div className={styles.iconBox}>
-                <Twitter className={styles.icon} />
-              </div>
-              <div className={styles.iconBox}>
-                <Youtube className={styles.icon} />
-              </div>
-              <div className={styles.iconBox}>
-                <Pinterest className={styles.icon} />
-              </div>
-              <div className={styles.iconBox}>
-                <Tiktok className={styles.icon} />
-              </div>
-              <div className={styles.iconBox}>
-                <LinkedIn className={styles.icon} />
-              </div>
-              <div className={styles.iconBox}>
-                <Instagram className={styles.icon} />
-              </div>
+              {socialMediaData.map((item) => (
+                <Link
+                  key={item.id}
+                  href={item.href}
+                  className={styles.iconBox}
+                  target='_blank'
+                  rel='noopener noreferrer'
+                >
+                  <div className={styles.icon}>{item.icon}</div>
+                </Link>
+              ))}
             </div>
           </div>
           <div className={styles.two}>
