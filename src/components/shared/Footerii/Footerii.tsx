@@ -48,21 +48,10 @@ const data = [
 ];
 
 const dataii = [
-  {
-    id: 7,
-    title: "Terms of Service",
-    href: "/",
-  },
-  {
-    id: 8,
-    title: "Accessibility",
-    href: "/accessibility",
-  },
-  {
-    id: 9,
-    title: "Careers",
-    href: "/careers",
-  },
+  { id: 7, title: "Privacy Policy", href: "/privacy" },
+  { id: 8, title: "Terms & Conditions", href: "/terms" },
+  { id: 9, title: "Accessibility Policy", href: "/accessibility" },
+  { id: 10, title: "California Disclosures", href: "/california" },
 ];
 
 const socialMediaData = [
