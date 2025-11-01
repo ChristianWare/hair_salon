@@ -1,0 +1,251 @@
+.bottom {
+  margin-top: 5rem;
+}
+
+.heading {
+  font-family: var(--SFUIMedium);
+  font-size: 2rem;
+  text-transform: none;
+  margin-bottom: 2rem;
+}
+
+.kpiCards,
+.quickLinks {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 1rem;
+  margin-top: 2rem;
+  margin-bottom: 5rem;
+}
+
+.mt12 {
+  margin-top: 12px;
+}
+.mb24 {
+  margin-bottom: 24px;
+}
+.center {
+  text-align: center;
+}
+
+.tableScroll {
+  overflow-x: auto;
+  margin-bottom: 24px;
+  -webkit-overflow-scrolling: touch;
+  position: relative;
+}
+
+.tableWrap {
+  /* border: 1px solid #ddd; */
+  border-radius: 10px;
+  overflow: hidden;
+  /* background: #fff; */
+  /* box-shadow: 0 1px 0 rgba(0, 0, 0, 0.02); */
+}
+
+.table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  table-layout: fixed;
+  /* background-color: var(--darkTan); */
+  /* padding: 0.2rem; */
+}
+
+.th,
+.td {
+  padding: 8px;
+  vertical-align: middle;
+  background: var(--tan);
+  border: 1px solid var(--brown);
+  border-right: none;
+  border-bottom: none;
+  font-size: 14px;
+  line-height: 1.35;
+  word-wrap: break-word;
+  /* border-radius: 10px; */
+}
+
+.tablethead .th,
+.table thead .th,
+.table thead th {
+  background: var(--tan);
+  font-weight: 600;
+  text-align: left;
+  padding: 12px 10px;
+  white-space: nowrap;
+}
+
+.tablethead .th:last-child {
+  border-right: 1px solid var(--brown);
+  border-top-right-radius: 10px;
+}
+
+.tablethead .th:first-child {
+  border-left: 1px solid var(--brown);
+  border-top-left-radius: 10px;
+}
+
+.center {
+  border: 1px solid var(--brown);
+  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+
+.table thead .th:first-child,
+.table thead th:first-child {
+  border-left: 1px solid var(--brown);
+  border-top-left-radius: 10px;
+}
+
+.table thead .th:last-child,
+.table thead th:last-child {
+  border-right: 1px solid var(--brown);
+  border-top-right-radius: 10px;
+}
+
+.badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 999px;
+  color: #fff;
+  font-size: 12px;
+  line-height: 1.5;
+  width: fit-content;
+}
+.badge_confirmed {
+  background: #0a7;
+}
+.badge_pending {
+  background: #d88a00;
+}
+.badge_completed {
+  background: #0366d6;
+}
+.badge_canceled {
+  background: #999;
+}
+.badge_noshow {
+  background: #b33636;
+}
+
+.btnContainer {
+  display: grid;
+  width: 100%;
+}
+
+@media screen and (max-width: 1268px) {
+  .kpiCards,
+  .quickLinks {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media screen and (max-width: 1268px) {
+  .tableScroll {
+    overflow: visible;
+    /* margin-left: -8px; */
+    /* margin-right: -8px; */
+  }
+
+  /* let cards breathe rather than one big rounded box */
+  .tableWrap {
+    border: 0;
+    border-radius: 0;
+    overflow: visible;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .table thead {
+    display: none;
+  }
+
+  .table,
+  .table tbody,
+  .table tr,
+  .table td {
+    display: block;
+    width: 100%;
+  }
+
+  .table tbody tr {
+    background: var(--tan);
+    border: 1px solid var(--darkTaniii);
+    border-radius: 12px;
+    padding: 10px 12px;
+  }
+
+  /* remove cell borders inside cards */
+  .table tbody tr .td,
+  .table tbody tr td {
+    border: 0;
+    background: transparent;
+    padding: 8px 0;
+    display: grid;
+    grid-template-columns: 128px 1fr; /* label | value */
+    gap: 10px;
+    align-items: baseline;
+    font-size: 14px;
+    line-height: 1.35;
+  }
+
+  /* show the label from the data-label attr (provided by TD helper) */
+  .table tbody tr .td::before,
+  .table tbody tr td::before {
+    content: attr(data-label);
+    color: #6b7280;
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 0.02em;
+    text-transform: none;
+  }
+
+  /* first cell: a bit more top breathing room */
+  .table tbody tr .td:first-child,
+  .table tbody tr td:first-child {
+    padding-top: 2px;
+  }
+
+  /* actions row at the bottom with a separator */
+  .table tbody tr > .td:last-child,
+  .table tbody tr > td:last-child {
+    margin-top: 8px;
+    padding-top: 12px;
+    border-top: 1px solid var(--tanii);
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    grid-template-columns: 1fr; /* actions don’t need a label column */
+  }
+  .table tbody tr > .td:last-child::before,
+  .table tbody tr > td:last-child::before {
+    content: "Actions";
+    flex: 0 0 auto;
+    font-weight: 700;
+    color: #6b7280;
+    margin-right: 8px;
+  }
+
+  /* small text inside cells */
+  .table small {
+    font-size: 12px;
+    color: #666;
+  }
+}
+
+/* very small phones: narrower label column */
+@media (max-width: 400px) {
+  .table tbody tr .td,
+  .table tbody tr td {
+    grid-template-columns: 108px 1fr;
+  }
+}
+
+/* Cards grid on very small screens */
+@media screen and (max-width: 768px) {
+  .kpiCards,
+  .quickLinks {
+    grid-template-columns: 1fr;
+  }
+}

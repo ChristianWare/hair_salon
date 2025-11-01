@@ -1,0 +1,214 @@
+// prisma/schema.prisma
+
+datasource bd {
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
+}
+
+generator client {
+    provider = "prisma-client-js"
+}
+
+/**
+ * ─────────────────────────────
+ * Core auth / user models
+ * ──────────────────────────────
+ */
+model User {
+    id            String    @id @default(cuid())
+    name          String?
+    email         String    @unique
+    password      String?
+    emailVerified DateTime?
+    image         String?
+    accounts      Account[]
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    role    UserRole  @default(USER)
+    Booking Booking[]
+    Session Session[]
+
+    // NEW: persist Stripe customer id for reuse
+    stripeCustomerId String? @unique
+
+    groomer Groomer? @relation("UserGroomer")
+}
+
+model Account {
+    id     String @id @default(cuid())
+    userId String
+    user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+    type              String
+    provider          String
+    providerAccountId String
+
+    refresh_token String?
+    access_token  String?
+    expires_at    Int?
+    token_type    String?
+    scope         String?
+    id_token      String?
+    session_state String?
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    @@unique([provider, providerAccountId])
+}
+
+model EmailVerificationToken {
+    id      String   @id @default(cuid())
+    email   String
+    token   String   @unique
+    expires DateTime
+
+    @@unique([email, token])
+}
+
+model PasswordResetToken {
+    id      String   @id @default(cuid())
+    email   String
+    token   String   @unique
+    expires DateTime
+
+    @@unique([email, token])
+}
+
+model Session {
+    id           String   @id @default(cuid())
+    sessionToken String   @unique
+    userId       String
+    expires      DateTime
+
+    user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+/**
+ * ─────────────────────────────
+ * Business models
+ * ──────────────────────────────
+ */
+model Service {
+    id          String  @id @default(cuid())
+    name        String
+    durationMin Int
+    priceCents  Int
+    active      Boolean @default(true)
+
+    // NEW (optional): server-side pricing knobs
+    depositPct Float? // e.g. 0.20 -> 20% deposit
+    taxRate    Float? // e.g. 0.086 -> 8.6% tax
+
+    bookings Booking[]
+}
+
+model Groomer {
+    // IMPORTANT: map Prisma `id` to existing DB column `userId`
+    // If your real column name is different, change "userId" below.
+    id String @id @map("userId")
+
+    // Shared PK one-to-one with User
+    user User @relation(name: "UserGroomer", fields: [id], references: [id], onDelete: Cascade)
+
+    bio          String?
+    specialties  String[]
+    workingHours Json
+    active       Boolean  @default(true)
+
+    // Settings
+    autoConfirm       Boolean @default(true) // instant confirm vs pending
+    minLeadMinutes    Int     @default(60) // minimum lead time
+    bufferMin         Int     @default(0) // per-appointment buffer
+    emailOptIn        Boolean @default(true)
+    smsOptIn          Boolean @default(false)
+    notificationPhone String?
+
+    breaks   Break[]
+    bookings Booking[]
+
+    @@map("Groomer") // (optional) explicit table map; remove if default
+}
+
+model Break {
+    id        String   @id @default(cuid())
+    groomerId String
+    groomer   Groomer  @relation(fields: [groomerId], references: [id], onDelete: Cascade)
+    date      DateTime
+
+    @@unique([groomerId, date])
+}
+
+model Booking {
+    id String @id @default(cuid())
+
+    userId String
+    user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+    groomerId String
+    groomer   Groomer @relation(fields: [groomerId], references: [id])
+
+    serviceId String
+    service   Service @relation(fields: [serviceId], references: [id])
+
+    start DateTime
+    end   DateTime
+
+    depositCents Int
+    tipCents     Int @default(0)
+
+    amountDueCents Int?
+    taxCents       Int?
+
+    paymentIntentId String? @unique
+    receiptUrl      String?
+
+    expiresAt DateTime?
+
+    notes   String?
+    petJson Json?
+
+    status BookingStatus @default(PENDING)
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+    // Optional: prevent exact same-start double-bookings
+    // @@unique([groomerId, start])
+
+    @@index([groomerId, start, end])
+    @@index([status])
+}
+
+model Config {
+    key   String @id
+    value String
+}
+
+model NotificationTemplate {
+    id      String @id @default(cuid())
+    event   String @unique
+    subject String
+    body    String
+}
+
+model BlackoutDate {
+    id   String   @id @default(cuid())
+    date DateTime
+}
+
+enum UserRole {
+    ADMIN
+    USER
+}
+
+enum BookingStatus {
+    DRAFT // optional; you can skip this if you prefer PENDING_PAYMENT only
+    PENDING_PAYMENT // user is at checkout; slot is held
+    PENDING
+    CONFIRMED
+    COMPLETED
+    CANCELED
+    NO_SHOW
+}
