@@ -14,7 +14,7 @@ export default function LoginPageIntro() {
           navColor='var(--black)'
           scrolledNavColor='var(--black)'
           scrolledBg='var(--white)'
-        />{" "}
+        />
         <div className={styles.content}>
           <div className={styles.bottomCornerContainer}></div>
           <div className={styles.top}>

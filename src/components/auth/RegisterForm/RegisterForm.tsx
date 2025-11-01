@@ -4,13 +4,13 @@ import styles from "./RegisterForm.module.css";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import FormField from "../FormField/FormField";
-import FalseButton from "@/components/shared/FalseButton/FalseButton";
 import GoogleButton from "../GoogleButton/GoogleButton";
 import Link from "next/link";
 import { RegisterSchema, RegisterSchemaType } from "@/schemas/RegisterSchema";
 import { signUp } from "../../../../actions/auth/register";
 import { useTransition, useState } from "react";
 import Alert from "@/components/shared/Alert/Alert";
+import Button from "@/components/shared/Button/Button";
 
 export default function RegisterForm() {
   const [isPending, startTransition] = useTransition();
@@ -77,10 +77,10 @@ export default function RegisterForm() {
         {error && <Alert message={error} error />}
         {success && <Alert message={success} success />}
         <div className={styles.btnContainer}>
-          <FalseButton
+          <Button
             text={isPending ? "Submitting..." : "Register"}
+            btnType='gold'
             type='submit'
-            btnType='orange'
             disabled={isPending}
           />
         </div>

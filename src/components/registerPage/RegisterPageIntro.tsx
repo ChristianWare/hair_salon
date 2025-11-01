@@ -10,16 +10,14 @@ export default function RegisterPageIntro() {
   return (
     <section className={styles.container}>
       <LayoutWrapper>
-        <Nav />
+        <Nav
+          navColor='var(--black)'
+          scrolledNavColor='var(--black)'
+          scrolledBg='var(--white)'
+        />{" "}
         <div className={styles.content}>
           <div className={styles.cornerContainer}></div>
-          <div className={styles.bottomCornerContainer}>
-            <div className={styles.bottomCorner}>
-              <p className={styles.copy}>
-                Register to book your next appointment with us!
-              </p>
-            </div>
-          </div>
+
           <div className={styles.top}>
             <div className={styles.left}>
               <div className={styles.formContainer}>
@@ -36,10 +34,16 @@ export default function RegisterPageIntro() {
                   fill
                 />
                 <div className={styles.imgOverlay} />
-                <h1 className={styles.heading}>
-                  Create <br />
-                  An Account
-                </h1>
+
+                <div className={styles.textContainer}>
+                  <h1 className={styles.heading}>
+                    Create 
+                    an account
+                  </h1>
+                  <p className={styles.copy}>
+                    Register to book your next appointment with us!
+                  </p>
+                </div>
               </div>
             </div>
           </div>
