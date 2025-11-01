@@ -3,13 +3,6 @@
   padding: 10rem 0rem;
 }
 
-.content {
-  background-color: var(--darkTan);
-  margin: 1rem;
-  border-radius: 15px;
-  position: relative;
-}
-
 .top {
   display: grid;
   grid-template-columns: 2fr 4fr;
@@ -118,9 +111,6 @@
   .formContainer {
     width: 100%;
   }
-
-
-
 }
 
 @media screen and (max-width: 568px) {
