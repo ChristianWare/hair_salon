@@ -91,10 +91,9 @@
 }
 
 .dowCell {
-  color: var(--white);
+  color: var(--tan);
+  background-color: var(--darkBrown);
   padding: 8px;
-  border-bottom: 1px solid #f3f3f3;
-  background: var(--lightBlue);
   text-align: center;
   font-family: var(--interTight);
   font-weight: 500;

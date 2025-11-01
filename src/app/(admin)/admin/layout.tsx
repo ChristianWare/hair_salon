@@ -3,6 +3,7 @@ import styles from "./Layout.module.css";
 import LayoutWrapper from "@/components/shared/LayoutWrapper";
 import Nav from "@/components/shared/Nav/Nav";
 import AdminSideNav from "@/components/admin/AdminSideNav/AdminSideNav";
+import Footerii from "@/components/shared/Footerii/Footerii";
 
 export default async function AdminLayout({
   children,
@@ -19,7 +20,7 @@ export default async function AdminLayout({
             navColor='var(--black)'
             scrolledNavColor='var(--black)'
             scrolledBg='var(--white)'
-          />{" "}
+          />
           <div className={styles.content}>
             <div className={styles.left}>
               <div className={styles.AdminSideNavContainer}>
@@ -30,6 +31,7 @@ export default async function AdminLayout({
           </div>
         </LayoutWrapper>
       </section>
+      <Footerii />
     </main>
   );
 }

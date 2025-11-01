@@ -2,16 +2,15 @@
 
 import styles from "./UserSideNav.module.css";
 import Link from "next/link";
-import Calendar from "@/components/icons/Calendar/Calendar";
-import House from "@/components/icons/House/House";
-import Cog from "@/components/icons/Cog/Cog";
-import Users from "@/components/icons/Users/Users";
-import Report from "@/components/icons/Report/Report";
-import Listing from "@/components/icons/Listing/Listing";
+import Calendar from "@/components/shared/icons/Calendar/Calendar";
+import House from "@/components/shared/icons/House/House";
+import Cog from "@/components/shared/icons/Cog/Cog";
+import Users from "@/components/shared/icons/Users/Users";
+import Report from "@/components/shared/icons/Report/Report";
+import Listing from "@/components/shared/icons/Listing/Listing";
 import UserButton from "@/components/dashboard/UserButton/UserButton";
 import Button from "@/components/shared/Button/Button";
 import { useState } from "react";
-import FalseButton from "@/components/shared/FalseButton/FalseButton";
 import { useSession } from "next-auth/react";
 
 const NAV_ITEMS = [
@@ -30,10 +29,6 @@ const NAV_ITEMS = [
 export default function UserSideNav() {
   const [isOpen, setIsOpen] = useState(false);
 
-  const openMenu = () => {
-    setIsOpen((o) => !o);
-  };
-
   const { data: session } = useSession();
   const isAdmin = session?.user?.role === "ADMIN";
   const isGroomer = !!session?.user?.isGroomer;
@@ -41,40 +36,11 @@ export default function UserSideNav() {
   return (
     <aside className={styles.container}>
       <nav className={styles.nav}>
-        <div className={styles.hamburgerContainer}>
-          <button
-            aria-label={isOpen ? "Close menu" : "Open menu"}
-            aria-expanded={isOpen}
-            className={
-              isOpen ? `${styles.hamburger} ${styles.active}` : styles.hamburger
-            }
-            onClick={openMenu}
-            type='button'
-          >
-            <span className={styles.whiteBar} />
-            <span className={styles.whiteBar} />
-            <span className={styles.whiteBar} />
-          </button>
-        </div>
-
-        {/* overlay */}
-        {isOpen && (
-          <div className={styles.overlay} onClick={() => setIsOpen(false)} />
-        )}
-
         <ul
           className={
             isOpen ? `${styles.navLinks} ${styles.open}` : styles.navLinks
           }
         >
-          <div className={styles.closeWrapper}>
-            <FalseButton
-              text='Close'
-              btnType='blue'
-              onClick={() => setIsOpen(false)}
-            />
-          </div>
-
           <div className={styles.linksWrapper}>
             {NAV_ITEMS.map(({ title, href, icon }) => (
               <li key={title}>
@@ -92,13 +58,9 @@ export default function UserSideNav() {
 
           <div className={styles.btnContainerii}>
             <UserButton />
-            <Button btnType='blue' text='Go Home' href='/' />
+            <Button btnType='brownBorder' text='Go Home' href='/' />
             {isAdmin && (
-              <Button
-                btnType='blueOutline'
-                text='Admin Dashboard'
-                href='/admin'
-              />
+              <Button btnType='brown' text='Admin Dashboard' href='/admin' />
             )}
             {isGroomer && (
               <Button
@@ -112,17 +74,17 @@ export default function UserSideNav() {
 
         <div className={styles.btnContainer}>
           <UserButton />
-          <Button btnType='dashBoardBrown' text='Go Home' href='/' />
+            <Button btnType='tan' text='Go Home' href='/' />
           {isAdmin && (
             <Button
-              btnType='dashBoardBrownOutline'
+              btnType='brown'
               text='Admin Dashboard'
               href='/admin'
             />
           )}
           {isGroomer && (
             <Button
-              btnType='dashBoardBrownOutline'
+              btnType='darkBrown'
               text='Groomer Dashboard'
               href='/groomer'
             />

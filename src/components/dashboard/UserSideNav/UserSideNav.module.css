@@ -1,9 +1,9 @@
 .container {
   display: flex;
   flex-direction: column;
+  border-radius: 10px;
   background-color: var(--white);
-  border-radius: 15px;
-  border: 1px solid var(--lightgray);
+  border: 1px solid var(--brown);
 }
 
 .nav {
@@ -18,38 +18,6 @@
 
 .hamburgerContainer {
   display: none;
-}
-
-.hamburger {
-  display: none;
-  background: none;
-  border: none;
-  padding: 0;
-  cursor: pointer;
-  position: relative;
-  z-index: 999;
-}
-
-.whiteBar {
-  display: block;
-  width: 55px;
-  height: 3px;
-  margin: 5px auto;
-  border-radius: 15px;
-  background-color: var(--blue);
-  transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
-}
-
-.hamburger.active .whiteBar:nth-child(1) {
-  transform: translateY(8px) rotate(45deg);
-}
-
-.hamburger.active .whiteBar:nth-child(2) {
-  opacity: 0;
-}
-
-.hamburger.active .whiteBar:nth-child(3) {
-  transform: translateY(-8px) rotate(-45deg);
 }
 
 .navLinks {
@@ -85,16 +53,15 @@
   font-family: var(--SFUIMedium);
   color: var(--black);
   text-decoration: none;
-  background-color: var(--gray);
+  background-color: var(--tan);
   border-radius: 5px;
   width: 100%;
   padding: 1rem 2rem;
   transition: all 0.2s ease-in;
-  white-space: nowrap;
 }
 
 .navLink:hover {
-  background-color: var(--lightgray);
+  background-color: var(--brownii);
 }
 
 .btnContainer,
@@ -109,20 +76,6 @@
 .btnContainerii {
   display: none;
 }
-
-.overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.45);
-  z-index: 1500;
-}
-
-/* @media screen and (max-width: 1068px) {
-  .linksWrapper {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-  }
-} */
 
 @media screen and (max-width: 568px) {
   .nav {

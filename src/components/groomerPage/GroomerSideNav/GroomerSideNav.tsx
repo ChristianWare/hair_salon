@@ -1,12 +1,12 @@
 "use client";
 
-import styles from "./AdminSideNav.module.css";
+import styles from "./GroomerSideNav.module.css";
 import Link from "next/link";
 import Calendar from "@/components/shared/icons/Calendar/Calendar";
 import House from "@/components/shared/icons/House/House";
 import Employee from "@/components/shared/icons/Employee/Employee";
 import Cog from "@/components/shared/icons/Cog/Cog";
-import Users from "@/components/shared/icons/Users/Users";
+// import Users from "@/components/icons/Users/Users";
 import Report from "@/components/shared/icons/Report/Report";
 import Listing from "@/components/shared/icons/Listing/Listing";
 import UserButton from "@/components/dashboard/UserButton/UserButton";
@@ -15,26 +15,51 @@ import { useState } from "react";
 import FalseButton from "@/components/shared/FalseButton/FalseButton";
 import { useSession } from "next-auth/react";
 
-const NAV_ITEMS = [
-  { title: "Dashboard", href: "/admin", icon: <House /> },
-  { title: "Bookings", href: "/admin/bookings", icon: <Calendar /> },
-  { title: "Groomers", href: "/admin/groomers", icon: <Employee /> },
-  { title: "Services", href: "/admin/services", icon: <Listing /> },
-  { title: "Users", href: "/admin/customers", icon: <Users /> },
-  { title: "Reports", href: "/admin/reports", icon: <Report /> },
-  { title: "Settings", href: "/admin/settings", icon: <Cog /> },
-];
 
-export default function AdminSideNav() {
+const NAV_ITEMS = [
+  { title: "Dashboard", href: "/groomer", icon: <House /> },
+  { title: "My Bookings", href: "/groomer/my-bookings", icon: <Calendar /> },
+  { title: "Availability", href: "/groomer/availability", icon: <Listing /> },
+  { title: "Profile", href: "/groomer/profile", icon: <Employee /> },
+  { title: "Earnings", href: "/groomer/earnings", icon: <Report /> },
+  { title: "Settings", href: "/groomer/settings", icon: <Cog /> },
+];
+export default function GroomerSideNav() {
   const [isOpen, setIsOpen] = useState(false);
 
+  const openMenu = () => {
+    setIsOpen((o) => !o);
+  };
+
+
   const { data: session } = useSession();
-  // const isAdmin = session?.user?.role === "ADMIN";
-  const isGroomer = !!session?.user?.isGroomer;
+  const isAdmin = session?.user?.role === "ADMIN";
+
 
   return (
     <aside className={styles.container}>
       <nav className={styles.nav}>
+        <div className={styles.hamburgerContainer}>
+          <button
+            aria-label={isOpen ? "Close menu" : "Open menu"}
+            aria-expanded={isOpen}
+            className={
+              isOpen ? `${styles.hamburger} ${styles.active}` : styles.hamburger
+            }
+            onClick={openMenu}
+            type='button'
+          >
+            <span className={styles.whiteBar} />
+            <span className={styles.whiteBar} />
+            <span className={styles.whiteBar} />
+          </button>
+        </div>
+
+        {/* overlay */}
+        {isOpen && (
+          <div className={styles.overlay} onClick={() => setIsOpen(false)} />
+        )}
+
         <ul
           className={
             isOpen ? `${styles.navLinks} ${styles.open}` : styles.navLinks
@@ -65,33 +90,26 @@ export default function AdminSideNav() {
 
           <div className={styles.btnContainerii}>
             <UserButton />
-            <Button btnType='brownBorder' text='Go Home' href='/' />
+            <Button btnType='blue' text='Go Home' href='/' />
             <Button
-              btnType='brownBorder'
+              btnType='blueOutline'
               text='User Dashboard'
               href='/dashboard'
             />
-            {isGroomer && (
-              <Button
-                btnType='brownBorder'
-                text='Groomer Dashboard'
-                href='/groomer'
-              />
-            )}
           </div>
         </ul>
 
         <div className={styles.btnContainer}>
           <UserButton />
-          <Button btnType='tan' text='Go Home' href='/' />
-          <Button btnType='brown' text='User Dashboard' href='/dashboard' />
-          {isGroomer && (
+          <Button btnType='blue' text='Go Home' href='/' />
+          {isAdmin && (
             <Button
-              btnType='darkBrown'
-              text='Groomer Dashboard'
-              href='/groomer'
+              btnType='blueOutline'
+              text='Admin Dashboard'
+              href='/admin'
             />
           )}
+          
         </div>
       </nav>
     </aside>

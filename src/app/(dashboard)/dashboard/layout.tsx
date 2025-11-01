@@ -4,6 +4,7 @@ import styles from "./UserLayout.module.css";
 import LayoutWrapper from "@/components/shared/LayoutWrapper";
 import Nav from "@/components/shared/Nav/Nav";
 import UserSideNav from "@/components/dashboard/UserSideNav/UserSideNav";
+import Footerii from "@/components/shared/Footerii/Footerii";
 
 export default async function UserLayout({
   children,
@@ -16,7 +17,11 @@ export default async function UserLayout({
     <main>
       <section className={styles.container}>
         <LayoutWrapper>
-          <Nav />
+          <Nav
+            navColor='var(--black)'
+            scrolledNavColor='var(--black)'
+            scrolledBg='var(--white)'
+          />{" "}
           <div className={styles.content}>
             <div className={styles.left}>
               <div className={styles.UserSideNavContainer}>
@@ -27,6 +32,7 @@ export default async function UserLayout({
           </div>
         </LayoutWrapper>
       </section>
+        <Footerii />
     </main>
   );
 }

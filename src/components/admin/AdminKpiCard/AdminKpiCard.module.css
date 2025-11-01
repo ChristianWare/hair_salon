@@ -1,6 +1,7 @@
 .container {
-  border: 1px solid var(--darkTan);
+  border: 1px solid var(--brown);
   border-radius: 10px;
+  background-color: var(--white);
   padding: 1rem;
   display: flex;
   flex-direction: column;
