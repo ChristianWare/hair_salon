@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";
-
 import localFont from "next/font/local";
+import { auth } from "../../auth";
+import { SessionProvider } from "next-auth/react";
+import { Toaster } from "react-hot-toast";
 
 const poppins = Poppins({
   variable: "--poppins",
@@ -46,19 +48,28 @@ export const metadata: Metadata = {
   },
 };
 
-
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const session = await auth();
+
   return (
-    <html lang='en'>
-      <body
-        className={`${poppins.variable} ${ButlerRegular.variable} ${ButlerUltraLight.variable} ${NyghtSerifLight.variable} ${Voyage.variable}`}
-      >
-        {children}
-      </body>
-    </html>
+    <SessionProvider session={session}>
+      <html lang='en'>
+        <body
+          className={`${poppins.variable} ${ButlerRegular.variable} ${ButlerUltraLight.variable} ${NyghtSerifLight.variable} ${Voyage.variable}`}
+        >
+          <Toaster
+            position='top-right'
+            toastOptions={{
+              className: "toastFont",
+            }}
+          />
+          {children}
+        </body>
+      </html>
+    </SessionProvider>
   );
 }

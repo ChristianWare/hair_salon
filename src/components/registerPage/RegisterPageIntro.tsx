@@ -14,7 +14,7 @@ export default function RegisterPageIntro() {
           navColor='var(--black)'
           scrolledNavColor='var(--black)'
           scrolledBg='var(--white)'
-        />{" "}
+        />
         <div className={styles.content}>
           <div className={styles.cornerContainer}></div>
 

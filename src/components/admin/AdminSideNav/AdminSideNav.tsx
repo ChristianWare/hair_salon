@@ -2,13 +2,13 @@
 
 import styles from "./AdminSideNav.module.css";
 import Link from "next/link";
-import Calendar from "@/components/icons/Calendar/Calendar";
-import House from "@/components/icons/House/House";
-import Employee from "@/components/icons/Employee/Employee";
-import Cog from "@/components/icons/Cog/Cog";
-import Users from "@/components/icons/Users/Users";
-import Report from "@/components/icons/Report/Report";
-import Listing from "@/components/icons/Listing/Listing";
+import Calendar from "@/components/shared/icons/Calendar/Calendar";
+import House from "@/components/shared/icons/House/House"; 
+import Employee from "@/components/shared/icons/Employee/Employee";
+import Cog from "@/components/shared/icons/Cog/Cog";
+import Users from "@/components/shared/icons/Users/Users";
+import Report from "@/components/shared/icons/Report/Report";
+import Listing from "@/components/shared/icons/Listing/Listing";
 import UserButton from "@/components/dashboard/UserButton/UserButton";
 import Button from "@/components/shared/Button/Button";
 import { useState } from "react";

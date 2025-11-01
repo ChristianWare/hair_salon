@@ -15,7 +15,11 @@ export default async function AdminLayout({
     <main>
       <section className={styles.container}>
         <LayoutWrapper>
-          <Nav />
+          <Nav
+            navColor='var(--black)'
+            scrolledNavColor='var(--black)'
+            scrolledBg='var(--white)'
+          />{" "}
           <div className={styles.content}>
             <div className={styles.left}>
               <div className={styles.AdminSideNavContainer}>
