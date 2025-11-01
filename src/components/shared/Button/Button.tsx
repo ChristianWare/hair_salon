@@ -1,14 +1,15 @@
+// Button.tsx
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import React, { ReactNode, useCallback, useMemo, useState } from "react";
-import Link from "next/link";
 import styles from "./Button.module.css";
 import {
   useAnimate,
   AnimationOptions,
   ValueAnimationTransition,
 } from "motion/react";
+import React, { ReactNode, useCallback, useMemo, useState } from "react";
+import Link from "next/link";
 
 const splitIntoCharacters = (text: string): string[] => {
   if (typeof Intl !== "undefined" && "Segmenter" in Intl) {
@@ -21,12 +22,11 @@ const splitIntoCharacters = (text: string): string[] => {
 const extractTextFromChildren = (children: React.ReactNode): string => {
   if (typeof children === "string") return children;
   if (React.isValidElement(children)) {
-    const props = (children as React.ReactElement).props;
-    const childText = (props as any).children as React.ReactNode;
+    const props = (children as React.ReactElement).props as any;
+    const childText = props.children as React.ReactNode;
     if (typeof childText === "string") return childText;
-    if (React.isValidElement(childText)) {
+    if (React.isValidElement(childText))
       return extractTextFromChildren(childText);
-    }
   }
   return "";
 };
@@ -48,6 +48,8 @@ interface Props {
     e: React.MouseEvent<HTMLButtonElement | HTMLAnchorElement>
   ) => void;
   type?: "button" | "submit" | "reset";
+  leftIcon?: ReactNode;
+  rightIcon?: ReactNode;
 }
 
 const staggerDuration = 0.015;
@@ -137,6 +139,8 @@ export default function Button({
   children,
   onClick,
   type = "button",
+  leftIcon,
+  rightIcon,
 }: Props) {
   const content = text || children;
   const [isAnimating, setIsAnimating] = useState(false);
@@ -183,9 +187,23 @@ export default function Button({
     setIsAnimating(false);
   }, [animate, getStaggerDelay, isAnimating, isHovering, scope]);
 
-  const handleHoverEnd = useCallback(() => {
-    setIsHovering(false);
-  }, []);
+  const handleHoverEnd = useCallback(() => setIsHovering(false), []);
+
+  const inner = (
+    <>
+      {leftIcon && (
+        <span className={styles.iconBox} aria-hidden='true'>
+          {leftIcon}
+        </span>
+      )}
+      <ButtonContent3D content={content} />
+      {rightIcon && (
+        <span className={styles.iconBox} aria-hidden='true'>
+          {rightIcon}
+        </span>
+      )}
+    </>
+  );
 
   if (href) {
     return (
@@ -199,7 +217,7 @@ export default function Button({
         onMouseLeave={handleHoverEnd}
         className={`${styles.btn} ${styles[btnType]}`}
       >
-        <ButtonContent3D content={content} />
+        {inner}
       </Link>
     );
   }
@@ -214,7 +232,7 @@ export default function Button({
       onMouseEnter={handleHoverStart}
       onMouseLeave={handleHoverEnd}
     >
-      <ButtonContent3D content={content} />
+      {inner}
     </button>
   );
 }

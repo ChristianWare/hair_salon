@@ -1,10 +1,9 @@
+// GoogleButton.tsx
 import styles from "./GoogleButton.module.css";
 import GoogleIcon from "@/components/shared/icons/GoogleIcon/GoogleIcon";
-// import { signIn } from "next-auth/react";
-// import { LOGIN_REDIRECT } from "../../../../routes";
 import { useActionState } from "react";
 import { googleAuthenticate } from "../../../../actions/auth/google-login";
-
+import Button from "@/components/shared/Button/Button";
 
 interface Props {
   title: string;
@@ -16,14 +15,15 @@ export default function GoogleButton({ title }: Props) {
     undefined
   );
 
-
   return (
     <form action={dispatchGoogle} className={styles.form}>
-      <button type='submit' className={styles.googleBtn}>
-        <GoogleIcon className={styles.google} />
-        <span className={styles.googleBtnText}>Sign {title} with Google</span>
-      </button>
-      <p>{errorMsgGoogle}</p>
+      <Button
+        type='submit'
+        btnType='goldBorder'
+        text={`Sign ${title} with Google`}
+        leftIcon={<GoogleIcon className={styles.google} />}
+      />
+      {errorMsgGoogle && <p className={styles.error}>{errorMsgGoogle}</p>}
     </form>
   );
 }

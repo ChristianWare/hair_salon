@@ -15,6 +15,7 @@ import Alert from "@/components/shared/Alert/Alert";
 import { useRouter, useSearchParams } from "next/navigation";
 import { LOGIN_REDIRECT } from "../../../../routes";
 import { signIn, getSession } from "next-auth/react";
+import Button from "@/components/shared/Button/Button";
 
 export default function LoginForm() {
   const {
@@ -94,10 +95,16 @@ export default function LoginForm() {
         {success && <Alert message={success} success />}
 
         <div className={styles.btnContainer}>
-          <FalseButton
+          {/* <FalseButton
             text={isPending ? "Submitting..." : "Sign In"}
             type='submit'
             btnType='orange'
+            disabled={isPending}
+          /> */}
+          <Button
+            type='submit'
+            btnType='gold'
+            text={isPending ? "Submitting..." : "Sign In"}
             disabled={isPending}
           />
         </div>

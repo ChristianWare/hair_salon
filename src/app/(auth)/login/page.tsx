@@ -1,10 +1,12 @@
 import { auth } from "../../../../auth";
 import { redirect } from "next/navigation";
 import LoginPageIntro from "@/components/loginPage/LoginPageIntro/LoginPageIntro";
+import Footerii from "@/components/shared/Footerii/Footerii";
+import FinalCTA from "@/components/shared/FinalCTA/FinalCTA";
 
 export default async function LoginPage() {
   const session = await auth();
-  
+
   if (session) {
     const isAdmin = session.user.role === "ADMIN";
     const isGroomer = !!session.user.isGroomer;
@@ -14,6 +16,8 @@ export default async function LoginPage() {
   return (
     <main>
       <LoginPageIntro />
+      <FinalCTA />
+      <Footerii />
     </main>
   );
 }

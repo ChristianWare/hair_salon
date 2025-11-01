@@ -45,6 +45,16 @@ const data = [
     title: "Book Appointment",
     href: "/book-appointment",
   },
+  {
+    id: 7,
+    title: "Login",
+    href: "/login",
+  },
+  {
+    id: 8,
+    title: "Register",
+    href: "/register",
+  },
 ];
 
 const dataii = [
