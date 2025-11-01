@@ -14,7 +14,6 @@ export default function Quote() {
           alt='Hero Image'
           fill
           className={styles.img}
-          quality={100}
         />
         <div className={styles.content}>
           <blockquote className={styles.quote}>

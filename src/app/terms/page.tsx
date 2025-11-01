@@ -23,7 +23,6 @@ const TermsPage = () => {
           className={styles.img2}
           sizes='100vw'
           priority
-          quality={100}
         />
         <Nav />
         <LayoutWrapper>

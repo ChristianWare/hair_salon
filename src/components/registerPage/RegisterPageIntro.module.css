@@ -1,0 +1,265 @@
+.container {
+  background-color: var(--tan);
+  padding-top: 6rem;
+}
+
+.content {
+  background-color: var(--darkTan);
+  margin: 1rem;
+  border-radius: 15px;
+  padding: 2rem;
+  position: relative;
+}
+
+.cornerContainer {
+  position: absolute;
+  top: 0px;
+  left: -1px;
+  width: 100%;
+  z-index: 1;
+  pointer-events: auto;
+}
+
+.bottomCornerContainer {
+  position: absolute;
+  bottom: -1px;
+  left: -1px;
+  z-index: 2;
+  pointer-events: auto;
+  width: 30%;
+}
+
+.bottomCorner {
+  position: relative;
+  background-color: var(--tan);
+  padding: 2rem;
+  padding-right: 0.3rem;
+  padding-bottom: 0.3rem;
+  border-radius: 15px;
+  width: 100%;
+  height: 100%;
+}
+
+.bottomCorner::after {
+  position: absolute;
+  content: "";
+  width: 40px;
+  height: 40px;
+  bottom: 1px;
+  right: -40px;
+  background-color: transparent;
+  border-top-left-radius: 15px;
+  box-shadow: -1em -1rem var(--tan);
+  transform: rotate(-90deg);
+}
+
+.bottomCorner::before {
+  position: absolute;
+  content: "";
+  width: 40px;
+  height: 40px;
+  left: 1px;
+  top: -40px;
+  background-color: transparent;
+  border-top-left-radius: 15px;
+  box-shadow: -1em -1rem var(--tan);
+  transform: rotate(-90deg);
+}
+
+.top {
+  display: grid;
+  grid-template-columns: 2fr 4fr;
+  grid-gap: 3rem;
+}
+
+.left,
+.right {
+  width: 100%;
+}
+
+.imgOverlay {
+  z-index: 2;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.imgContainer {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.img {
+  object-fit: cover;
+  border-radius: 15px;
+}
+
+.heading {
+  color: var(--white);
+  position: absolute;
+  right: 2rem;
+  top: 2rem;
+  z-index: 3;
+  text-align: right;
+}
+
+.formContainer {
+  width: 95%;
+  margin-right: auto;
+  margin-bottom: 20rem;
+}
+
+.copy {
+  margin-bottom: 2rem;
+  color: var(--blue);
+  font-family: var(--SFUIMedium);
+  width: 90%;
+}
+
+.btnContainer {
+  display: grid;
+  width: 100%;
+}
+
+@media screen and (max-width: 1068px) {
+  .content {
+    padding-bottom: 0rem;
+    padding-right: 3rem;
+  }
+
+  /* .heading,
+  .copy {
+    text-align: center;
+  } */
+
+  .top {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    margin-bottom: 5rem;
+  }
+
+  .right {
+    order: -1;
+  }
+
+  .formContainer {
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .imgContainer {
+    width: 100%;
+    height: 30vh;
+  }
+
+  .formContainer {
+    width: 95%;
+    margin-right: auto;
+    margin-bottom: 15rem;
+  }
+
+  .bottomCornerContainer {
+    width: 50%;
+  }
+
+  .copy {
+    text-align: right;
+  }
+
+  /* .bottomCornerContainer {
+    left: 50%;
+    transform: translateX(-50%);
+    width: 70%;
+    position: relative;
+  } */
+
+  /* .bottomCorner {
+    padding-right: 2rem;
+    padding-bottom: 0rem;
+  } */
+
+  /* .bottomCorner::before {
+    top: auto;
+    right: -40px;
+    bottom: 1px;
+    box-shadow: -1em -1rem var(--gray);
+    transform: rotate(-90deg);
+  } */
+}
+
+@media screen and (max-width: 768px) {
+  .formContainer {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 568px) {
+  .heading {
+    letter-spacing: -0.5px;
+    font-size: 13vw;
+  }
+
+  .content {
+    padding-bottom: 1.5rem;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+
+  .imgContainer {
+    width: 100%;
+    height: 350px;
+  }
+
+  .formContainer {
+    margin-bottom: 10rem;
+  }
+
+  .bottomCornerContainer {
+    width: 95%;
+    bottom: 2rem;
+    left: 2rem;
+  }
+
+  .copy {
+    text-align: center;
+    width: 95%;
+    margin-bottom: 0rem;
+  }
+
+  .bottomCorner {
+    padding-bottom: 2rem;
+  }
+
+  .bottomCorner::before,
+  .bottomCorner::after {
+    box-shadow: -1em -1rem transparent;
+  }
+}
+
+/* 1268px:
+
+  .formContainer {
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  @media screen and (max-width: 380px) {
+  .span {
+    white-space: inherit;
+  }
+}
+
+
+.formContainer {
+  width: 100%;
+}
+
+*/
