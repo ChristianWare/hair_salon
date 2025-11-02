@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Poppins } from "next/font/google";
+import { Poppins, Inter_Tight } from "next/font/google";
 import "./globals.css";
 import localFont from "next/font/local";
 import { auth } from "../../auth";
@@ -8,6 +8,12 @@ import { Toaster } from "react-hot-toast";
 
 const poppins = Poppins({
   variable: "--poppins",
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "800", "900"],
+});
+
+const interTight = Inter_Tight({
+  variable: "--interTight",
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "800", "900"],
 });
@@ -59,7 +65,7 @@ export default async function RootLayout({
     <SessionProvider session={session}>
       <html lang='en'>
         <body
-          className={`${poppins.variable} ${ButlerRegular.variable} ${ButlerUltraLight.variable} ${NyghtSerifLight.variable} ${Voyage.variable}`}
+          className={`${poppins.variable} ${ButlerRegular.variable} ${ButlerUltraLight.variable} ${NyghtSerifLight.variable} ${Voyage.variable} ${interTight.variable}`}
         >
           <Toaster
             position='top-right'

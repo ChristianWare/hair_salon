@@ -8,6 +8,7 @@ import AdminKpiCard from "@/components/admin/AdminKpiCard/AdminKpiCard";
 import Button from "@/components/shared/Button/Button";
 import { startOfDay, endOfDay, startOfMonth, addDays } from "date-fns";
 import AdminMonthlyCalendar from "@/components/admin/AdminMonthlyCalendar/AdminMonthlyCalendar";
+import Arrow from "@/components/shared/icons/Arrow/Arrow";
 
 export default async function AdminPage() {
   const session = await auth();
@@ -188,8 +189,9 @@ export default async function AdminPage() {
                           <div className={styles.btnContainer}>
                             <Button
                               href={`/admin/bookings/${b.id}`}
-                              btnType='blueOutline'
+                              btnType='noBorderBrown'
                               text='View'
+                              rightIcon={<Arrow className={styles.arrow} />}
                             />
                           </div>
                         </TD>

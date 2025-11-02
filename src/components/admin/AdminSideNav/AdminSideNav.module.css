@@ -50,7 +50,8 @@
   justify-content: flex-start;
   gap: 2rem;
   font-size: 1.6rem;
-  font-family: var(--SFUIMedium);
+  font-family: var(--interTight);
+  font-weight: 600;
   color: var(--black);
   text-decoration: none;
   background-color: var(--tan);

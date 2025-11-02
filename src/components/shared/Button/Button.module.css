@@ -152,6 +152,12 @@ a.btn.tanBorderii:hover {
   border-color: var(--tan);
 }
 
+.noBorderBrown {
+  background: transparent;
+  color: var(--darkBrown);
+  padding: 0rem;
+}
+
 .text3dContainer {
   display: inline-flex;
   flex-wrap: wrap;
