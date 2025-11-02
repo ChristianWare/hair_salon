@@ -1,0 +1,70 @@
+.actionsRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.input {
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  background: #fff;
+  font-family: var(--interTight);
+}
+
+.reasonInput {
+  width: 260px;
+}
+
+.btnOutline {
+  padding: 8px 14px;
+  border-radius: 6px;
+  background: #fff;
+  color: #333;
+  border: 1px solid #ddd;
+  cursor: pointer;
+  text-decoration: none;
+  font-family: var(--interTight);
+}
+
+.btnDanger {
+  padding: 8px 14px;
+  border-radius: 6px;
+  background: #fff;
+  color: #b33636;
+  border: 1px solid #e5a0a0;
+  cursor: pointer;
+  text-decoration: none;
+  font-family: var(--interTight);
+}
+
+.btnDisabled {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.btnMuted {
+  opacity: 0.6;
+}
+
+.cancelForm {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+
+@media screen and (max-width: 480px) {
+  .reasonInput {
+    width: 100%;
+  }
+
+  .actionsRow, .cancelForm {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .cancelForm {
+    margin-top: 5rem;
+  }
+}

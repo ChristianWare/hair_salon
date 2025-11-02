@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-// src/components/admin/ActionBar/ActionBar.tsx
 "use client";
 
+import styles from "./ActionBar.module.css";
 import { useTransition } from "react";
 import { Toaster, toast } from "react-hot-toast";
 import { useRouter } from "next/navigation";
@@ -46,7 +46,6 @@ export default function ActionBar({
       }
     });
 
-  // Admin-initiated cancel + refund through API route (so refund receipts are visible to both sides)
   const handleAdminCancel = (formData: FormData) =>
     start(async () => {
       const reason = String(formData.get("reason") || "").trim();
@@ -82,14 +81,13 @@ export default function ActionBar({
 
   return (
     <>
-      {/* Remove this Toaster if you already render one globally */}
       <Toaster position='top-right' />
 
-      <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+      <div className={styles.actionsRow}>
         <button
           type='button'
           onClick={handleCompleted}
-          style={outlineBtn}
+          className={styles.btnOutline}
           disabled={isCanceled || pending}
           title={isCanceled ? "Cannot complete a canceled booking" : undefined}
         >
@@ -99,7 +97,7 @@ export default function ActionBar({
         <button
           type='button'
           onClick={handleNoShow}
-          style={outlineBtn}
+          className={styles.btnOutline}
           disabled={isCanceled || pending}
           title={isCanceled ? "Cannot no-show a canceled booking" : undefined}
         >
@@ -108,21 +106,21 @@ export default function ActionBar({
 
         {isCanceled ? (
           <span
-            style={{ ...outlineBtn, opacity: 0.6, pointerEvents: "none" }}
+            className={`${styles.btnOutline} ${styles.btnDisabled}`}
             title='This booking is already canceled'
           >
             Already canceled
           </span>
         ) : isCompleted ? (
           <span
-            style={{ ...outlineBtn, opacity: 0.6 }}
+            className={`${styles.btnOutline} ${styles.btnMuted}`}
             title='Completed bookings can’t be canceled'
           >
             Completed — no cancellation
           </span>
         ) : isNoShow ? (
           <span
-            style={{ ...outlineBtn, opacity: 0.6 }}
+            className={`${styles.btnOutline} ${styles.btnMuted}`}
             title='No-show bookings can’t be canceled'
           >
             No-show — no cancellation
@@ -130,7 +128,7 @@ export default function ActionBar({
         ) : (
           <form
             action={handleAdminCancel}
-            style={{ display: "flex", gap: 8, alignItems: "center" }}
+            className={styles.cancelForm}
             onSubmit={(e) => {
               if (
                 !confirm(
@@ -145,9 +143,13 @@ export default function ActionBar({
               type='text'
               name='reason'
               placeholder='Reason (optional)'
-              style={{ ...input, width: 260 }}
+              className={`${styles.input} ${styles.reasonInput}`}
             />
-            <button type='submit' style={dangerBtn} disabled={cancelDisabled}>
+            <button
+              type='submit'
+              className={styles.btnDanger}
+              disabled={cancelDisabled}
+            >
               {pending ? "Canceling…" : "Cancel Booking"}
             </button>
           </form>
@@ -156,24 +158,3 @@ export default function ActionBar({
     </>
   );
 }
-
-/* inline tokens to match your admin UI */
-const input: React.CSSProperties = {
-  padding: "8px 12px",
-  border: "1px solid #ddd",
-  borderRadius: 6,
-  background: "white",
-};
-const outlineBtn: React.CSSProperties = {
-  padding: "8px 14px",
-  borderRadius: 6,
-  background: "white",
-  color: "#333",
-  border: "1px solid #ddd",
-  cursor: "pointer",
-};
-const dangerBtn: React.CSSProperties = {
-  ...outlineBtn,
-  borderColor: "#e5a0a0",
-  color: "#b33636",
-};

@@ -1,0 +1,307 @@
+.headerRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 1rem;
+}
+
+.link {
+  color: #0969da;
+  text-decoration: none;
+  font-family: var(--interTight);
+}
+
+.idText {
+  font-size: 14px;
+  color: #666;
+  font-family: var(--interTight);
+}
+
+.titleRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 5rem;
+}
+
+.detailsGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+
+.card {
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+  padding: 12px;
+  background: #fff;
+}
+
+.twoColGridArea {
+  background-color: var(--lightGray);
+  border-radius: 10px;
+  padding: 1rem;
+}
+
+.twoColGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.sectionTitle {
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: #111;
+  font-size: 14px;
+  font-family: var(--interTight);
+}
+
+.mt10 {
+  margin-top: 10px;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  padding: 6px 0;
+  border-bottom: 1px solid #f5f5f5;
+  align-items: center;
+  font-family: var(--interTight);
+}
+
+.rowLabel {
+  font-size: 12px;
+  color: #666;
+  font-family: var(--interTight);
+}
+
+.rowValue {
+  font-size: 14px;
+  font-family: var(--interTight);
+}
+
+.totalRow {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: 8px;
+  padding: 6px 0;
+  border-top: 1px solid #f5f5f5;
+  margin-top: 6px;
+  align-items: center;
+  font-family: var(--interTight);
+}
+
+.totalLabel {
+  font-size: 12px;
+  color: #111;
+  font-weight: 600;
+  font-family: var(--interTight);
+}
+
+.totalValue {
+  font-size: 14px;
+  font-weight: 600;
+  font-family: var(--interTight);
+}
+
+.remainingNote {
+  font-size: 12px;
+  color: #666;
+  margin-top: 4px;
+  font-family: var(--interTight);
+}
+
+.refundRow {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: 8px;
+  padding: 6px 0;
+  border-bottom: 1px solid #f5f5f5;
+  align-items: center;
+  font-family: var(--interTight);
+}
+
+.refundLabel {
+  font-size: 12px;
+  color: #666;
+  font-family: var(--interTight);
+}
+
+.refundValue {
+  font-size: 14px;
+  font-family: var(--interTight);
+}
+
+.refundMeta {
+  font-size: 12px;
+  color: #666;
+  font-family: var(--interTight);
+}
+
+.refundLinks {
+  margin-top: 4px;
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+  font-family: var(--interTight);
+}
+
+.dot {
+  color: #666;
+  font-family: var(--interTight);
+}
+
+.notes {
+  font-size: 14px;
+  padding: 6px 0;
+  border-bottom: 1px solid #f5f5f5;
+  white-space: pre-wrap;
+  font-family: var(--interTight);
+}
+
+.notesEmpty {
+  color: #666;
+  font-family: var(--interTight);
+}
+
+.actionsHeader {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+  font-family: var(--interTight);
+}
+
+.actionsTitle {
+  font-weight: 600;
+  font-family: var(--interTight);
+}
+
+.actionsHint {
+  font-size: 12px;
+  color: #666;
+  font-family: var(--interTight);
+}
+
+.mono {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 12px;
+  background: #fafafa;
+  border: 1px solid #eee;
+  border-radius: 4px;
+  padding: 1px 6px;
+  word-break: break-all;
+}
+
+.badge {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 999px;
+  color: #fff;
+  font-size: 12px;
+  text-align: center;
+  font-family: var(--interTight);
+}
+
+.badgeConfirmed {
+  background: #0a7;
+}
+
+.badgePending {
+  background: #d88a00;
+}
+
+.badgeCompleted {
+  background: #0366d6;
+}
+
+.badgeCanceled {
+  background: #999;
+}
+
+.badgeOther {
+  background: #b33636;
+}
+
+:global(th),
+:global(td) {
+  font-family: var(--interTight);
+}
+
+@media screen and (max-width: 1268px) {
+  .headerRow {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 3rem;
+  }
+
+  .titleRow {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .title {
+    text-align: center;
+    font-family: var(--interTight);
+  }
+
+  .detailsGrid {
+    max-width: 100%;
+  }
+
+  .twoColGrid {
+    grid-template-columns: 1fr;
+  }
+
+
+  .row,
+  .totalRow,
+  .refundRow {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .tr .td:first-child {
+    padding-top: 2px;
+  }
+
+  .tr > .td:last-child {
+    padding: 2rem;
+    border: none;
+    background-color: var(--brownii);
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    grid-template-columns: 1fr;
+    border-radius: 10px;
+    font-family: var(--interTight);
+  }
+
+  .tr > .td:last-child::before {
+    content: "Actions";
+    flex: 0 0 auto;
+    font-weight: 700;
+    color: #6b7280;
+    margin-right: 8px;
+    font-family: var(--interTight);
+  }
+
+  .tr:last-child {
+    border-bottom: 1px solid var(--darkBrown);
+  }
+
+  .row {
+    padding: 1rem 0rem;
+  }
+
+  .row:last-child {
+    border-bottom: none;
+  }
+}
