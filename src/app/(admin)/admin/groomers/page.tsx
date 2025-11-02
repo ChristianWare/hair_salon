@@ -1,5 +1,6 @@
 // src/app/(admin)/groomers/page.tsx
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import styles from "./GroomersPageStyles.module.css";
 import { redirect } from "next/navigation";
 import { auth } from "../../../../../auth";
 import { db } from "@/lib/db";
@@ -21,7 +22,7 @@ function getStr(
   fallback = ""
 ) {
   const v = sp[key];
-  return Array.isArray(v) ? (v[0] ?? fallback) : (v ?? fallback);
+  return Array.isArray(v) ? v[0] ?? fallback : v ?? fallback;
 }
 function getNum(
   sp: Record<string, string | string[] | undefined>,
@@ -45,13 +46,11 @@ export default async function GroomersPage({
 }: {
   searchParams: SearchParamsPromise;
 }) {
-  // 1) Admin guard
   const session = await auth();
   if (!session || session.user.role !== "ADMIN") {
     redirect("/login");
   }
 
-  // 2) Parse filters/sorting/pagination
   const spObj = await searchParams;
   const sp = new URLSearchParams(
     Object.entries(spObj).reduce<Record<string, string>>((acc, [k, v]) => {
@@ -62,44 +61,36 @@ export default async function GroomersPage({
   );
 
   const q = getStr(spObj, "q").trim();
-  const activeParam = getStr(spObj, "active").trim(); // "", "true", "false"
-  const sort = getStr(spObj, "sort") || "name"; // name | createdAt | active
+  const activeParam = getStr(spObj, "active").trim();
+  const sort = getStr(spObj, "sort") || "name";
   const order = (getStr(spObj, "order") || "asc") as "asc" | "desc";
-
   const page = Math.max(1, getNum(spObj, "page", 1));
   const pageSize = Math.min(100, getNum(spObj, "pageSize", 20));
 
-const where: Prisma.GroomerWhereInput = {
-  // Exclude admins; only users with standard USER role
-  user: { role: $Enums.UserRole.USER },
+  const where: Prisma.GroomerWhereInput = {
+    user: { role: $Enums.UserRole.USER },
+    ...(activeParam === "true" ? { active: true } : {}),
+    ...(activeParam === "false" ? { active: false } : {}),
+    ...(q
+      ? {
+          OR: [
+            { user: { name: { contains: q, mode: "insensitive" } } },
+            { user: { email: { contains: q, mode: "insensitive" } } },
+            { bio: { contains: q, mode: "insensitive" } },
+            { specialties: { has: q } },
+            { id: { contains: q, mode: "insensitive" } },
+          ],
+        }
+      : {}),
+  };
 
-  ...(activeParam === "true" ? { active: true } : {}),
-  ...(activeParam === "false" ? { active: false } : {}),
-
-  ...(q
-    ? {
-        OR: [
-          { user: { name: { contains: q, mode: "insensitive" } } },
-          { user: { email: { contains: q, mode: "insensitive" } } },
-          { bio: { contains: q, mode: "insensitive" } },
-          { specialties: { has: q } },
-          { id: { contains: q, mode: "insensitive" } },
-        ],
-      }
-    : {}),
-};
-
-
-  // orderBy
-  // Groomer has no createdAt; keep to valid fields
   const orderBy: Prisma.GroomerOrderByWithRelationInput =
     sort === "active"
       ? { active: order }
       : sort === "name"
-        ? { user: { name: order } }
-        : { id: order }; // fallback
+      ? { user: { name: order } }
+      : { id: order };
 
-  // 3) Fetch data + counts
   const [groomers, total, activeGroups] = await db.$transaction([
     db.groomer.findMany({
       where,
@@ -120,69 +111,52 @@ const where: Prisma.GroomerWhereInput = {
 
   const pages = Math.max(1, Math.ceil(total / pageSize));
 
-  // TS-safe map for active counts
   let activeCount = 0;
   let inactiveCount = 0;
   for (const row of activeGroups) {
     const c =
-      typeof row._count === "object" && row._count ? (row._count._all ?? 0) : 0;
+      typeof row._count === "object" && row._count ? row._count._all ?? 0 : 0;
     if (row.active) activeCount = c;
     else inactiveCount = c;
   }
 
   return (
-    <section style={{ padding: "2rem" }}>
-      {/* Header */}
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          gap: 16,
-          marginBottom: "1rem",
-        }}
-      >
-        <h1 style={{ fontSize: 22, fontWeight: 600, margin: 0 }}>Groomers</h1>
-        <div style={{ fontSize: 14, color: "#666" }}>
-          {total.toLocaleString()} total
-        </div>
+    <section className={styles.section}>
+      <div className={styles.header}>
+        <h1 className={`${styles.heading} adminHeading`}>Groomers</h1>
+        <div className={styles.headerCount}>{total.toLocaleString()} total</div>
       </div>
 
-      {/* Filters */}
-      <form
-        style={{
-          display: "flex",
-          flexWrap: "wrap",
-          gap: 8,
-          alignItems: "end",
-          marginBottom: 12,
-        }}
-      >
-        <div style={{ minWidth: 260, flex: "1 1 300px" }}>
+      <form className={styles.filters}>
+        <div className={styles.fieldGrow}>
           <input
+            className={styles.input}
             type='text'
             name='q'
             defaultValue={q}
             placeholder='Search name, email, bio, specialty…'
-            style={input}
           />
         </div>
 
-        <div style={{ minWidth: 160 }}>
-          <select name='active' defaultValue={activeParam} style={select}>
+        <div className={styles.field}>
+          <select
+            name='active'
+            defaultValue={activeParam}
+            className={styles.select}
+          >
             <option value=''>All statuses</option>
             <option value='true'>Active</option>
             <option value='false'>Inactive</option>
           </select>
         </div>
 
-        <div style={{ display: "flex", gap: 8 }}>
-          <select name='sort' defaultValue={sort} style={select}>
+        <div className={styles.sortRow}>
+          <select name='sort' defaultValue={sort} className={styles.select}>
             <option value='name'>Sort by Name</option>
             <option value='createdAt'>Sort by Created</option>
             <option value='active'>Sort by Active</option>
           </select>
-          <select name='order' defaultValue={order} style={select}>
+          <select name='order' defaultValue={order} className={styles.select}>
             <option value='asc'>Asc</option>
             <option value='desc'>Desc</option>
           </select>
@@ -191,20 +165,20 @@ const where: Prisma.GroomerWhereInput = {
         <input type='hidden' name='page' value='1' />
         <input type='hidden' name='pageSize' value={pageSize} />
 
-        <div style={{ display: "flex", gap: 8, marginLeft: "auto" }}>
-          <button type='submit' style={primaryBtn}>
+        <div className={styles.actionsRight}>
+          <button type='submit' className={styles.btnPrimary}>
             Apply
           </button>
-          <Link href={{ pathname: BASE_PATH, query: {} }} style={outlineBtn}>
+          <Link
+            href={{ pathname: BASE_PATH, query: {} }}
+            className={styles.btnOutline}
+          >
             Clear
           </Link>
         </div>
       </form>
 
-      {/* Quick filter pills */}
-      <div
-        style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 12 }}
-      >
+      <div className={styles.pillsRow}>
         <Pill
           href={buildHref(sp, { active: null, page: "1" })}
           current={!activeParam}
@@ -222,66 +196,44 @@ const where: Prisma.GroomerWhereInput = {
         />
       </div>
 
-      {/* Table */}
-      <div
-        style={{
-          overflowX: "auto",
-          border: "1px solid #e5e5e5",
-          borderRadius: 8,
-        }}
-      >
-        <table
-          style={{
-            width: "100%",
-            borderCollapse: "collapse",
-            background: "white",
-          }}
-        >
-          <thead
-            style={{
-              position: "sticky",
-              top: 0,
-              background: "#fafafa",
-              zIndex: 1,
-            }}
-          >
+      <div className={styles.tableWrap}>
+        <table className={styles.table}>
+          <thead className={styles.thead}>
             <tr>
-              <th style={th}>Name</th>
-              <th style={th}>Email</th>
-              <th style={th}>Bio</th>
-              <th style={th}>Specialties</th>
-              <th style={th}>Active?</th>
+              <th className={styles.th}>Name</th>
+              <th className={styles.th}>Email</th>
+              <th className={styles.th}>Bio</th>
+              <th className={styles.th}>Specialties</th>
+              <th className={styles.th}>Active?</th>
             </tr>
           </thead>
           <tbody>
             {groomers.length === 0 ? (
               <tr>
-                <td
-                  colSpan={5}
-                  style={{ padding: 16, textAlign: "center", color: "#666" }}
-                >
+                <td colSpan={5} className={styles.emptyCell}>
                   No groomers match your filters.
                 </td>
               </tr>
             ) : (
               groomers.map((g) => (
-                <tr key={g.id} style={{ borderTop: "1px solid #eee" }}>
-                  <td style={td}>{g.user?.name ?? "—"}</td>
-                  <td style={td}>{g.user?.email ?? "—"}</td>
-                  <td style={td}>{g.bio ?? "—"}</td>
-                  <td style={td}>
+                <tr key={g.id} className={styles.tr}>
+                  <td className={styles.td} data-label='Name'>
+                    {g.user?.name ?? "—"}
+                  </td>
+                  <td className={styles.td} data-label='Email'>
+                    {g.user?.email ?? "—"}
+                  </td>
+                  <td className={styles.td} data-label='Bio'>
+                    {g.bio ?? "—"}
+                  </td>
+                  <td className={styles.td} data-label='Specialties'>
                     {g.specialties?.length ? g.specialties.join(", ") : "—"}
                   </td>
-                  <td style={td}>
+                  <td className={styles.td} data-label='Active?'>
                     <span
-                      style={{
-                        display: "inline-block",
-                        padding: "2px 8px",
-                        borderRadius: 999,
-                        color: "white",
-                        background: g.active ? "#0a7" : "#999",
-                        fontSize: 12,
-                      }}
+                      className={`${styles.badge} ${
+                        g.active ? styles.badgeConfirmed : styles.badgeCanceled
+                      }`}
                     >
                       {g.active ? "Yes" : "No"}
                     </span>
@@ -293,47 +245,38 @@ const where: Prisma.GroomerWhereInput = {
         </table>
       </div>
 
-      {/* Pagination */}
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          marginTop: 12,
-        }}
-      >
-        <div style={{ fontSize: 14, color: "#666" }}>
+      <div className={styles.pagination}>
+        <div className={styles.paginationInfo}>
           Showing{" "}
           {total === 0
             ? "0"
-            : `${(page - 1) * pageSize + 1}–${Math.min(page * pageSize, total)}`}{" "}
+            : `${(page - 1) * pageSize + 1}–${Math.min(
+                page * pageSize,
+                total
+              )}`}{" "}
           of {total}
         </div>
-        <div style={{ display: "flex", gap: 8 }}>
+        <div className={styles.paginationControls}>
           {page <= 1 ? (
-            <span
-              style={{ ...outlineBtn, opacity: 0.5, pointerEvents: "none" }}
-            >
+            <span className={`${styles.btnOutline} ${styles.btnDisabled}`}>
               Previous
             </span>
           ) : (
             <Link
               href={buildHref(sp, { page: String(page - 1) })}
-              style={outlineBtn}
+              className={styles.btnOutline}
             >
               Previous
             </Link>
           )}
           {page >= pages ? (
-            <span
-              style={{ ...outlineBtn, opacity: 0.5, pointerEvents: "none" }}
-            >
+            <span className={`${styles.btnOutline} ${styles.btnDisabled}`}>
               Next
             </span>
           ) : (
             <Link
               href={buildHref(sp, { page: String(page + 1) })}
-              style={outlineBtn}
+              className={styles.btnOutline}
             >
               Next
             </Link>
@@ -344,7 +287,6 @@ const where: Prisma.GroomerWhereInput = {
   );
 }
 
-/* ───────────── UI helpers ───────────── */
 function Pill({
   href,
   current,
@@ -357,64 +299,9 @@ function Pill({
   return (
     <Link
       href={href}
-      style={{
-        padding: "6px 10px",
-        borderRadius: 999,
-        textDecoration: "none",
-        border: "1px solid #ddd",
-        background: current ? "#111" : "white",
-        color: current ? "white" : "#333",
-        fontSize: 13,
-      }}
+      className={`${styles.pill} ${current ? styles.pillCurrent : ""}`}
     >
       {label}
     </Link>
   );
 }
-
-/* shared inline styles to match your other page */
-const input: React.CSSProperties = {
-  width: "100%",
-  padding: "8px 12px",
-  border: "1px solid #ddd",
-  borderRadius: 6,
-  background: "white",
-};
-const select: React.CSSProperties = {
-  padding: "8px 12px",
-  border: "1px solid #ddd",
-  borderRadius: 6,
-  background: "white",
-  minWidth: 140,
-};
-const primaryBtn: React.CSSProperties = {
-  padding: "8px 14px",
-  borderRadius: 6,
-  background: "#111",
-  color: "white",
-  border: "1px solid #111",
-  cursor: "pointer",
-  textDecoration: "none",
-};
-const outlineBtn: React.CSSProperties = {
-  padding: "8px 14px",
-  borderRadius: 6,
-  background: "white",
-  color: "#333",
-  border: "1px solid #ddd",
-  cursor: "pointer",
-  textDecoration: "none",
-};
-const th: React.CSSProperties = {
-  borderBottom: "1px solid #e5e5e5",
-  padding: 10,
-  background: "#fafafa",
-  textAlign: "left",
-  position: "sticky",
-  top: 0,
-  zIndex: 1,
-};
-const td: React.CSSProperties = {
-  borderBottom: "1px solid #f0f0f0",
-  padding: 10,
-};

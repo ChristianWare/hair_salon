@@ -339,19 +339,29 @@ export default async function BookingPage({
                   b.groomer?.user?.name || b.groomer?.user?.email || "—";
                 return (
                   <tr key={b.id} className={styles.tr}>
-                    <td className={styles.td}>{date}</td>
-                    <td className={styles.td}>{time}</td>
-                    <td className={styles.td}>
+                    <td className={styles.td} data-label='Date'>
+                      {date}
+                    </td>
+                    <td className={styles.td} data-label='Time'>
+                      {time}
+                    </td>
+                    <td className={styles.td} data-label='Booked'>
                       {bookedDate}{" "}
                       <small className={styles.bookedTime}>{bookedTime}</small>
                     </td>
-                    <td className={styles.td}>{customer}</td>
-                    <td className={styles.td}>{groomerName}</td>
-                    <td className={styles.td}>{service}</td>
-                    <td className={styles.td}>
+                    <td className={styles.td} data-label='Customer'>
+                      {customer}
+                    </td>
+                    <td className={styles.td} data-label='Groomer'>
+                      {groomerName}
+                    </td>
+                    <td className={styles.td} data-label='Service'>
+                      {service}
+                    </td>
+                    <td className={styles.td} data-label='Status'>
                       <StatusBadge status={b.status as any} />
                     </td>
-                    <td className={styles.td}>
+                    <td className={styles.td} data-label='Details'>
                       <Link
                         href={{ pathname: `${BASE_PATH}/${b.id}` }}
                         className={styles.viewLink}

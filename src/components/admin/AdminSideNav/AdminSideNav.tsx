@@ -14,6 +14,7 @@ import Button from "@/components/shared/Button/Button";
 import { useState } from "react";
 import FalseButton from "@/components/shared/FalseButton/FalseButton";
 import { useSession } from "next-auth/react";
+import { usePathname } from "next/navigation";
 
 const NAV_ITEMS = [
   { title: "Dashboard", href: "/admin", icon: <House /> },
@@ -27,10 +28,9 @@ const NAV_ITEMS = [
 
 export default function AdminSideNav() {
   const [isOpen, setIsOpen] = useState(false);
-
   const { data: session } = useSession();
-  // const isAdmin = session?.user?.role === "ADMIN";
   const isGroomer = !!session?.user?.isGroomer;
+  const pathname = usePathname();
 
   return (
     <aside className={styles.container}>
@@ -49,18 +49,27 @@ export default function AdminSideNav() {
           </div>
 
           <div className={styles.linksWrapper}>
-            {NAV_ITEMS.map(({ title, href, icon }) => (
-              <li key={href}>
-                <Link
-                  href={href}
-                  className={styles.navLink}
-                  onClick={() => setIsOpen(false)}
-                >
-                  {icon}
-                  {title}
-                </Link>
-              </li>
-            ))}
+            {NAV_ITEMS.map(({ title, href, icon }) => {
+              const isDashboard = href === "/admin";
+              const active = isDashboard
+                ? pathname === "/admin"
+                : pathname === href || pathname.startsWith(href + "/");
+              return (
+                <li key={href}>
+                  <Link
+                    href={href}
+                    className={`${styles.navLink} ${
+                      active ? styles.navLinkActive : ""
+                    }`}
+                    onClick={() => setIsOpen(false)}
+                    aria-current={active ? "page" : undefined}
+                  >
+                    {icon}
+                    {title}
+                  </Link>
+                </li>
+              );
+            })}
           </div>
 
           <div className={styles.btnContainerii}>
