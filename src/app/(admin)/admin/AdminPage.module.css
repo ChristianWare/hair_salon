@@ -37,9 +37,11 @@
 }
 
 .tableWrap {
-  border-radius: 10px;
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
   overflow: hidden;
-  border: 1px solid var(--darkBrown);
+  border: 0;
+  border-bottom: 1px solid var(--darkBrown);
 }
 
 .table {
@@ -54,11 +56,17 @@
   padding: 8px;
   vertical-align: middle;
   background: var(--tan);
-  border-right: 1px solid var(--brown);
-  border-top: none;
   font-size: 14px;
+  font-family: var(--interTight);
+  letter-spacing: 0px;
   line-height: 1.35;
   word-wrap: break-word;
+  border: 0;
+}
+
+.table tbody tr:nth-child(even) .td,
+.table tbody tr:nth-child(even) td {
+  background-color: var(--white);
 }
 
 .tablethead .th,
@@ -69,43 +77,38 @@
   text-align: left;
   padding: 12px 10px;
   white-space: nowrap;
+  border-top: 1px solid var(--darkBrown);
+  border-bottom: 1px solid var(--darkBrown);
+  border-left: 1px solid var(--brown);
+  border-right: none;
 }
 
-/* .tablethead .th {
+.table thead tr .th:first-child,
+.table thead tr th:first-child {
+  border-left: 1px solid var(--darkBrown);
+  border-top-left-radius: 10px;
+}
+
+.table thead tr .th:last-child,
+.table thead tr th:last-child {
   border-right: 1px solid var(--darkBrown);
-} */
-
-.tablethead .th:last-child {
-  border-right: 1px solid var(--brown);
   border-top-right-radius: 10px;
 }
 
-.tablethead .td:last-child {
-  border-right: none;
-  background-color: red;
-}
-
-.tablethead .th:first-child {
+.table tbody .td,
+.table tbody td {
   border-left: 1px solid var(--brown);
-  border-top-left-radius: 10px;
-}
-
-.center {
-  border: 1px solid var(--brown);
-  border-bottom-right-radius: 10px;
-  border-bottom-left-radius: 10px;
-}
-
-.table thead .th:first-child,
-.table thead th:first-child {
-  border-left: 1px solid var(--brown);
-  border-top-left-radius: 10px;
-}
-
-.table thead .th:last-child,
-.table thead th:last-child {
   border-right: none;
-  border-top-right-radius: 10px;
+}
+
+.table tbody tr .td:first-child,
+.table tbody tr td:first-child {
+  border-left: 1px solid var(--darkBrown);
+}
+
+.table tbody tr .td:last-child,
+.table tbody tr td:last-child {
+  border-right: 1px solid var(--darkBrown);
 }
 
 .badge {
@@ -114,23 +117,25 @@
   border-radius: 999px;
   color: #fff;
   font-size: 12px;
+  font-family: var(--interTight);
+  text-align: center;
   line-height: 1.5;
-  width: fit-content;
+  width: 100%;
 }
 .badge_confirmed {
-  background: #0a7;
+  background: var(--badge_confirmed);
 }
 .badge_pending {
-  background: #d88a00;
+  background: var(--badge_pending);
 }
 .badge_completed {
-  background: #0366d6;
+  background: var(--badge_completed);
 }
 .badge_canceled {
-  background: #999;
+  background: var(--badge_canceled);
 }
 .badge_noshow {
-  background: #b33636;
+  background: var(--badge_noshow);
 }
 
 .btnContainer {
@@ -147,9 +152,7 @@
   .quickLinks {
     grid-template-columns: repeat(2, 1fr);
   }
-}
 
-@media screen and (max-width: 1268px) {
   .tableScroll {
     overflow: visible;
   }
@@ -176,7 +179,7 @@
 
   .table tbody tr {
     background: var(--tan);
-    border: 1px solid var(--darkTaniii);
+    border: 1px solid var(--darkBrown);
     border-radius: 12px;
     padding: 10px 12px;
   }
@@ -185,13 +188,17 @@
   .table tbody tr td {
     border: 0;
     background: transparent;
-    padding: 8px 0;
+    /* padding: 8px 0; */
     display: grid;
     grid-template-columns: 128px 1fr;
     gap: 10px;
     align-items: baseline;
     font-size: 14px;
     line-height: 1.35;
+  }
+
+  .table tbody tr .td {
+    border-bottom: 1px solid var(--brown);
   }
 
   .table tbody tr .td::before,
@@ -207,17 +214,22 @@
   .table tbody tr .td:first-child,
   .table tbody tr td:first-child {
     padding-top: 2px;
+    border-left: none;
   }
 
   .table tbody tr > .td:last-child,
   .table tbody tr > td:last-child {
-    margin-top: 8px;
-    padding-top: 12px;
-    border-top: 1px solid var(--tanii);
+    /* margin-top: 8px; */
+    padding: 2rem;
+    /* padding-top: 12px; */
+    /* border-top: 1px solid var(--darkBrown); */
+    border: none;
+    background-color: var(--brownii);
     display: flex;
     gap: 8px;
     align-items: center;
     grid-template-columns: 1fr;
+    border-radius: 10px;
   }
   .table tbody tr > .td:last-child::before,
   .table tbody tr > td:last-child::before {
@@ -228,9 +240,28 @@
     margin-right: 8px;
   }
 
+  .table tbody tr > td:nth-last-child(2) {
+    margin-bottom: 1rem;
+  }
+
+  .table tbody tr > .td {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 2rem;
+  }
+
   .table small {
     font-size: 12px;
     color: #666;
+  }
+
+  .center {
+    border: none;
+    margin-top: 0rem;
+  }
+
+  .table tbody tr {
+    margin-bottom: 2rem;
   }
 }
 

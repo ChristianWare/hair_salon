@@ -10,6 +10,11 @@
   --darkGray: #646464;
   --darkGrayii: rgb(194, 192, 192);
   --gold: #d09d02;
+  --badge_confirmed: #0a7;
+  --badge_pending: #d88a00;
+  --badge_completed: #0366d6;
+  --badge_canceled: #999;
+  --badge_noshow: #b33636;
 }
 
 * {

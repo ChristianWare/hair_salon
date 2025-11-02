@@ -179,7 +179,7 @@ export default async function AdminPage() {
                         <TD label='Customer'>
                           {b.user.name ?? "—"}
                           <br />
-                          <small>{b.user.email}</small>
+                          {/* <small>{b.user.email}</small> */}
                         </TD>
                         <TD label='Groomer'>{b.groomer.user?.name ?? "—"}</TD>
                         <TD label='Status'>
@@ -242,7 +242,7 @@ export default async function AdminPage() {
                         <TD label='Customer'>
                           {b.user.name ?? "—"}
                           <br />
-                          <small>{b.user.email}</small>
+                          {/* <small>{b.user.email}</small> */}
                         </TD>
                         <TD label='Groomer'>{b.groomer.user?.name ?? "—"}</TD>
                         <TD label='Status'>
@@ -309,7 +309,7 @@ export default async function AdminPage() {
                         <TD label='Customer'>
                           {b.user.name ?? "—"}
                           <br />
-                          <small>{b.user.email}</small>
+                          {/* <small>{b.user.email}</small> */}
                         </TD>
                         <TD label='Groomer'>{b.groomer.user?.name ?? "—"}</TD>
                         <TD label='Status'>
@@ -374,7 +374,7 @@ export default async function AdminPage() {
                             <TD label='Customer'>
                               {b.user.name ?? "—"}
                               <br />
-                              <small>{b.user.email}</small>
+                              {/* <small>{b.user.email}</small> */}
                             </TD>
                             <TD label='Groomer'>
                               {b.groomer.user?.name ?? "—"}
@@ -435,7 +435,7 @@ export default async function AdminPage() {
                           <TD label='Customer'>
                             {b.user?.name ?? "—"}
                             <br />
-                            <small>{b.user?.email ?? "—"}</small>
+                            {/* <small>{b.user?.email ?? "—"}</small> */}
                           </TD>
                           <TD label='Service'>{b.service?.name ?? "—"}</TD>
                           <TD label='Actions'>
