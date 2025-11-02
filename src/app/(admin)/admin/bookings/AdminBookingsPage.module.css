@@ -1,0 +1,403 @@
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 3rem;
+}
+
+.headerCount {
+  font-size: 14px;
+  color: #666;
+}
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: end;
+  margin-bottom: 12px;
+}
+
+.fieldGrow {
+  min-width: 240px;
+}
+
+.field {
+  min-width: 160px;
+}
+
+.input {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  background: #fff;
+}
+
+.select {
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  background: #fff;
+  min-width: 140px;
+}
+
+.dateRow {
+  display: flex;
+  gap: 8px;
+}
+
+.sortRow {
+  display: flex;
+  gap: 8px;
+}
+
+.actionsRight {
+  display: flex;
+  gap: 8px;
+  margin-left: auto;
+}
+
+.btnPrimary {
+  padding: 8px 14px;
+  border-radius: 6px;
+  background: #111;
+  color: #fff;
+  border: 1px solid #111;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.btnOutline {
+  padding: 8px 14px;
+  border-radius: 6px;
+  background: #fff;
+  font-family: var(--interTight);
+  color: #333;
+  border: 1px solid #ddd;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.btnDisabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.pillsRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.pill {
+  padding: 6px 10px;
+  border-radius: 999px;
+  text-decoration: none;
+  border: 1px solid #ddd;
+  background: #fff;
+  color: #333;
+  font-size: 13px;
+}
+
+.pillCurrent {
+  background: #111;
+  color: #fff;
+}
+
+.pillCount {
+  margin-left: 6px;
+  opacity: 0.9;
+}
+
+.tableWrap {
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+}
+
+.thead {
+  position: sticky;
+  top: 0;
+  background: var(--brownii);
+  z-index: 1;
+}
+
+.thead tr {
+  border: 1px solid var(--darkBrown);
+  border-top-right-radius: 10px;
+}
+
+.th {
+  border: 1px solid var(--darkBrown);
+  border-top: none;
+  border-bottom: none;
+  padding: 10px;
+  text-align: left;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.th:last-child {
+  border-right: none;
+}
+
+.thLink,
+.th {
+  font-family: var(--interTight);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.thActive {
+  font-weight: 600;
+}
+
+.thArrow {
+  color: #777;
+  font-size: 12px;
+}
+
+.tr {
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid var(--brown);
+}
+
+.tr:last-child {
+  border-bottom: none;
+}
+
+.td {
+  padding: 2rem 1rem;
+  font-family: var(--interTight);
+  border-right: 1px solid var(--brown);
+}
+
+.emptyCell {
+  padding: 16px;
+  text-align: center;
+  color: #666;
+}
+
+.bookedTime {
+  color: #666;
+}
+
+.viewLink {
+  color: var(--badge_completed);
+  text-align: center;
+  width: 100%;
+  text-decoration: none;
+}
+
+.badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 999px;
+  color: #fff;
+  font-size: 12px;
+  width: 100%;
+  font-family: var(--interTight);
+  text-align: center;
+}
+
+.badgeConfirmed {
+  background: #0a7;
+}
+
+.badgePending {
+  background: #d88a00;
+}
+
+.badgeCompleted {
+  background: #0366d6;
+}
+
+.badgeCanceled {
+  background: #999;
+}
+
+.badgeOther {
+  background: #b33636;
+}
+
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 12px;
+}
+
+.paginationInfo {
+  font-size: 14px;
+  color: #666;
+}
+
+.paginationControls {
+  display: flex;
+  gap: 8px;
+}
+
+@media screen and (max-width: 1268px) {
+  .header {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 3rem;
+  }
+
+  .heading {
+    text-align: center;
+  }
+
+  .filters {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  .fieldGrow,
+  .field,
+  .dateRow,
+  .sortRow {
+    width: 100%;
+  }
+
+  .dateRow,
+  .sortRow {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .actionsRight {
+    width: 100%;
+    margin-left: 0;
+    gap: 10px;
+  }
+
+  .btnPrimary,
+  .btnOutline {
+    width: 100%;
+    text-align: center;
+  }
+
+  .pillsRow {
+    gap: 6px;
+    margin: 5rem 0rem 3rem;
+  }
+
+  .tableWrap {
+    border: 0;
+    border-radius: 0;
+    overflow: visible;
+    background: transparent;
+  }
+
+  .thead {
+    display: none;
+  }
+
+  .table,
+  .table tbody,
+  .table tr,
+  .table td {
+    display: block;
+    width: 100%;
+  }
+
+  .tr {
+    background: var(--tan);
+    border: 1px solid var(--darkBrown);
+    border-radius: 12px;
+    padding: 10px 12px;
+    margin-bottom: 2rem;
+  }
+
+  .td {
+    border: 0;
+    background: transparent;
+    display: grid;
+    grid-template-columns: 128px 1fr;
+    gap: 10px;
+    align-items: baseline;
+    font-size: 14px;
+    line-height: 1.35;
+    padding: 8px 0;
+  }
+
+  .td::before {
+    content: attr(data-label);
+    color: #6b7280;
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 0.02em;
+    text-transform: none;
+  }
+
+  .tr .td:first-child {
+    padding-top: 2px;
+  }
+
+  .tr > .td:last-child {
+    padding: 2rem;
+    border: none;
+    background-color: var(--brownii);
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    grid-template-columns: 1fr;
+    border-radius: 10px;
+  }
+
+  .tr > .td:last-child::before {
+    content: "Actions";
+    flex: 0 0 auto;
+    font-weight: 700;
+    color: #6b7280;
+    margin-right: 8px;
+  }
+
+  .tr:last-child {
+    border-bottom: 1px solid var(--darkBrown);
+  }
+
+  .viewLink {
+    width: auto;
+    display: inline-block;
+  }
+
+  .badge {
+    width: auto;
+    text-align: left;
+  }
+
+  .table {
+    background-color: transparent;
+  }
+
+  .pagination {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  .paginationControls {
+    justify-content: space-between;
+  }
+
+  .table tbody tr .td {
+    border-bottom: 1px solid var(--brown);
+  }
+
+  .table tbody tr > td:nth-last-child(2) {
+    margin-bottom: 1rem;
+  }
+}

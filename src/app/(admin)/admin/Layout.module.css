@@ -75,7 +75,11 @@
 @media screen and (max-width: 768px) {
   .content {
     grid-template-columns: 1fr;
-    grid-gap: 2rem;
+    grid-gap: 10rem;
+  }
+
+  .right {
+    order: -1
   }
 
   .copy {

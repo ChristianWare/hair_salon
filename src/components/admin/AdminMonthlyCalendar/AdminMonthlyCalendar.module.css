@@ -1,5 +1,5 @@
 .wrap {
-  border: 1px solid var(--brown);
+  border: 1px solid var(--darkBrown);
   border-radius: 10px;
   background: var(--tan);
 }

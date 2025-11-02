@@ -158,6 +158,15 @@ textarea:focus {
   font-weight: 500;
 }
 
+.adminHeading {
+  color: var(--darkBrown);
+  font-size: 4rem;
+  font-family: var(--interTight);
+  text-transform: none;
+  letter-spacing: 0;
+  font-weight: 600;
+}
+
 /* .toastFont {
   font-family: var(--ABCSocialLight);
 } */
