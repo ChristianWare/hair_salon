@@ -1,5 +1,6 @@
 // src/app/(admin)/reports/page.tsx
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import styles from "./ReportsPage.module.css";
 import { redirect } from "next/navigation";
 import { auth } from "../../../../../auth";
 import { db } from "@/lib/db";
@@ -21,7 +22,7 @@ function getStr(
   fallback = ""
 ) {
   const v = sp[key];
-  return Array.isArray(v) ? (v[0] ?? fallback) : (v ?? fallback);
+  return Array.isArray(v) ? v[0] ?? fallback : v ?? fallback;
 }
 function buildHref(prev: URLSearchParams, next: Record<string, string | null>) {
   const q: Record<string, string> = Object.fromEntries(prev.entries());
@@ -60,11 +61,9 @@ export default async function ReportsPage({
 }: {
   searchParams: SearchParamsPromise;
 }) {
-  // Guard
   const session = await auth();
   if (!session || session.user.role !== "ADMIN") redirect("/login");
 
-  // Parse query
   const spObj = await searchParams;
   const sp = new URLSearchParams(
     Object.entries(spObj).reduce<Record<string, string>>((acc, [k, v]) => {
@@ -83,7 +82,6 @@ export default async function ReportsPage({
   const fromQ = getStr(spObj, "from");
   const toQ = getStr(spObj, "to");
 
-  // Determine range
   const now = new Date();
   let fromDate: Date;
   let toDate: Date;
@@ -106,7 +104,6 @@ export default async function ReportsPage({
     fromDate = startOfDay(first);
     toDate = endOfDay(now);
   } else {
-    // default 30d
     fromDate = startOfDay(subDays(now, 29));
     toDate = endOfDay(now);
   }
@@ -114,7 +111,6 @@ export default async function ReportsPage({
   const fromStr = toISODate(fromDate);
   const toStr = toISODate(toDate);
 
-  // Where clauses
   const whereAll: Prisma.BookingWhereInput = {
     start: { gte: fromDate, lte: toDate },
   };
@@ -123,7 +119,6 @@ export default async function ReportsPage({
     status: "COMPLETED",
   };
 
-  // Fetch aggregates
   const [
     totalBookings,
     statusCounts,
@@ -145,7 +140,6 @@ export default async function ReportsPage({
       _sum: { depositCents: true, tipCents: true },
       _count: { _all: true },
     }),
-    // 🔧 add orderBy here
     db.booking.groupBy({
       by: ["serviceId"],
       where: whereCompleted,
@@ -153,7 +147,6 @@ export default async function ReportsPage({
       _count: { _all: true },
       _sum: { depositCents: true, tipCents: true },
     }),
-    // 🔧 and here
     db.booking.groupBy({
       by: ["groomerId"],
       where: whereCompleted,
@@ -167,41 +160,37 @@ export default async function ReportsPage({
     }),
   ]);
 
-
-  // Derive numbers
   const statusMap = Object.fromEntries(
     statusCounts.map((s) => [
       String(s.status),
-      typeof s._count === "object" && s._count ? (s._count._all ?? 0) : 0,
+      typeof s._count === "object" && s._count ? s._count._all ?? 0 : 0,
     ])
   );
   const completedCount =
     typeof revenueAgg._count === "object" && revenueAgg._count
-      ? (revenueAgg._count._all ?? 0)
+      ? revenueAgg._count._all ?? 0
       : 0;
   const sumDeposit =
     typeof revenueAgg._sum === "object" && revenueAgg._sum?.depositCents
-      ? (revenueAgg._sum.depositCents ?? 0)
+      ? revenueAgg._sum.depositCents ?? 0
       : 0;
   const sumTip =
     typeof revenueAgg._sum === "object" && revenueAgg._sum?.tipCents
-      ? (revenueAgg._sum.tipCents ?? 0)
+      ? revenueAgg._sum.tipCents ?? 0
       : 0;
   const revenueCents = (sumDeposit ?? 0) + (sumTip ?? 0);
   const avgTicketCents =
     completedCount > 0 ? Math.round(revenueCents / completedCount) : 0;
 
-  // Lookup maps
   const serviceName = new Map(services.map((s) => [s.id, s.name]));
   const groomerName = new Map(
     groomers.map((g) => [g.id, g.user?.name || g.user?.email || g.id])
   );
 
-  // Sort top lists
   const topServices = [...svcAgg]
     .map((r) => {
       const count =
-        typeof r._count === "object" && r._count ? (r._count._all ?? 0) : 0;
+        typeof r._count === "object" && r._count ? r._count._all ?? 0 : 0;
       const revenue = (r._sum?.depositCents ?? 0) + (r._sum?.tipCents ?? 0);
       return {
         id: r.serviceId,
@@ -216,7 +205,7 @@ export default async function ReportsPage({
   const topGroomers = [...grAgg]
     .map((r) => {
       const count =
-        typeof r._count === "object" && r._count ? (r._count._all ?? 0) : 0;
+        typeof r._count === "object" && r._count ? r._count._all ?? 0 : 0;
       const revenue = (r._sum?.depositCents ?? 0) + (r._sum?.tipCents ?? 0);
       return {
         id: r.groomerId,
@@ -229,56 +218,48 @@ export default async function ReportsPage({
     .slice(0, 10);
 
   return (
-    <section style={{ padding: "2rem" }}>
-      {/* Header */}
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          gap: 16,
-          marginBottom: "1rem",
-        }}
-      >
-        <h1 style={{ fontSize: 22, fontWeight: 600, margin: 0 }}>Reports</h1>
-        <div style={{ fontSize: 14, color: "#666" }}>
+    <section className={styles.section}>
+      <div className={styles.header}>
+        <h1 className={`${styles.heading} adminHeading`}>Reports</h1>
+        <div className={styles.headerCount}>
           {fromStr} → {toStr}
         </div>
       </div>
 
-      {/* Date filters */}
-      <form
-        style={{
-          display: "flex",
-          flexWrap: "wrap",
-          gap: 8,
-          alignItems: "end",
-          marginBottom: 12,
-        }}
-      >
-        <div>
-          <label style={label}>From</label>
-          <input type='date' name='from' defaultValue={fromStr} style={input} />
+      <form className={styles.filters}>
+        <div className={styles.field}>
+          <label className={styles.label}>From</label>
+          <input
+            type='date'
+            name='from'
+            defaultValue={fromStr}
+            className={styles.input}
+          />
         </div>
-        <div>
-          <label style={label}>To</label>
-          <input type='date' name='to' defaultValue={toStr} style={input} />
+        <div className={styles.field}>
+          <label className={styles.label}>To</label>
+          <input
+            type='date'
+            name='to'
+            defaultValue={toStr}
+            className={styles.input}
+          />
         </div>
         <input type='hidden' name='preset' value='custom' />
-        <div style={{ display: "flex", gap: 8, marginLeft: "auto" }}>
-          <button type='submit' style={primaryBtn}>
+        <div className={styles.actionsRight}>
+          <button type='submit' className={styles.btnPrimary}>
             Apply
           </button>
-          <Link href={{ pathname: BASE_PATH, query: {} }} style={outlineBtn}>
+          <Link
+            href={{ pathname: BASE_PATH, query: {} }}
+            className={styles.btnOutline}
+          >
             Clear
           </Link>
         </div>
       </form>
 
-      {/* Preset pills */}
-      <div
-        style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 16 }}
-      >
+      <div className={styles.pillsRow}>
         <Pill
           href={buildHref(sp, { preset: "today", from: null, to: null })}
           current={preset === "today"}
@@ -301,15 +282,7 @@ export default async function ReportsPage({
         />
       </div>
 
-      {/* Summary cards */}
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(180px,1fr))",
-          gap: 12,
-          marginBottom: 16,
-        }}
-      >
+      <div className={styles.cardsGrid}>
         <Card title='Bookings' value={totalBookings.toLocaleString()} />
         <Card title='Completed' value={completedCount.toLocaleString()} />
         <Card title='Revenue' value={toUSD(revenueCents)} />
@@ -324,50 +297,33 @@ export default async function ReportsPage({
         />
       </div>
 
-      {/* Status breakdown */}
-      <div
-        style={{
-          overflowX: "auto",
-          border: "1px solid #e5e5e5",
-          borderRadius: 8,
-          marginBottom: 16,
-        }}
-      >
-        <table
-          style={{
-            width: "100%",
-            borderCollapse: "collapse",
-            background: "white",
-          }}
-        >
-          <thead
-            style={{
-              position: "sticky",
-              top: 0,
-              background: "#fafafa",
-              zIndex: 1,
-            }}
-          >
+      <div className={styles.tableWrap}>
+        <table className={styles.table}>
+          <thead className={styles.thead}>
             <tr>
-              <th style={th}>Status</th>
-              <th style={th}>Count</th>
+              <th className={styles.th}>Status</th>
+              <th className={styles.th}>Count</th>
             </tr>
           </thead>
           <tbody>
             {Object.entries(statusMap).length === 0 ? (
               <tr>
-                <td
-                  colSpan={2}
-                  style={{ padding: 16, textAlign: "center", color: "#666" }}
-                >
+                <td colSpan={2} className={styles.emptyCell}>
                   No bookings in range.
                 </td>
               </tr>
             ) : (
               Object.entries(statusMap).map(([s, c]) => (
-                <tr key={s} style={{ borderTop: "1px solid #eee" }}>
-                  <td style={td}>{s.replace("_", " ")}</td>
-                  <td style={td}>{c}</td>
+                <tr key={s} className={styles.tr}>
+                  <td className={styles.td} data-label='Status'>
+                    {s.replace("_", " ")}
+                  </td>
+                  <td
+                    className={`${styles.td} ${styles.tdCenter}`}
+                    data-label='Count'
+                  >
+                    {c}
+                  </td>
                 </tr>
               ))
             )}
@@ -375,58 +331,38 @@ export default async function ReportsPage({
         </table>
       </div>
 
-      {/* Top services + top groomers */}
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(320px,1fr))",
-          gap: 16,
-        }}
-      >
-        <div
-          style={{
-            overflowX: "auto",
-            border: "1px solid #e5e5e5",
-            borderRadius: 8,
-          }}
-        >
-          <table
-            style={{
-              width: "100%",
-              borderCollapse: "collapse",
-              background: "white",
-            }}
-          >
-            <thead
-              style={{
-                position: "sticky",
-                top: 0,
-                background: "#fafafa",
-                zIndex: 1,
-              }}
-            >
+      <div className={styles.tablesGrid}>
+        <div className={styles.tableWrap}>
+          <table className={styles.table}>
+            <thead className={styles.thead}>
               <tr>
-                <th style={th}>Top Services (Completed)</th>
-                <th style={th}>Bookings</th>
-                <th style={th}>Revenue</th>
+                <th className={styles.th}>Top Services (Completed)</th>
+                <th className={styles.th}>Bookings</th>
+                <th className={styles.th}>Revenue</th>
               </tr>
             </thead>
             <tbody>
               {topServices.length === 0 ? (
                 <tr>
-                  <td
-                    colSpan={3}
-                    style={{ padding: 16, textAlign: "center", color: "#666" }}
-                  >
+                  <td colSpan={3} className={styles.emptyCell}>
                     No completed bookings in range.
                   </td>
                 </tr>
               ) : (
                 topServices.map((r) => (
-                  <tr key={r.id} style={{ borderTop: "1px solid #eee" }}>
-                    <td style={td}>{r.name}</td>
-                    <td style={td}>{r.count}</td>
-                    <td style={td}>{toUSD(r.revenue)}</td>
+                  <tr key={r.id} className={styles.tr}>
+                    <td className={styles.td} data-label='Service'>
+                      {r.name}
+                    </td>
+                    <td
+                      className={`${styles.td} ${styles.tdCenter}`}
+                      data-label='Bookings'
+                    >
+                      {r.count}
+                    </td>
+                    <td className={styles.td} data-label='Revenue'>
+                      {toUSD(r.revenue)}
+                    </td>
                   </tr>
                 ))
               )}
@@ -434,50 +370,37 @@ export default async function ReportsPage({
           </table>
         </div>
 
-        <div
-          style={{
-            overflowX: "auto",
-            border: "1px solid #e5e5e5",
-            borderRadius: 8,
-          }}
-        >
-          <table
-            style={{
-              width: "100%",
-              borderCollapse: "collapse",
-              background: "white",
-            }}
-          >
-            <thead
-              style={{
-                position: "sticky",
-                top: 0,
-                background: "#fafafa",
-                zIndex: 1,
-              }}
-            >
+        <div className={styles.tableWrap}>
+          <table className={styles.table}>
+            <thead className={styles.thead}>
               <tr>
-                <th style={th}>Top Groomers (Completed)</th>
-                <th style={th}>Bookings</th>
-                <th style={th}>Revenue</th>
+                <th className={styles.th}>Top Groomers (Completed)</th>
+                <th className={styles.th}>Bookings</th>
+                <th className={styles.th}>Revenue</th>
               </tr>
             </thead>
             <tbody>
               {topGroomers.length === 0 ? (
                 <tr>
-                  <td
-                    colSpan={3}
-                    style={{ padding: 16, textAlign: "center", color: "#666" }}
-                  >
+                  <td colSpan={3} className={styles.emptyCell}>
                     No completed bookings in range.
                   </td>
                 </tr>
               ) : (
                 topGroomers.map((r) => (
-                  <tr key={r.id} style={{ borderTop: "1px solid #eee" }}>
-                    <td style={td}>{r.name}</td>
-                    <td style={td}>{r.count}</td>
-                    <td style={td}>{toUSD(r.revenue)}</td>
+                  <tr key={r.id} className={styles.tr}>
+                    <td className={styles.td} data-label='Groomer'>
+                      {r.name}
+                    </td>
+                    <td
+                      className={`${styles.td} ${styles.tdCenter}`}
+                      data-label='Bookings'
+                    >
+                      {r.count}
+                    </td>
+                    <td className={styles.td} data-label='Revenue'>
+                      {toUSD(r.revenue)}
+                    </td>
                   </tr>
                 ))
               )}
@@ -488,8 +411,6 @@ export default async function ReportsPage({
     </section>
   );
 }
-
-/* ───────────── UI helpers / styles ───────────── */
 
 function Pill({
   href,
@@ -503,15 +424,7 @@ function Pill({
   return (
     <Link
       href={href}
-      style={{
-        padding: "6px 10px",
-        borderRadius: 999,
-        textDecoration: "none",
-        border: "1px solid #ddd",
-        background: current ? "#111" : "white",
-        color: current ? "white" : "#333",
-        fontSize: 13,
-      }}
+      className={`${styles.pill} ${current ? styles.pillCurrent : ""}`}
     >
       {label}
     </Link>
@@ -520,62 +433,9 @@ function Pill({
 
 function Card({ title, value }: { title: string; value: React.ReactNode }) {
   return (
-    <div
-      style={{
-        border: "1px solid #e5e5e5",
-        borderRadius: 8,
-        padding: 12,
-        background: "white",
-      }}
-    >
-      <div style={{ fontSize: 12, color: "#666", marginBottom: 6 }}>
-        {title}
-      </div>
-      <div style={{ fontSize: 20, fontWeight: 600 }}>{value}</div>
+    <div className={styles.card}>
+      <div className={styles.cardLabel}>{title}</div>
+      <div className={styles.cardValue}>{value}</div>
     </div>
   );
 }
-
-const label: React.CSSProperties = {
-  display: "block",
-  fontSize: 12,
-  color: "#666",
-  marginBottom: 4,
-};
-const input: React.CSSProperties = {
-  width: 180,
-  padding: "8px 12px",
-  border: "1px solid #ddd",
-  borderRadius: 6,
-  background: "white",
-};
-const primaryBtn: React.CSSProperties = {
-  padding: "8px 14px",
-  borderRadius: 6,
-  background: "#111",
-  color: "white",
-  border: "1px solid #111",
-  cursor: "pointer",
-};
-const outlineBtn: React.CSSProperties = {
-  padding: "8px 14px",
-  borderRadius: 6,
-  background: "white",
-  color: "#333",
-  border: "1px solid #ddd",
-  cursor: "pointer",
-  textDecoration: "none",
-};
-const th: React.CSSProperties = {
-  borderBottom: "1px solid #e5e5e5",
-  padding: 10,
-  background: "#fafafa",
-  textAlign: "left",
-  position: "sticky",
-  top: 0,
-  zIndex: 1,
-};
-const td: React.CSSProperties = {
-  borderBottom: "1px solid #f0f0f0",
-  padding: 10,
-};
