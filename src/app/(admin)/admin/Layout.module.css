@@ -72,7 +72,7 @@
   }
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 1068px) {
   .content {
     grid-template-columns: 1fr;
     grid-gap: 10rem;

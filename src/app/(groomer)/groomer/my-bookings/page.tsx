@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import styles from './MyBookingsPage.module.css'
 import Link from "next/link";
 import { db } from "@/lib/db";
 import { requireGroomer } from "@/lib/rbac";
@@ -135,7 +136,7 @@ export default async function MyBookingsPage({
 
   return (
     <section style={{ padding: "2rem" }}>
-      <h1 style={{ marginBottom: "1rem" }}>My Bookings</h1>
+      <h1 className={`${styles.heading} adminHeading`}>My Bookings</h1>
 
       {/* Filters */}
       <nav

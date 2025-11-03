@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import styles from "./MyBookingsPage.module.css";
 import { redirect } from "next/navigation";
 import { auth } from "../../../../../auth";
 import { db } from "@/lib/db";
@@ -23,7 +24,7 @@ function getStr(
   fallback = ""
 ) {
   const v = sp[key];
-  return Array.isArray(v) ? (v[0] ?? fallback) : (v ?? fallback);
+  return Array.isArray(v) ? v[0] ?? fallback : v ?? fallback;
 }
 
 function getNum(
@@ -158,7 +159,7 @@ export default async function MyBookingsPage({
   const statusMap = Object.fromEntries(
     statusCounts.map((s) => [
       String(s.status),
-      typeof s._count === "object" && s._count ? (s._count._all ?? 0) : 0,
+      typeof s._count === "object" && s._count ? s._count._all ?? 0 : 0,
     ])
   );
 
@@ -175,29 +176,17 @@ export default async function MyBookingsPage({
   });
 
   return (
-    <section style={{ padding: "2rem" }}>
+    <section className={styles.section}>
       {/* Header */}
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          gap: 16,
-          marginBottom: 12,
-        }}
-      >
-        <h1 style={{ fontSize: 22, fontWeight: 600, margin: 0 }}>
-          My Bookings
-        </h1>
-        <div style={{ fontSize: 14, color: "#666" }}>
+      <div className={styles.header}>
+        <h1 className={`${styles.heading} adminHeading`}>My Bookings</h1>
+        <div className={styles.headerCount}>
           {total.toLocaleString()} result{total === 1 ? "" : "s"}
         </div>
       </div>
 
       {/* Quick filter pills */}
-      <div
-        style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 12 }}
-      >
+      <div className={styles.pillsRow}>
         <Pill
           href={buildHref(sp, { filter: "upcoming", page: "1" })}
           current={filter === "upcoming"}
@@ -236,119 +225,107 @@ export default async function MyBookingsPage({
         <Pill
           href={buildHref(sp, { filter: "all", page: "1" })}
           current={filter === "all"}
-          label={`All (${Object.values(statusMap).reduce((a, b) => a + (b as number), 0)})`}
+          label={`All (${Object.values(statusMap).reduce(
+            (a, b) => a + (b as number),
+            0
+          )})`}
         />
       </div>
 
       {/* Table */}
-      <div
-        style={{
-          overflowX: "auto",
-          border: "1px solid #e5e5e5",
-          borderRadius: 8,
-        }}
-      >
-        <table
-          style={{
-            width: "100%",
-            borderCollapse: "collapse",
-            background: "white",
-          }}
-        >
-          <thead
-            style={{
-              position: "sticky",
-              top: 0,
-              background: "#fafafa",
-              zIndex: 1,
-            }}
-          >
-            <tr>
-              <th style={th}>Date</th>
-              <th style={th}>Time</th>
-              <th style={th}>Service</th>
-              <th style={th}>Groomer</th>
-              <th style={th}>Status</th>
-              <th style={th}>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {bookings.length === 0 ? (
+      <div className={styles.tableScroll}>
+        <div className={styles.tableWrap}>
+          <table className={styles.table}>
+            <thead className='tablethead'>
               <tr>
-                <td
-                  colSpan={6}
-                  style={{ padding: 16, textAlign: "center", color: "#666" }}
-                >
-                  No bookings for this view.
-                </td>
+                <th className={styles.th}>Date</th>
+                <th className={styles.th}>Time</th>
+                <th className={styles.th}>Service</th>
+                <th className={styles.th}>Groomer</th>
+                <th className={styles.th}>Status</th>
+                <th className={styles.th}>Actions</th>
               </tr>
-            ) : (
-              bookings.map((b) => {
-                const start = new Date(b.start);
-                const dateStr = dateFmt.format(start);
-                const timeStr = timeFmt.format(start);
-                const canCancel =
-                  (b.status === "PENDING" || b.status === "CONFIRMED") &&
-                  start > new Date();
+            </thead>
+            <tbody>
+              {bookings.length === 0 ? (
+                <tr>
+                  <td
+                    colSpan={6}
+                    className={`${styles.td} ${styles.center} ${styles.muted}`}
+                  >
+                    No bookings for this view.
+                  </td>
+                </tr>
+              ) : (
+                bookings.map((b) => {
+                  const start = new Date(b.start);
+                  const dateStr = dateFmt.format(start);
+                  const timeStr = timeFmt.format(start);
+                  const canCancel =
+                    (b.status === "PENDING" || b.status === "CONFIRMED") &&
+                    start > new Date();
 
-                return (
-                  <tr key={b.id} style={{ borderTop: "1px solid #eee" }}>
-                    <td style={td}>{dateStr}</td>
-                    <td style={td}>{timeStr}</td>
-                    <td style={td}>
-                      {b.service?.name ?? "—"}{" "}
-                      {b.service?.durationMin ? (
-                        <small>({b.service.durationMin}m)</small>
-                      ) : null}
-                    </td>
-                    <td style={td}>
-                      {b.groomer?.user?.name ?? b.groomer?.user?.email ?? "—"}
-                    </td>
-                    <td style={td}>
-                      <span style={statusPill(b.status)}>
-                        {b.status.replace("_", " ")}
-                      </span>
-                    </td>
-                    <td style={td}>
-                      <div
-                        style={{
-                          display: "flex",
-                          gap: 8,
-                          alignItems: "center",
-                          flexWrap: "wrap",
-                        }}
-                      >
-                        <Link
-                          href={`${BASE_PATH}/${b.id}`}
-                          style={{ color: "#0969da", textDecoration: "none" }}
+                  return (
+                    <tr key={b.id}>
+                      <td className={styles.td} data-label='Date'>
+                        {dateStr}
+                      </td>
+                      <td className={styles.td} data-label='Time'>
+                        {timeStr}
+                      </td>
+                      <td className={styles.td} data-label='Service'>
+                        {b.service?.name ?? "—"}{" "}
+                        {b.service?.durationMin ? (
+                          <small>({b.service.durationMin}m)</small>
+                        ) : null}
+                      </td>
+                      <td className={styles.td} data-label='Groomer'>
+                        {b.groomer?.user?.name ?? b.groomer?.user?.email ?? "—"}
+                      </td>
+                      <td className={styles.td} data-label='Status'>
+                        <span
+                          className={`${styles.badge} ${
+                            b.status === "CONFIRMED"
+                              ? styles.badge_confirmed
+                              : b.status === "PENDING"
+                              ? styles.badge_pending
+                              : b.status === "COMPLETED"
+                              ? styles.badge_completed
+                              : b.status === "CANCELED"
+                              ? styles.badge_canceled
+                              : styles.badge_noshow
+                          }`}
                         >
-                          View
-                        </Link>
-                        {canCancel ? (
-                          <CancelBookingForm bookingId={b.id} />
-                        ) : (
-                          <span style={{ color: "#666" }}>—</span>
-                        )}
-                      </div>
-                    </td>
-                  </tr>
-                );
-              })
-            )}
-          </tbody>
-        </table>
+                          {b.status.replace("_", " ")}
+                        </span>
+                      </td>
+                      <td className={styles.td} data-label='Actions'>
+                        <div className={styles.rowActions}>
+                          <Link
+                            href={`${BASE_PATH}/${b.id}`}
+                            className={styles.btnOutlineSm}
+                          >
+                            View
+                          </Link>
+                          {canCancel ? (
+                            <CancelBookingForm bookingId={b.id} />
+                          ) : (
+                            <span className={styles.muted}>—</span>
+                          )}
+                        </div>
+                      </td>
+                    </tr>
+                  );
+                })
+              )}
+            </tbody>
+          </table>
+        </div>
       </div>
 
       {/* Pagination */}
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          marginTop: 12,
-        }}
-      >
-        <div style={{ fontSize: 14, color: "#666" }}>
+      <div className={styles.pagination}>
+        <div className={styles.paginationInfo}>
           Showing{" "}
           {total === 0
             ? "0"
@@ -358,31 +335,27 @@ export default async function MyBookingsPage({
               )}`}{" "}
           of {total}
         </div>
-        <div style={{ display: "flex", gap: 8 }}>
+        <div className={styles.paginationControls}>
           {page <= 1 ? (
-            <span
-              style={{ ...outlineBtn, opacity: 0.5, pointerEvents: "none" }}
-            >
+            <span className={`${styles.btnOutline} ${styles.btnDisabled}`}>
               Previous
             </span>
           ) : (
             <Link
               href={buildHref(sp, { page: String(page - 1) })}
-              style={outlineBtn}
+              className={styles.btnOutline}
             >
               Previous
             </Link>
           )}
           {page >= pages ? (
-            <span
-              style={{ ...outlineBtn, opacity: 0.5, pointerEvents: "none" }}
-            >
+            <span className={`${styles.btnOutline} ${styles.btnDisabled}`}>
               Next
             </span>
           ) : (
             <Link
               href={buildHref(sp, { page: String(page + 1) })}
-              style={outlineBtn}
+              className={styles.btnOutline}
             >
               Next
             </Link>
@@ -407,62 +380,10 @@ function Pill({
   return (
     <Link
       href={href}
-      style={{
-        padding: "6px 10px",
-        borderRadius: 999,
-        textDecoration: "none",
-        border: "1px solid #ddd",
-        background: current ? "#111" : "white",
-        color: current ? "white" : "#333",
-        fontSize: 13,
-      }}
+      className={`${styles.pill} ${current ? styles.pillCurrent : ""}`}
+      aria-current={current ? "page" : undefined}
     >
       {label}
     </Link>
   );
 }
-
-function statusPill(status: string): React.CSSProperties {
-  const color =
-    status === "CONFIRMED"
-      ? "#0a7"
-      : status === "PENDING"
-        ? "#d88a00"
-        : status === "COMPLETED"
-          ? "#0366d6"
-          : status === "CANCELED"
-            ? "#999"
-            : "#b33636"; // NO_SHOW
-  return {
-    display: "inline-block",
-    padding: "2px 8px",
-    borderRadius: 999,
-    color: "white",
-    background: color,
-    fontSize: 12,
-  };
-}
-
-/* ───────────── shared inline styles ───────────── */
-const outlineBtn: React.CSSProperties = {
-  padding: "8px 14px",
-  borderRadius: 6,
-  background: "white",
-  color: "#333",
-  border: "1px solid #ddd",
-  cursor: "pointer",
-  textDecoration: "none",
-};
-const th: React.CSSProperties = {
-  borderBottom: "1px solid #e5e5e5",
-  padding: 10,
-  background: "#fafafa",
-  textAlign: "left",
-  position: "sticky",
-  top: 0,
-  zIndex: 1,
-};
-const td: React.CSSProperties = {
-  borderBottom: "1px solid #f0f0f0",
-  padding: 10,
-};

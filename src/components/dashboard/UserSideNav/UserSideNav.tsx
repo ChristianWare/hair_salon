@@ -16,7 +16,7 @@ import { usePathname } from "next/navigation";
 
 const NAV_ITEMS = [
   { title: "Dashboard", href: "/dashboard", icon: <House /> },
-  { title: "Book Aptmnt", href: "/booking", icon: <Calendar /> },
+  { title: "Book Aptmnt", href: "/book-appointment", icon: <Calendar /> },
   { title: "My Bookings", href: "/dashboard/my-bookings", icon: <Listing /> },
   { title: "Profile", href: "/dashboard/profile", icon: <Users /> },
   { title: "Settings", href: "/dashboard/settings", icon: <Cog /> },

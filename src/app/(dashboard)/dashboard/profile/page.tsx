@@ -1,3 +1,4 @@
+import styles from "./ProfilePage.module.css";
 import { redirect } from "next/navigation";
 import { auth } from "../../../../../auth";
 import { db } from "@/lib/db";
@@ -22,10 +23,7 @@ export async function updateProfile(formData: FormData) {
 
   await db.user.update({
     where: { id: session.user.id },
-    data: {
-      name,
-      image: image || null,
-    },
+    data: { name, image: image || null },
   });
 
   revalidatePath(BASE_PATH);
@@ -56,91 +54,28 @@ export default async function ProfilePage() {
   }).format(new Date(me.createdAt));
 
   return (
-    <section style={{ padding: "2rem" }}>
+    <section className={styles.section}>
       {/* Header */}
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          gap: 16,
-          marginBottom: 12,
-        }}
-      >
-        <h1 style={{ fontSize: 22, fontWeight: 600, margin: 0 }}>
-          Profile & Settings
-        </h1>
-        <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
-          <Link href='/dashboard' style={outlineBtn}>
+      <div className={styles.header}>
+        <h1 className={`${styles.heading} adminHeading`}>Profile & Settings</h1>
+        <div className={styles.btnRow}>
+          <Link href='/dashboard' className={styles.btnOutline}>
             Dashboard
           </Link>
-          <Link href='/dashboard/bookings' style={outlineBtn}>
+          <Link href='/dashboard/my-bookings' className={styles.btnOutline}>
             My Bookings
           </Link>
-          <Link href='/book' style={primaryBtn}>
+          <Link href='/book' className={styles.btnPrimary}>
             Book Appointment
           </Link>
         </div>
       </div>
 
       {/* Summary card */}
-      <div
-        style={{
-          ...card,
-          display: "grid",
-          gridTemplateColumns: "120px 1fr",
-          gap: 16,
-          marginBottom: 16,
-        }}
-      >
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          {me.image ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
-              src={me.image}
-              alt='Avatar'
-              width={96}
-              height={96}
-              style={{
-                width: 96,
-                height: 96,
-                borderRadius: "999px",
-                objectFit: "cover",
-                border: "1px solid #eee",
-              }}
-            />
-          ) : (
-            <div
-              style={{
-                width: 96,
-                height: 96,
-                borderRadius: "999px",
-                background: "#f4f4f5",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                fontWeight: 600,
-                color: "#666",
-                border: "1px solid #eee",
-              }}
-            >
-              {me.name?.[0]?.toUpperCase() ?? me.email[0]?.toUpperCase()}
-            </div>
-          )}
-        </div>
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit,minmax(220px,1fr))",
-            gap: 12,
-          }}
-        >
+      <div className={`${styles.card} ${styles.summaryGrid} ${styles.mb16}`}>
+        
+
+        <div className={styles.infoGrid}>
           <Info label='Name' value={me.name ?? "—"} />
           <Info label='Email' value={me.email} />
           <Info label='Role' value={me.role} />
@@ -149,42 +84,21 @@ export default async function ProfilePage() {
       </div>
 
       {/* Edit profile */}
-      <section style={{ marginBottom: 16 }}>
-        <h2 style={h2}>Edit Profile</h2>
-        <form
-          action={updateProfile}
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(260px,1fr))",
-            gap: 12,
-            alignItems: "end",
-          }}
-        >
-          <div style={card}>
-            <label style={label}>Name</label>
+      <section className={styles.mb16}>
+        <h2 className={styles.h2}>Edit Profile</h2>
+        <form action={updateProfile} className={styles.formGrid}>
+          <div className={styles.card}>
+            <label className={styles.label}>Name</label>
             <input
               name='name'
               defaultValue={me.name ?? ""}
               required
-              style={input}
+              className={styles.input}
             />
           </div>
-          <div style={card}>
-            <label style={label}>Avatar URL</label>
-            <input
-              name='image'
-              defaultValue={me.image ?? ""}
-              placeholder='https://…'
-              style={input}
-            />
-            <div style={{ fontSize: 12, color: "#666", marginTop: 6 }}>
-              Paste a public image URL. (Uploads coming soon.)
-            </div>
-          </div>
-          <div
-            style={{ alignSelf: "stretch", display: "flex", alignItems: "end" }}
-          >
-            <button type='submit' style={primaryBtn}>
+         
+          <div className={styles.actionsRight}>
+            <button type='submit' className={styles.btnPrimary}>
               Save Changes
             </button>
           </div>
@@ -193,35 +107,27 @@ export default async function ProfilePage() {
 
       {/* Read-only account details */}
       <section>
-        <h2 style={h2}>Account</h2>
-        <div
-          style={{
-            ...card,
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(220px,1fr))",
-            gap: 12,
-          }}
-        >
+        <h2 className={styles.h2}>Account</h2>
+        <div className={`${styles.card} ${styles.infoGridWide}`}>
           <Info label='Email (read-only)' value={me.email} />
-          <Info label='User ID' value={<code style={code}>{me.id}</code>} />
-          {/* Add buttons as your project supports them; left minimal to avoid auth/verification tangles */}
+          <Info
+            label='User ID'
+            value={<code className={styles.code}>{me.id}</code>}
+          />
+
           {session.user.role === "ADMIN" && (
             <div>
-              <div style={{ fontSize: 12, color: "#666", marginBottom: 4 }}>
-                Admin
-              </div>
-              <Link href='/admin' style={outlineBtn}>
+              <div className={styles.infoLabelMuted}>Admin</div>
+              <Link href='/admin' className={styles.btnOutline}>
                 Open Admin Panel
               </Link>
             </div>
           )}
-          {/* If you expose a groomer panel for users who are groomers */}
+
           {session.user.isGroomer && (
             <div>
-              <div style={{ fontSize: 12, color: "#666", marginBottom: 4 }}>
-                Groomer
-              </div>
-              <Link href='/groomer' style={outlineBtn}>
+              <div className={styles.infoLabelMuted}>Groomer</div>
+              <Link href='/groomer' className={styles.btnOutline}>
                 Open Groomer Panel
               </Link>
             </div>
@@ -233,71 +139,11 @@ export default async function ProfilePage() {
 }
 
 /* ───────────── little presentational bits ───────────── */
-
 function Info({ label, value }: { label: string; value: React.ReactNode }) {
   return (
-    <div>
-      <div style={{ fontSize: 12, color: "#666", marginBottom: 4 }}>
-        {label}
-      </div>
-      <div style={{ fontWeight: 500, wordBreak: "break-word" }}>{value}</div>
+    <div className={styles.infoLabelBox}>
+      <div className={styles.infoLabel}>{label}</div>
+      <div className={styles.infoValue}>{value}</div>
     </div>
   );
 }
-
-/* ───────────── inline styles (consistent with other pages) ───────────── */
-const h2: React.CSSProperties = {
-  fontSize: 16,
-  fontWeight: 600,
-  margin: "0 0 8px 0",
-};
-
-const card: React.CSSProperties = {
-  border: "1px solid #e5e5e5",
-  borderRadius: 8,
-  padding: 12,
-  background: "white",
-};
-
-const label: React.CSSProperties = {
-  display: "block",
-  fontSize: 12,
-  color: "#666",
-  marginBottom: 4,
-};
-
-const input: React.CSSProperties = {
-  width: "100%",
-  padding: "8px 12px",
-  border: "1px solid #ddd",
-  borderRadius: 6,
-  background: "white",
-};
-
-const primaryBtn: React.CSSProperties = {
-  padding: "8px 14px",
-  borderRadius: 6,
-  background: "#111",
-  color: "white",
-  border: "1px solid #111",
-  cursor: "pointer",
-  textDecoration: "none",
-};
-
-const outlineBtn: React.CSSProperties = {
-  padding: "8px 14px",
-  borderRadius: 6,
-  background: "white",
-  color: "#333",
-  border: "1px solid #ddd",
-  cursor: "pointer",
-  textDecoration: "none",
-};
-
-const code: React.CSSProperties = {
-  background: "#f6f8fa",
-  border: "1px solid #eee",
-  borderRadius: 6,
-  padding: "2px 6px",
-  fontSize: 12,
-};
