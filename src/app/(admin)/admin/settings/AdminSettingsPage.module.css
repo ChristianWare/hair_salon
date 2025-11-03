@@ -1,0 +1,222 @@
+.section {
+  padding: 2rem;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 5rem;
+}
+
+.heading {
+  font-family: var(--interTight);
+}
+
+.block {
+  margin-bottom: 1.25rem;
+}
+
+.h2 {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0 0 8px 0;
+  font-family: var(--interTight);
+  letter-spacing: .5px;
+}
+
+.gridForm {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+  align-items: end;
+}
+
+.card {
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+  padding: 12px;
+  background: #fff;
+}
+
+.cardColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.cardsGridWide {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 12px;
+}
+
+.metaRow {
+  font-size: 12px;
+  color: #666;
+}
+
+.label {
+  display: block;
+  font-size: 12px;
+  color: #666;
+  margin-bottom: 4px;
+  font-family: var(--interTight);
+}
+
+.input {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  background: #fff;
+  font-family: var(--interTight);
+}
+
+.textarea {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  background: #fff;
+  resize: vertical;
+  font-family: var(--interTight);
+}
+
+.actionsRight {
+  align-self: stretch;
+  display: flex;
+  align-items: end;
+}
+
+.btnPrimary {
+  padding: 8px 14px;
+  border-radius: 6px;
+  background: #111;
+  color: #fff;
+  border: 1px solid #111;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.tableWrap {
+  overflow-x: auto;
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+  margin-bottom: 12px;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+}
+
+.thead {
+  position: sticky;
+  top: 0;
+  background: #fafafa;
+  z-index: 1;
+}
+
+.th {
+  border-bottom: 1px solid #e5e5e5;
+  padding: 10px;
+  text-align: left;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  font-family: var(--interTight);
+  font-weight: 600;
+}
+
+.tr {
+  border-top: 1px solid #eee;
+}
+
+.td {
+  border-bottom: 1px solid #f0f0f0;
+  padding: 10px;
+  font-family: var(--interTight);
+}
+
+.emptyCell {
+  padding: 16px;
+  text-align: center;
+  color: #666;
+}
+
+.inlineRow {
+  display: flex;
+  gap: 8px;
+  align-items: end;
+}
+
+.hidden {
+  display: none;
+}
+
+/* Responsive tweaks for mobile parity with other admin pages */
+@media screen and (max-width: 1268px) {
+  .header {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 3rem;
+  }
+
+  .heading {
+    text-align: center;
+  }
+
+  .cardsGridWide {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media screen and (max-width: 568px) {
+  .inlineRow {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .table,
+  .table tbody,
+  .table tr,
+  .table td {
+    display: block;
+    width: 100%;
+  }
+
+  .tr {
+    background: var(--tan);
+    border: 1px solid var(--brown);
+    background-color: var(--white);
+    border-radius: 12px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .td {
+    border: 0;
+    background: transparent;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    align-items: baseline;
+    font-size: 14px;
+    line-height: 1.35;
+    padding: 8px 0;
+  }
+
+  .td::before {
+    content: attr(data-label);
+    color: #6b7280;
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 0.02em;
+    margin-right: 2rem;
+  }
+}

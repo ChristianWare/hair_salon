@@ -1,19 +1,17 @@
 // src/app/(admin)/settings/page.tsx
+import styles from "./AdminSettingsPage.module.css";
 import { redirect } from "next/navigation";
 import { auth } from "../../../../../auth";
 import { db } from "@/lib/db";
 import { revalidatePath } from "next/cache";
 import ConfirmSubmit from "@/components/shared/ConfirmSubmit/ConfirmSubmit";
-import ToastBridge from "@/components/shared/ToastBridge/ToastBridge"; // ⬅️ new
+import ToastBridge from "@/components/shared/ToastBridge/ToastBridge";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
 const BASE_PATH = "/admin/settings";
 
-/*───────────────────────────────────
-  1️⃣ Server Action: General Settings
-────────────────────────────────────*/
 export async function updateGeneralSettings(formData: FormData) {
   "use server";
   const session = await auth();
@@ -23,7 +21,6 @@ export async function updateGeneralSettings(formData: FormData) {
   const depositPct = parseFloat(formData.get("depositPct") as string);
   const cancelWindow = parseInt(formData.get("cancelWindow") as string, 10);
   const taxRate = parseFloat(formData.get("taxRate") as string);
-
   if (isNaN(depositPct) || isNaN(cancelWindow) || isNaN(taxRate)) {
     throw new Error("Invalid input");
   }
@@ -47,13 +44,9 @@ export async function updateGeneralSettings(formData: FormData) {
   ]);
 
   revalidatePath(BASE_PATH);
-  // ⬇️ redirect with toast flag
   redirect(`${BASE_PATH}?toast=settings_saved`);
 }
 
-/*───────────────────────────────────
-  2️⃣ Server Action: Notification 
-────────────────────────────────────*/
 export async function updateNotificationTemplate(formData: FormData) {
   "use server";
   const session = await auth();
@@ -74,9 +67,6 @@ export async function updateNotificationTemplate(formData: FormData) {
   redirect(`${BASE_PATH}?toast=template_saved`);
 }
 
-/*───────────────────────────────────
-  3️⃣ Server Action: Blackout Dates
-────────────────────────────────────*/
 export async function addBlackoutDate(formData: FormData) {
   "use server";
   const session = await auth();
@@ -104,9 +94,6 @@ export async function removeBlackoutDate(formData: FormData) {
   redirect(`${BASE_PATH}?toast=blackout_removed`);
 }
 
-/*───────────────────────────────────
-  4️⃣ Admin Settings Page Component
-────────────────────────────────────*/
 type SearchParamsPromise = Promise<
   Record<string, string | string[] | undefined>
 >;
@@ -114,7 +101,7 @@ type SearchParamsPromise = Promise<
 export default async function AdminSettingsPage({
   searchParams,
 }: {
-  searchParams: SearchParamsPromise; // ← Next 15: async
+  searchParams: SearchParamsPromise;
 }) {
   const session = await auth();
   if (!session || session.user.role !== "ADMIN") redirect("/login");
@@ -136,124 +123,91 @@ export default async function AdminSettingsPage({
   });
 
   return (
-    <section style={{ padding: "2rem" }}>
-      {/* Toasts */}
+    <section className={styles.section}>
       <ToastBridge toastKey={toastKey} />
 
-      {/* Header */}
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          gap: 16,
-          marginBottom: "1rem",
-        }}
-      >
-        <h1 style={{ fontSize: 22, fontWeight: 600, margin: 0 }}>Settings</h1>
+      <div className={styles.header}>
+        <h1 className={`${styles.heading} adminHeading`}>Settings</h1>
       </div>
 
-      {/* ── General Settings ─────────────────── */}
-      <section style={{ marginBottom: "1.25rem" }}>
-        <h2 style={h2}>General Business Settings</h2>
-        <form
-          action={updateGeneralSettings}
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(220px,1fr))",
-            gap: 12,
-            alignItems: "end",
-          }}
-        >
-          <div style={card}>
-            <label style={label}>Deposit Percentage (%)</label>
+      <section className={styles.block}>
+        <h2 className={styles.h2}>General Business Settings</h2>
+        <form action={updateGeneralSettings} className={styles.gridForm}>
+          <div className={styles.card}>
+            <label className={styles.label}>Deposit Percentage (%)</label>
             <input
               name='depositPct'
               type='number'
               step='0.1'
               defaultValue={depositCfg?.value ?? ""}
               required
-              style={input}
+              className={styles.input}
             />
           </div>
-          <div style={card}>
-            <label style={label}>Cancellation Window (hrs)</label>
+          <div className={styles.card}>
+            <label className={styles.label}>Cancellation Window (hrs)</label>
             <input
               name='cancelWindow'
               type='number'
               defaultValue={cancelCfg?.value ?? ""}
               required
-              style={input}
+              className={styles.input}
             />
           </div>
-          <div style={card}>
-            <label style={label}>Tax Rate (%)</label>
+          <div className={styles.card}>
+            <label className={styles.label}>Tax Rate (%)</label>
             <input
               name='taxRate'
               type='number'
               step='0.1'
               defaultValue={taxCfg?.value ?? ""}
               required
-              style={input}
+              className={styles.input}
             />
           </div>
-          <div
-            style={{ alignSelf: "stretch", display: "flex", alignItems: "end" }}
-          >
-            <button type='submit' style={primaryBtn}>
+          <div className={styles.actionsRight}>
+            <button type='submit' className={styles.btnPrimary}>
               Save
             </button>
           </div>
         </form>
       </section>
 
-      {/* ── Notification Templates ───────────── */}
-      <section style={{ marginBottom: "1.25rem" }}>
-        <h2 style={h2}>Notification Templates</h2>
+      <section className={styles.block}>
+        <h2 className={styles.h2}>Notification Templates</h2>
 
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(320px,1fr))",
-            gap: 12,
-          }}
-        >
+        <div className={styles.cardsGridWide}>
           {notificationTemplates.map((t) => (
             <form
               key={t.id}
               action={updateNotificationTemplate}
-              style={{
-                ...card,
-                display: "flex",
-                flexDirection: "column",
-                gap: 8,
-              }}
+              className={`${styles.card} ${styles.cardColumn}`}
             >
               <input type='hidden' name='id' value={t.id} />
-              <div style={{ fontSize: 12, color: "#666" }}>
-                <strong>Event:</strong> {t.event}
+              <div className={styles.metaRow}>
+                <strong>Event:</strong>&nbsp;{t.event}
               </div>
               <div>
-                <label style={label}>Subject</label>
+                <label className={styles.label}>Subject</label>
                 <input
                   name='subject'
                   defaultValue={t.subject}
                   required
-                  style={input}
+                  className={styles.input}
                 />
               </div>
               <div>
-                <label style={label}>Body</label>
+                <label className={styles.label}>Body</label>
                 <textarea
                   name='body'
                   defaultValue={t.body}
                   rows={4}
                   required
-                  style={textarea}
+                  className={styles.textarea}
                 />
               </div>
               <div>
-                <button type='submit' style={primaryBtn}>
+                <button type='submit' className={styles.btnPrimary}>
                   Save Template
                 </button>
               </div>
@@ -262,45 +216,21 @@ export default async function AdminSettingsPage({
         </div>
       </section>
 
-      {/* ── Blackout Dates ───────────────────── */}
-      <section>
-        <h2 style={h2}>Blackout Dates</h2>
+      <section className={styles.block}>
+        <h2 className={styles.h2}>Blackout Dates</h2>
 
-        <div
-          style={{
-            overflowX: "auto",
-            border: "1px solid #e5e5e5",
-            borderRadius: 8,
-            marginBottom: 12,
-          }}
-        >
-          <table
-            style={{
-              width: "100%",
-              borderCollapse: "collapse",
-              background: "white",
-            }}
-          >
-            <thead
-              style={{
-                position: "sticky",
-                top: 0,
-                background: "#fafafa",
-                zIndex: 1,
-              }}
-            >
+        <div className={styles.tableWrap}>
+          <table className={styles.table}>
+            <thead className={styles.thead}>
               <tr>
-                <th style={th}>Date</th>
-                <th style={th}>Actions</th>
+                <th className={styles.th}>Date</th>
+                <th className={styles.th}>Actions</th>
               </tr>
             </thead>
             <tbody>
               {blackoutDates.length === 0 ? (
                 <tr>
-                  <td
-                    colSpan={2}
-                    style={{ padding: 16, textAlign: "center", color: "#666" }}
-                  >
+                  <td colSpan={2} className={styles.emptyCell}>
                     No blackout dates.
                   </td>
                 </tr>
@@ -308,22 +238,21 @@ export default async function AdminSettingsPage({
                 blackoutDates.map((b) => {
                   const delFormId = `blk-del-${b.id}`;
                   return (
-                    <tr key={b.id} style={{ borderTop: "1px solid #eee" }}>
-                      <td style={td}>
+                    <tr key={b.id} className={styles.tr}>
+                      <td className={styles.td} data-label='Date'>
                         {new Date(b.date).toLocaleDateString()}
                       </td>
-                      <td style={td}>
+                      <td className={styles.td} data-label='Actions'>
                         <ConfirmSubmit
                           form={delFormId}
                           message='Remove this blackout date?'
                         >
                           Remove
                         </ConfirmSubmit>
-                        {/* hidden form */}
                         <form
                           id={delFormId}
                           action={removeBlackoutDate}
-                          style={{ display: "none" }}
+                          className={styles.hidden}
                         >
                           <input type='hidden' name='id' value={b.id} />
                         </form>
@@ -336,15 +265,12 @@ export default async function AdminSettingsPage({
           </table>
         </div>
 
-        <form
-          action={addBlackoutDate}
-          style={{ display: "flex", gap: 8, alignItems: "end" }}
-        >
+        <form action={addBlackoutDate} className={styles.inlineRow}>
           <div>
-            <label style={label}>Add Date</label>
-            <input name='date' type='date' required style={input} />
+            <label className={styles.label}>Add Date</label>
+            <input name='date' type='date' required className={styles.input} />
           </div>
-          <button type='submit' style={primaryBtn}>
+          <button type='submit' className={styles.btnPrimary}>
             Add Blackout Date
           </button>
         </form>
@@ -352,65 +278,3 @@ export default async function AdminSettingsPage({
     </section>
   );
 }
-
-/* ───────────── UI styles ───────────── */
-const h2: React.CSSProperties = {
-  fontSize: 16,
-  fontWeight: 600,
-  margin: "0 0 8px 0",
-};
-
-const card: React.CSSProperties = {
-  border: "1px solid #e5e5e5",
-  borderRadius: 8,
-  padding: 12,
-  background: "white",
-};
-
-const label: React.CSSProperties = {
-  display: "block",
-  fontSize: 12,
-  color: "#666",
-  marginBottom: 4,
-};
-
-const input: React.CSSProperties = {
-  width: "100%",
-  padding: "8px 12px",
-  border: "1px solid #ddd",
-  borderRadius: 6,
-  background: "white",
-};
-
-const textarea: React.CSSProperties = {
-  width: "100%",
-  padding: "8px 12px",
-  border: "1px solid #ddd",
-  borderRadius: 6,
-  background: "white",
-  resize: "vertical",
-};
-
-const primaryBtn: React.CSSProperties = {
-  padding: "8px 14px",
-  borderRadius: 6,
-  background: "#111",
-  color: "white",
-  border: "1px solid #111",
-  cursor: "pointer",
-};
-
-const th: React.CSSProperties = {
-  borderBottom: "1px solid #e5e5e5",
-  padding: 10,
-  background: "#fafafa",
-  textAlign: "left",
-  position: "sticky",
-  top: 0,
-  zIndex: 1,
-};
-
-const td: React.CSSProperties = {
-  borderBottom: "1px solid #f0f0f0",
-  padding: 10,
-};
