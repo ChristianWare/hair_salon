@@ -6,7 +6,6 @@ import Calendar from "@/components/shared/icons/Calendar/Calendar";
 import House from "@/components/shared/icons/House/House";
 import Employee from "@/components/shared/icons/Employee/Employee";
 import Cog from "@/components/shared/icons/Cog/Cog";
-// import Users from "@/components/icons/Users/Users";
 import Report from "@/components/shared/icons/Report/Report";
 import Listing from "@/components/shared/icons/Listing/Listing";
 import UserButton from "@/components/dashboard/UserButton/UserButton";
@@ -14,7 +13,7 @@ import Button from "@/components/shared/Button/Button";
 import { useState } from "react";
 import FalseButton from "@/components/shared/FalseButton/FalseButton";
 import { useSession } from "next-auth/react";
-
+import { usePathname } from "next/navigation";
 
 const NAV_ITEMS = [
   { title: "Dashboard", href: "/groomer", icon: <House /> },
@@ -24,17 +23,14 @@ const NAV_ITEMS = [
   { title: "Earnings", href: "/groomer/earnings", icon: <Report /> },
   { title: "Settings", href: "/groomer/settings", icon: <Cog /> },
 ];
+
 export default function GroomerSideNav() {
   const [isOpen, setIsOpen] = useState(false);
-
-  const openMenu = () => {
-    setIsOpen((o) => !o);
-  };
-
-
   const { data: session } = useSession();
   const isAdmin = session?.user?.role === "ADMIN";
+  const pathname = usePathname();
 
+  const toggle = () => setIsOpen((o) => !o);
 
   return (
     <aside className={styles.container}>
@@ -46,7 +42,7 @@ export default function GroomerSideNav() {
             className={
               isOpen ? `${styles.hamburger} ${styles.active}` : styles.hamburger
             }
-            onClick={openMenu}
+            onClick={toggle}
             type='button'
           >
             <span className={styles.whiteBar} />
@@ -55,7 +51,6 @@ export default function GroomerSideNav() {
           </button>
         </div>
 
-        {/* overlay */}
         {isOpen && (
           <div className={styles.overlay} onClick={() => setIsOpen(false)} />
         )}
@@ -74,18 +69,27 @@ export default function GroomerSideNav() {
           </div>
 
           <div className={styles.linksWrapper}>
-            {NAV_ITEMS.map(({ title, href, icon }) => (
-              <li key={href}>
-                <Link
-                  href={href}
-                  className={styles.navLink}
-                  onClick={() => setIsOpen(false)}
-                >
-                  {icon}
-                  {title}
-                </Link>
-              </li>
-            ))}
+            {NAV_ITEMS.map(({ title, href, icon }) => {
+              const isDashboard = href === "/groomer";
+              const active = isDashboard
+                ? pathname === "/groomer"
+                : pathname === href || pathname.startsWith(href + "/");
+              return (
+                <li key={href}>
+                  <Link
+                    href={href}
+                    className={`${styles.navLink} ${
+                      active ? styles.navLinkActive : ""
+                    }`}
+                    onClick={() => setIsOpen(false)}
+                    aria-current={active ? "page" : undefined}
+                  >
+                    {icon}
+                    {title}
+                  </Link>
+                </li>
+              );
+            })}
           </div>
 
           <div className={styles.btnContainerii}>
@@ -101,15 +105,10 @@ export default function GroomerSideNav() {
 
         <div className={styles.btnContainer}>
           <UserButton />
-          <Button btnType='blue' text='Go Home' href='/' />
+          <Button btnType='brown' text='Go Home' href='/' />
           {isAdmin && (
-            <Button
-              btnType='blueOutline'
-              text='Admin Dashboard'
-              href='/admin'
-            />
+            <Button btnType='darkBrown' text='Admin Dashboard' href='/admin' />
           )}
-          
         </div>
       </nav>
     </aside>
