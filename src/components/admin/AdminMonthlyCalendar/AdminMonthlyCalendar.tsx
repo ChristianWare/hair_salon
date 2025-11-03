@@ -93,6 +93,7 @@ export default function AdminMonthlyCalendar() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [bookings, setBookings] = useState<ApiBooking[]>([]);
+  const [blackouts, setBlackouts] = useState<Set<string>>(new Set());
   const [filters, setFilters] = useState<Filters>({
     includeCanceled: false,
     statuses: new Set(["PENDING", "CONFIRMED", "COMPLETED"]),
@@ -110,16 +111,32 @@ export default function AdminMonthlyCalendar() {
     let alive = true;
     setLoading(true);
     setError(null);
-    fetch(`/api/admin/bookings/month?month=${monthKey}`, { cache: "no-store" })
+
+    const bookingsReq = fetch(`/api/admin/bookings/month?month=${monthKey}`, {
+      cache: "no-store",
+    })
       .then((r) =>
-        r.ok ? r.json() : Promise.reject(new Error("Failed to load"))
+        r.ok ? r.json() : Promise.reject(new Error("Failed to load bookings"))
       )
-      .then((json) => {
+      .then((json) => json?.bookings ?? []);
+
+    const blackoutsReq = fetch(`/api/admin/blackouts/month?month=${monthKey}`, {
+      cache: "no-store",
+    })
+      .then((r) =>
+        r.ok ? r.json() : Promise.reject(new Error("Failed to load blackouts"))
+      )
+      .then((json) => new Set<string>(json?.dates ?? []));
+
+    Promise.all([bookingsReq, blackoutsReq])
+      .then(([bk, bo]) => {
         if (!alive) return;
-        setBookings(json?.bookings ?? []);
+        setBookings(bk);
+        setBlackouts(bo);
       })
       .catch((e) => alive && setError(e?.message || "Error"))
       .finally(() => alive && setLoading(false));
+
     return () => {
       alive = false;
     };
@@ -131,10 +148,9 @@ export default function AdminMonthlyCalendar() {
     const gridStart = startOfWeek(first);
     const grid: Date[] = [];
     for (let i = 0; i < 42; i++) grid.push(addDays(gridStart, i));
-    const filtered = bookings.filter((b) => {
-      if (filters.includeCanceled) return true;
-      return filters.statuses.has(b.status);
-    });
+    const filtered = bookings.filter((b) =>
+      filters.includeCanceled ? true : filters.statuses.has(b.status)
+    );
     const map = new Map<string, ApiBooking[]>();
     for (const b of filtered) {
       const d = new Date(b.start);
@@ -178,7 +194,6 @@ export default function AdminMonthlyCalendar() {
 
   const touchStartX = useRef<number | null>(null);
   const touchEndX = useRef<number | null>(null);
-
   function onTouchStart(e: React.TouchEvent<HTMLDivElement>) {
     touchStartX.current = e.changedTouches[0].clientX;
   }
@@ -200,7 +215,6 @@ export default function AdminMonthlyCalendar() {
     month: "long",
     year: "numeric",
   }).format(monthDate);
-
   function openModalForDay(date: Date, items: ApiBooking[]) {
     setModalDate(date);
     setModalItems(items);
@@ -309,6 +323,7 @@ export default function AdminMonthlyCalendar() {
                 const isOtherMonth = d.getMonth() !== monthDate.getMonth();
                 const isToday = key === todayYMD;
                 const isPast = key < todayYMD;
+                const isBlackout = blackouts.has(key);
                 const label = `${WEEKDAYS[d.getDay()]}, ${
                   MONTHS[d.getMonth()]
                 } ${d.getDate()}`;
@@ -320,57 +335,40 @@ export default function AdminMonthlyCalendar() {
                       isOtherMonth ? styles.dayCellOther : ""
                     } ${isToday ? styles.today : ""} ${
                       isPast ? styles.pastDay : ""
-                    }`}
+                    } ${isBlackout ? styles.blackout : ""}`}
+                    aria-label={isBlackout ? `${label} (Blackout)` : label}
                   >
                     <div className={styles.dayTop}>
                       <span className={styles.dayLabel}>{label}</span>
                       <span className={styles.dayNumDesk}>{d.getDate()}</span>
                     </div>
 
-                    {list.length === 0 ? (
+                    {isBlackout ? (
+                      <div className={styles.blackoutNote}>Blackout</div>
+                    ) : list.length === 0 ? (
                       <div className={styles.empty}>—</div>
                     ) : (
-                      <>
-                        <div className={styles.chipRow}>
-                          {/* <Link
-                            href={adminDayHref(d)}
-                            className={styles.countChip}
-                            title={`View ${list.length} appointment${
-                              list.length === 1 ? "" : "s"
-                            } on ${d.toDateString()}`}
-                          >
+                      <div className={styles.chipRow}>
+                        <Link
+                          href={adminDayHref(d)}
+                          className={styles.countChip}
+                        >
+                          <span className={styles.chipText}>
                             {list.length} appointment
                             {list.length === 1 ? "" : "s"}
-                          </Link> */}
-                          <Link
-                            href={adminDayHref(d)}
-                            className={styles.countChip}
-                          >
-                            <span className={styles.chipText}>
-                              {list.length} appointment
-                              {list.length === 1 ? "" : "s"}
-                            </span>
-                          </Link>
-                          {/* <button
-                            type='button'
-                            className={styles.countChipMobile}
-                            onClick={() => openModalForDay(d, list)}
-                          >
+                          </span>
+                        </Link>
+                        <button
+                          type='button'
+                          className={styles.countChipMobile}
+                          onClick={() => openModalForDay(d, list)}
+                        >
+                          <span className={styles.chipText}>
                             {list.length} appointment
                             {list.length === 1 ? "" : "s"}
-                          </button> */}
-                          <button
-                            type='button'
-                            className={styles.countChipMobile}
-                            onClick={() => openModalForDay(d, list)}
-                          >
-                            <span className={styles.chipText}>
-                              {list.length} appointment
-                              {list.length === 1 ? "" : "s"}
-                            </span>
-                          </button>
-                        </div>
-                      </>
+                          </span>
+                        </button>
+                      </div>
                     )}
                   </div>
                 );

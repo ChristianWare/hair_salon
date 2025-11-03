@@ -61,7 +61,7 @@
 .primary {
   background: #111;
   color: #fff;
-  border-color: #111;
+  /* border-color: #111; */
 }
 
 .primary:hover {
@@ -162,7 +162,6 @@
   min-width: 0;
 }
 
-/* keep chips on one line so ellipsis can apply */
 .chipRow {
   margin-top: auto;
   display: flex;
@@ -171,24 +170,21 @@
   flex-wrap: nowrap;
 }
 
-/* make the chip a flex box and hide overflow on it */
 .countChip {
   display: flex;
   align-items: center;
   justify-content: center;
-  flex: 1 1 auto; /* allow shrink/grow */
+  flex: 1 1 auto;
   box-sizing: border-box;
   padding: 5px 10px;
   border-radius: 999px;
-  background: green;
+  background: var(--badge_confirmed);
   color: #fff !important;
-  border: 1px solid #111;
   text-decoration: none;
   line-height: 1;
-  overflow: hidden; /* critical */
+  overflow: hidden;
 }
 
-/* the actual ellipsis is applied to the inner span */
 .chipText {
   font-family: var(--interTight);
   letter-spacing: 0.7px;
@@ -205,23 +201,21 @@
   transform: translateY(1px);
 }
 
-/* allow shrinking in flex context */
 .countChipMobile {
   min-width: 0;
 }
 
-/* make mobile chip behave like the desktop chip */
 .countChipMobile {
-  display: none; /* same as .countChip */
+  display: none;
   align-items: center;
   justify-content: center;
   flex: 1 1 auto;
   box-sizing: border-box;
-  padding: 5px 10px; /* match desktop chip padding */
+  padding: 5px 10px;
   border-radius: 999px;
-  background: green; /* same bg as .countChip */
+  background: var(--badge_confirmed);
   color: #fff !important;
-  border: 1px solid #111;
+  /* border: 1px solid #111; */
   text-decoration: none;
   line-height: 1;
   overflow: hidden; /* critical for ellipsis */
@@ -398,6 +392,49 @@
 
 .select:hover {
   background: #f7f7f7;
+}
+
+/* Blackout day styling */
+.blackout {
+  background: #000 !important;
+  border-color: #000 !important;
+  color: #fff !important;
+}
+
+.blackout .dayLabel,
+.blackout .dayNumDesk {
+  color: #fff !important;
+}
+
+.blackout .empty {
+  color: #fff;
+  opacity: 0.7;
+}
+
+.blackout .chipRow,
+.blackout .countChip,
+.blackout .countChipMobile {
+  pointer-events: none;
+  opacity: 0.35;
+  filter: grayscale(1);
+}
+
+.blackoutNote {
+  margin-top: auto;
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--white);
+  background-color: var(--lightGray);
+  text-align: center;
+  color: var(--black);
+  font-weight: 600;
+  display: inline-block;
+  font-size: 12px;
+  font-family: var(--interTight);
+  letter-spacing: 0.4px;
+      white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 
 @media screen and (max-width: 1068px) {

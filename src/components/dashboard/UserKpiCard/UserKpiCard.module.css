@@ -1,5 +1,5 @@
 .container {
-  border: 1px solid var(--brown);
+  border: 1px solid var(--brownii);
   border-radius: 10px;
   background-color: var(--white);
   padding: 1rem;
@@ -13,12 +13,12 @@
 
 .label {
   width: 100%;
-  background-color: var(--darkTan);
+  background-color: var(--brownii);
   border-radius: 7px;
   padding: 1.5rem;
   font-size: 1.6rem;
   font-family: var(--interTight);
-  font-weight: 700;
+  font-weight: 600;
   text-transform: none;
 }
 
