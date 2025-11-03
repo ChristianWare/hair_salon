@@ -61,13 +61,16 @@ export default function CancelBookingForm({
         type='submit'
         disabled={pending}
         style={{
-          padding: "6px 12px",
+          padding: "8px 14px",
           border: "1px solid #ddd",
           backgroundColor: pending ? "#c33" : "red",
           color: "white",
           borderRadius: 6,
           cursor: pending ? "not-allowed" : "pointer",
           opacity: pending ? 0.8 : 1,
+          display: "grid",
+          placeItems: "center",
+          width: "100%",
         }}
       >
         {pending ? "Canceling…" : "Cancel"}
