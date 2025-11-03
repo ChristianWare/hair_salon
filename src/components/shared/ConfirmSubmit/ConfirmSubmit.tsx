@@ -34,4 +34,6 @@ const dangerBtn: React.CSSProperties = {
   color: "white",
   border: "1px solid #b33636",
   cursor: "pointer",
+  display: "grid",
+  width: "100%",
 };

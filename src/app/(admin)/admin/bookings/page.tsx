@@ -161,7 +161,6 @@ export default async function BookingPage({
     <section className={styles.section}>
       <div className={styles.header}>
         <h1 className={`${styles.heading} adminHeading`}>Bookings</h1>
-
         <div className={styles.headerCount}>
           {total.toLocaleString()} result{total === 1 ? "" : "s"}
         </div>

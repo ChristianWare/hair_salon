@@ -6,11 +6,11 @@
   --brown: #b3a083;
   --brownii: #dfd9cf;
   --darkBrown: #474036;
-  --border: #ffffff1c;
   --darkGray: #646464;
   --darkGrayii: rgb(194, 192, 192);
   --gold: #d09d02;
   /* admin colors */
+  --border: #ffffff1c;
   --badge_confirmed: #0a7;
   --badge_pending: #d88a00;
   --badge_completed: #0366d6;
