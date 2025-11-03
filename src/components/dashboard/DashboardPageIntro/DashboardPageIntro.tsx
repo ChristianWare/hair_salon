@@ -109,7 +109,7 @@ export default async function DashboardPageIntro() {
     <div>
       <section className={styles.container}>
         <div className={styles.content}>
-          <h1 className={styles.heading}>{name}&apos;s Dashboard (Stylist)</h1>
+          <h1 className={styles.heading}>{name}&apos;s Dashboard (user)</h1>
           <p className={styles.copy}>
             Welcome back! Here&apos;s what&apos;s happening with your bookings.
           </p>

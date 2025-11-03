@@ -12,6 +12,7 @@ import UserButton from "@/components/dashboard/UserButton/UserButton";
 import Button from "@/components/shared/Button/Button";
 import { useState } from "react";
 import { useSession } from "next-auth/react";
+import { usePathname } from "next/navigation";
 
 const NAV_ITEMS = [
   { title: "Dashboard", href: "/dashboard", icon: <House /> },
@@ -28,10 +29,11 @@ const NAV_ITEMS = [
 
 export default function UserSideNav() {
   const [isOpen, setIsOpen] = useState(false);
-
   const { data: session } = useSession();
   const isAdmin = session?.user?.role === "ADMIN";
   const isGroomer = !!session?.user?.isGroomer;
+
+  const pathname = usePathname();
 
   return (
     <aside className={styles.container}>
@@ -42,18 +44,27 @@ export default function UserSideNav() {
           }
         >
           <div className={styles.linksWrapper}>
-            {NAV_ITEMS.map(({ title, href, icon }) => (
-              <li key={title}>
-                <Link
-                  href={href}
-                  className={styles.navLink}
-                  onClick={() => setIsOpen(false)}
-                >
-                  {icon}
-                  {title}
-                </Link>
-              </li>
-            ))}
+            {NAV_ITEMS.map(({ title, href, icon }) => {
+              const isDashboard = href === "/dashboard";
+              const active = isDashboard
+                ? pathname === "/dashboard"
+                : pathname === href || pathname.startsWith(href + "/");
+              return (
+                <li key={href}>
+                  <Link
+                    href={href}
+                    className={`${styles.navLink} ${
+                      active ? styles.navLinkActive : ""
+                    }`}
+                    onClick={() => setIsOpen(false)}
+                    aria-current={active ? "page" : undefined}
+                  >
+                    {icon}
+                    {title}
+                  </Link>
+                </li>
+              );
+            })}
           </div>
 
           <div className={styles.btnContainerii}>
@@ -74,13 +85,9 @@ export default function UserSideNav() {
 
         <div className={styles.btnContainer}>
           <UserButton />
-            <Button btnType='tan' text='Go Home' href='/' />
+          <Button btnType='tan' text='Go Home' href='/' />
           {isAdmin && (
-            <Button
-              btnType='brown'
-              text='Admin Dashboard'
-              href='/admin'
-            />
+            <Button btnType='brown' text='Admin Dashboard' href='/admin' />
           )}
           {isGroomer && (
             <Button

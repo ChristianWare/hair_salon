@@ -65,6 +65,11 @@
   background-color: var(--brownii);
 }
 
+/* NEW: match Admin nav active behavior */
+.navLinkActive {
+  background-color: var(--brownii);
+}
+
 .btnContainer,
 .btnContainerii {
   display: grid;
