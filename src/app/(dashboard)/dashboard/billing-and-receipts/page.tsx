@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+import styles from "./BillingAndReceiptsPage.module.css";
 import { redirect } from "next/navigation";
 import { auth } from "../../../../../auth";
 import { db } from "@/lib/db";
@@ -8,8 +8,6 @@ import type { Prisma } from "@prisma/client";
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
-// Adjust if your route is different (e.g. "/dashboard/billing")
-// const BASE_PATH = "/dashboard/billing-and-receipts";
 const TZ = process.env.SALON_TZ ?? "America/Phoenix";
 
 type SearchParamsPromise = Promise<
@@ -23,7 +21,7 @@ function getStr(
   fallback = ""
 ) {
   const v = sp[key];
-  return Array.isArray(v) ? (v[0] ?? fallback) : (v ?? fallback);
+  return Array.isArray(v) ? v[0] ?? fallback : v ?? fallback;
 }
 function buildHref(prev: URLSearchParams, next: Record<string, string | null>) {
   const q = new URLSearchParams(prev.toString());
@@ -31,7 +29,6 @@ function buildHref(prev: URLSearchParams, next: Record<string, string | null>) {
     if (v === null) q.delete(k);
     else q.set(k, v);
   }
-  // return only query to preserve the current path (avoids 404s if route differs)
   return `?${q.toString()}`;
 }
 function toISODate(d: Date) {
@@ -100,7 +97,6 @@ export default async function BillingAndReceiptsPage({
     fromDate = startOfDay(new Date(now.getFullYear(), 0, 1));
     toDate = endOfDay(now);
   } else {
-    // 30d default
     fromDate = startOfDay(subDays(now, 29));
     toDate = endOfDay(now);
   }
@@ -121,8 +117,6 @@ export default async function BillingAndReceiptsPage({
     start: "desc",
   } as const;
 
-  // data
-//   const page = 1; // keep it simple for now; add pagination later if needed
   const pageSize = 100;
 
   const [rows, totalsAll, totalsCompleted] = await db.$transaction([
@@ -167,309 +161,214 @@ export default async function BillingAndReceiptsPage({
   const completedCount = totalsCompleted._count?._all ?? 0;
   const allCount = totalsAll._count?._all ?? 0;
 
+  const pillClass = (current: boolean) =>
+    current ? `${styles.pill} ${styles.pillCurrent}` : styles.pill;
+
+  const statusClass = (s: string) =>
+    s === "COMPLETED"
+      ? styles.badge_completed
+      : s === "CONFIRMED"
+      ? styles.badge_confirmed
+      : s === "PENDING"
+      ? styles.badge_pending
+      : s === "CANCELED"
+      ? styles.badge_canceled
+      : styles.badge_noshow;
+
   return (
-    <section style={{ padding: "2rem" }}>
+    <section className={styles.section}>
       {/* Header */}
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          gap: 16,
-          marginBottom: 12,
-        }}
-      >
-        <h1 style={{ fontSize: 22, fontWeight: 600, margin: 0 }}>
-          Billing & Receipts
-        </h1>
-        <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
-          <Link href='/dashboard' style={outlineBtn}>
+      <div className={styles.header}>
+        <h1 className={`${styles.heading} adminHeading`}>Billing & Receipts</h1>
+        <div className={styles.btnRow}>
+          <Link href='/dashboard' className={styles.btnOutline}>
             Dashboard
           </Link>
-          <Link href='/dashboard/bookings' style={outlineBtn}>
+          <Link href='/dashboard/my-bookings' className={styles.btnOutline}>
             My Bookings
           </Link>
-          <Link href='/book' style={primaryBtn}>
+          <Link href='/book' className={styles.btnPrimary}>
             Book Appointment
           </Link>
         </div>
       </div>
 
       {/* Filters */}
-      <form
-        style={{
-          display: "flex",
-          flexWrap: "wrap",
-          gap: 8,
-          alignItems: "end",
-          marginBottom: 12,
-        }}
-      >
-        <div>
-          <label style={label}>From</label>
-          <input type='date' name='from' defaultValue={fromStr} style={input} />
+      <form className={styles.filters}>
+        <div className={styles.field}>
+          <label className={styles.label}>From</label>
+          <input
+            type='date'
+            name='from'
+            defaultValue={fromStr}
+            className={styles.input}
+          />
         </div>
-        <div>
-          <label style={label}>To</label>
-          <input type='date' name='to' defaultValue={toStr} style={input} />
+        <div className={styles.field}>
+          <label className={styles.label}>To</label>
+          <input
+            type='date'
+            name='to'
+            defaultValue={toStr}
+            className={styles.input}
+          />
         </div>
         <input type='hidden' name='preset' value='custom' />
-        <div>
-          <label style={label}>Status</label>
-          <select name='status' defaultValue={statusParam} style={select}>
+        <div className={styles.field}>
+          <label className={styles.label}>Status</label>
+          <select
+            name='status'
+            defaultValue={statusParam}
+            className={styles.select}
+          >
             <option value='COMPLETED'>Completed only</option>
             <option value='ALL'>All statuses</option>
           </select>
         </div>
-        <button type='submit' style={primaryBtn}>
+        <button type='submit' className={styles.btnPrimary}>
           Apply
         </button>
-        <Link href='?' style={outlineBtn}>
+        <Link href='?' className={styles.btnOutline}>
           Clear
         </Link>
       </form>
 
       {/* Preset pills */}
-      <div
-        style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 16 }}
-      >
-        <Pill
+      <div className={styles.pillsRow}>
+        <Link
           href={buildHref(sp, { preset: "30d", from: null, to: null })}
-          current={preset === "30d"}
-          label='Last 30 days'
-        />
-        <Pill
+          className={pillClass(preset === "30d")}
+        >
+          Last 30 days
+        </Link>
+        <Link
           href={buildHref(sp, { preset: "90d", from: null, to: null })}
-          current={preset === "90d"}
-          label='Last 90 days'
-        />
-        <Pill
+          className={pillClass(preset === "90d")}
+        >
+          Last 90 days
+        </Link>
+        <Link
           href={buildHref(sp, { preset: "year", from: null, to: null })}
-          current={preset === "year"}
-          label='This year'
-        />
+          className={pillClass(preset === "year")}
+        >
+          This year
+        </Link>
       </div>
 
       {/* Summary cards */}
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(220px,1fr))",
-          gap: 12,
-          marginBottom: 16,
-        }}
-      >
-        <Card title='Completed total' value={toUSD(completedSum)} />
-        <Card title='Completed count' value={completedCount.toLocaleString()} />
-        <Card title='All total (in range)' value={toUSD(allSum)} />
-        <Card title='All count (in range)' value={allCount.toLocaleString()} />
+      <div className={styles.cardsGrid}>
+        <div className={styles.card}>
+          <div className={styles.cardLabel}>Completed total</div>
+          <div className={styles.cardValue}>{toUSD(completedSum)}</div>
+        </div>
+        <div className={styles.card}>
+          <div className={styles.cardLabel}>Completed count</div>
+          <div className={styles.cardValue}>
+            {completedCount.toLocaleString()}
+          </div>
+        </div>
+        <div className={styles.card}>
+          <div className={styles.cardLabel}>All total (in range)</div>
+          <div className={styles.cardValue}>{toUSD(allSum)}</div>
+        </div>
+        <div className={styles.card}>
+          <div className={styles.cardLabel}>All count (in range)</div>
+          <div className={styles.cardValue}>{allCount.toLocaleString()}</div>
+        </div>
       </div>
 
       {/* Table */}
-      <div
-        style={{
-          overflowX: "auto",
-          border: "1px solid #e5e5e5",
-          borderRadius: 8,
-        }}
-      >
-        <table
-          style={{
-            width: "100%",
-            borderCollapse: "collapse",
-            background: "white",
-          }}
-        >
-          <thead
-            style={{
-              position: "sticky",
-              top: 0,
-              background: "#fafafa",
-              zIndex: 1,
-            }}
-          >
-            <tr>
-              <th style={th}>Date</th>
-              <th style={th}>Time</th>
-              <th style={th}>Service</th>
-              <th style={th}>Groomer</th>
-              <th style={th}>Deposit</th>
-              <th style={th}>Tip</th>
-              <th style={th}>Total</th>
-              <th style={th}>Status</th>
-              <th style={th}>Receipt</th>
-            </tr>
-          </thead>
-          <tbody>
-            {rows.length === 0 ? (
+      <div className={styles.tableScroll}>
+        <div className={styles.tableWrap}>
+          <table className={styles.table}>
+            <thead>
               <tr>
-                <td
-                  colSpan={9}
-                  style={{ padding: 16, textAlign: "center", color: "#666" }}
-                >
-                  No records for this view.
-                </td>
+                <th className={styles.th}>Date</th>
+                <th className={styles.th}>Time</th>
+                <th className={styles.th}>Service</th>
+                <th className={styles.th}>Groomer</th>
+                <th className={styles.th}>Deposit</th>
+                <th className={styles.th}>Tip</th>
+                <th className={styles.th}>Total</th>
+                <th className={styles.th}>Status</th>
+                <th className={styles.th}>Receipt</th>
               </tr>
-            ) : (
-              rows.map((r) => {
-                const d = new Date(r.start);
-                const service = r.service?.name ?? "—";
-                const groomer =
-                  r.groomer?.user?.name ?? r.groomer?.user?.email ?? "—";
-                const deposit = r.depositCents ?? 0;
-                const tip = r.tipCents ?? 0;
-                const total = deposit + tip;
-                return (
-                  <tr key={r.id} style={{ borderTop: "1px solid #eee" }}>
-                    <td style={td}>{dateFmt.format(d)}</td>
-                    <td style={td}>{timeFmt.format(d)}</td>
-                    <td style={td}>{service}</td>
-                    <td style={td}>{groomer}</td>
-                    <td style={td}>{toUSD(deposit)}</td>
-                    <td style={td}>{toUSD(tip)}</td>
-                    <td style={{ ...td, fontWeight: 600 }}>{toUSD(total)}</td>
-                    <td style={td}>
-                      <span style={statusPill(r.status)}>
-                        {r.status.replace("_", " ")}
-                      </span>
-                    </td>
-                    <td style={td}>
-                      {r.receiptUrl ? (
-                        <a
-                          href={r.receiptUrl}
-                          target='_blank'
-                          rel='noopener noreferrer'
-                          style={{ color: "#0969da" }}
+            </thead>
+            <tbody>
+              {rows.length === 0 ? (
+                <tr>
+                  <td
+                    colSpan={9}
+                    className={`${styles.td} ${styles.center} ${styles.muted}`}
+                  >
+                    No records for this view.
+                  </td>
+                </tr>
+              ) : (
+                rows.map((r) => {
+                  const d = new Date(r.start);
+                  const service = r.service?.name ?? "—";
+                  const groomer =
+                    r.groomer?.user?.name ?? r.groomer?.user?.email ?? "—";
+                  const deposit = r.depositCents ?? 0;
+                  const tip = r.tipCents ?? 0;
+                  const total = deposit + tip;
+
+                  return (
+                    <tr key={r.id}>
+                      <td className={styles.td} data-label='Date'>
+                        {dateFmt.format(d)}
+                      </td>
+                      <td className={styles.td} data-label='Time'>
+                        {timeFmt.format(d)}
+                      </td>
+                      <td className={styles.td} data-label='Service'>
+                        {service}
+                      </td>
+                      <td className={styles.td} data-label='Groomer'>
+                        {groomer}
+                      </td>
+                      <td className={styles.td} data-label='Deposit'>
+                        {toUSD(deposit)}
+                      </td>
+                      <td className={styles.td} data-label='Tip'>
+                        {toUSD(tip)}
+                      </td>
+                      <td
+                        className={`${styles.td} ${styles.tdStrong}`}
+                        data-label='Total'
+                      >
+                        {toUSD(total)}
+                      </td>
+                      <td className={styles.td} data-label='Status'>
+                        <span
+                          className={`${styles.badge} ${statusClass(r.status)}`}
                         >
-                          View
-                        </a>
-                      ) : (
-                        <span style={{ color: "#666" }}>—</span>
-                      )}
-                    </td>
-                  </tr>
-                );
-              })
-            )}
-          </tbody>
-        </table>
+                          {r.status.replace("_", " ")}
+                        </span>
+                      </td>
+                      <td className={styles.td} data-label='Receipt'>
+                        {r.receiptUrl ? (
+                          <a
+                            href={r.receiptUrl}
+                            target='_blank'
+                            rel='noopener noreferrer'
+                            className={styles.link}
+                          >
+                            View
+                          </a>
+                        ) : (
+                          <span className={styles.muted}>—</span>
+                        )}
+                      </td>
+                    </tr>
+                  );
+                })
+              )}
+            </tbody>
+          </table>
+        </div>
       </div>
     </section>
   );
 }
-
-/* ───────────── UI bits / styles ───────────── */
-function Pill({
-  href,
-  current,
-  label,
-}: {
-  href: any;
-  current?: boolean;
-  label: React.ReactNode;
-}) {
-  return (
-    <Link
-      href={href}
-      style={{
-        padding: "6px 10px",
-        borderRadius: 999,
-        textDecoration: "none",
-        border: "1px solid #ddd",
-        background: current ? "#111" : "white",
-        color: current ? "white" : "#333",
-        fontSize: 13,
-      }}
-    >
-      {label}
-    </Link>
-  );
-}
-function Card({ title, value }: { title: string; value: React.ReactNode }) {
-  return (
-    <div style={card}>
-      <div style={{ fontSize: 12, color: "#666", marginBottom: 6 }}>
-        {title}
-      </div>
-      <div style={{ fontSize: 20, fontWeight: 600 }}>{value}</div>
-    </div>
-  );
-}
-function statusPill(status: string): React.CSSProperties {
-  const color =
-    status === "COMPLETED"
-      ? "#0366d6"
-      : status === "CONFIRMED"
-        ? "#0a7"
-        : status === "PENDING"
-          ? "#d88a00"
-          : status === "CANCELED"
-            ? "#999"
-            : "#b33636"; // NO_SHOW
-  return {
-    display: "inline-block",
-    padding: "2px 8px",
-    borderRadius: 999,
-    color: "white",
-    background: color,
-    fontSize: 12,
-  };
-}
-
-const label: React.CSSProperties = {
-  display: "block",
-  fontSize: 12,
-  color: "#666",
-  marginBottom: 4,
-};
-const input: React.CSSProperties = {
-  width: 180,
-  padding: "8px 12px",
-  border: "1px solid #ddd",
-  borderRadius: 6,
-  background: "white",
-};
-const select: React.CSSProperties = {
-  padding: "8px 12px",
-  border: "1px solid #ddd",
-  borderRadius: 6,
-  background: "white",
-  minWidth: 160,
-};
-const primaryBtn: React.CSSProperties = {
-  padding: "8px 14px",
-  borderRadius: 6,
-  background: "#111",
-  color: "white",
-  border: "1px solid #111",
-  cursor: "pointer",
-  textDecoration: "none",
-};
-const outlineBtn: React.CSSProperties = {
-  padding: "8px 14px",
-  borderRadius: 6,
-  background: "white",
-  color: "#333",
-  border: "1px solid #ddd",
-  cursor: "pointer",
-  textDecoration: "none",
-};
-const card: React.CSSProperties = {
-  border: "1px solid #e5e5e5",
-  borderRadius: 8,
-  padding: 12,
-  background: "white",
-};
-const th: React.CSSProperties = {
-  borderBottom: "1px solid #e5e5e5",
-  padding: 10,
-  background: "#fafafa",
-  textAlign: "left",
-  position: "sticky",
-  top: 0,
-  zIndex: 1,
-};
-const td: React.CSSProperties = {
-  borderBottom: "1px solid #f0f0f0",
-  padding: 10,
-};

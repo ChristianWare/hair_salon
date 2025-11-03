@@ -1,3 +1,4 @@
+import styles from "./SettingPage.module.css";
 import { redirect } from "next/navigation";
 import { auth } from "../../../../../auth";
 import { db } from "@/lib/db";
@@ -22,7 +23,6 @@ export async function updateGroomerNotifications(formData: FormData) {
   const notificationPhone =
     (formData.get("notificationPhone") as string)?.trim() || null;
 
-  // Only update if the user is a groomer
   const groomer = await db.groomer.findUnique({
     where: { id: session.user.id },
     select: { id: true },
@@ -56,7 +56,6 @@ export async function deleteAccount() {
   const session = await auth();
   if (!session?.user?.id) redirect("/login");
 
-  // Block deletion if there are upcoming bookings
   const upcoming = await db.booking.count({
     where: {
       userId: session.user.id,
@@ -68,7 +67,6 @@ export async function deleteAccount() {
     throw new Error("You have upcoming bookings. Please cancel them first.");
   }
 
-  // This will cascade delete sessions/accounts/bookings per your schema
   await db.user.delete({ where: { id: session.user.id } });
   redirect("/");
 }
@@ -110,41 +108,25 @@ export default async function SettingPage() {
   }).format(new Date(me.createdAt));
 
   return (
-    <section style={{ padding: "2rem" }}>
+    <section className={styles.section}>
       {/* Header */}
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          gap: 16,
-          marginBottom: 12,
-        }}
-      >
-        <h1 style={{ fontSize: 22, fontWeight: 600, margin: 0 }}>Settings</h1>
-        <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
-          <Link href='/dashboard' style={outlineBtn}>
+      <div className={styles.header}>
+        <h1 className={`${styles.heading} adminHeading`}>Settings</h1>
+        <div className={styles.btnRow}>
+          <Link href='/dashboard' className={styles.btnOutline}>
             Dashboard
           </Link>
-          <Link href='/dashboard/bookings' style={outlineBtn}>
+          <Link href='/dashboard/my-bookings' className={styles.btnOutline}>
             My Bookings
           </Link>
-          <Link href='/book' style={primaryBtn}>
+          <Link href='/book' className={styles.btnPrimary}>
             Book Appointment
           </Link>
         </div>
       </div>
 
       {/* Account summary */}
-      <div
-        style={{
-          ...card,
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(220px,1fr))",
-          gap: 12,
-          marginBottom: 16,
-        }}
-      >
+      <div className={`${styles.card} ${styles.infoGridWide} ${styles.mb16}`}>
         <Info label='Name' value={me.name ?? "—"} />
         <Info label='Email' value={me.email} />
         <Info label='Role' value={me.role} />
@@ -153,60 +135,53 @@ export default async function SettingPage() {
 
       {/* Notifications (groomer only) */}
       {groomer?.active && (
-        <section style={{ marginBottom: 16 }}>
-          <h2 style={h2}>Notifications (Groomers)</h2>
+        <section className={styles.mb16}>
+          <h2 className={styles.h2}>Notifications (Groomers)</h2>
           <form
             action={updateGroomerNotifications}
-            style={{
-              ...card,
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fit,minmax(260px,1fr))",
-              gap: 12,
-              alignItems: "end",
-            }}
+            className={`${styles.card} ${styles.formGrid}`}
           >
             <div>
-              <label style={label}>Email Notifications</label>
-              <label style={checkboxLabel}>
+              <div className={styles.label}>Email Notifications</div>
+              <label className={styles.checkboxLabel}>
                 <input
                   type='checkbox'
                   name='emailOptIn'
                   defaultChecked={!!groomer.emailOptIn}
-                />{" "}
-                &nbsp;Receive job notifications by email
+                />
+                <span className={styles.checkboxText}>
+                  Receive job notifications by email
+                </span>
               </label>
             </div>
+
             <div>
-              <label style={label}>SMS Notifications</label>
-              <label style={checkboxLabel}>
+              <div className={styles.label}>SMS Notifications</div>
+              <label className={styles.checkboxLabel}>
                 <input
                   type='checkbox'
                   name='smsOptIn'
                   defaultChecked={!!groomer.smsOptIn}
-                />{" "}
-                &nbsp;Receive job notifications by SMS
+                />
+                <span className={styles.checkboxText}>
+                  Receive job notifications by SMS
+                </span>
               </label>
             </div>
+
             <div>
-              <label style={label}>Notification Phone</label>
+              <label className={styles.label}>Notification Phone</label>
               <input
                 name='notificationPhone'
                 defaultValue={groomer.notificationPhone ?? ""}
                 placeholder='(555) 123-4567'
-                style={input}
+                className={styles.input}
               />
-              <div style={{ fontSize: 12, color: "#666", marginTop: 6 }}>
-                Required if SMS is enabled.
-              </div>
+              <div className={styles.helpText}>Required if SMS is enabled.</div>
             </div>
-            <div
-              style={{
-                alignSelf: "stretch",
-                display: "flex",
-                alignItems: "end",
-              }}
-            >
-              <button type='submit' style={primaryBtn}>
+
+            <div className={styles.actionsRight}>
+              <button type='submit' className={styles.btnPrimary}>
                 Save
               </button>
             </div>
@@ -216,41 +191,33 @@ export default async function SettingPage() {
 
       {/* Security */}
       <section>
-        <h2 style={h2}>Security</h2>
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(280px,1fr))",
-            gap: 12,
-          }}
-        >
+        <h2 className={styles.h2}>Security</h2>
+        <div className={styles.cardGrid}>
           {/* Sign out everywhere */}
-          <form action={signOutEverywhere} style={card}>
-            <div style={{ fontWeight: 600, marginBottom: 4 }}>
-              Sign out everywhere
-            </div>
-            <div style={{ fontSize: 12, color: "#666", marginBottom: 8 }}>
+          <form action={signOutEverywhere} className={styles.card}>
+            <div className={styles.cardTitle}>Sign out everywhere</div>
+            <div className={styles.helpText}>
               End all active sessions on all devices. You’ll need to log in
               again.
             </div>
-            <button type='submit' style={outlineBtn}>
+            <button type='submit' className={styles.btnOutline}>
               Sign out all devices
             </button>
           </form>
 
-          {/* Danger Zone: Delete account */}
-          <div style={card}>
-            <div style={{ fontWeight: 600, marginBottom: 4, color: "#b33636" }}>
+          {/* Danger Zone */}
+          <div className={styles.card}>
+            <div className={`${styles.cardTitle} ${styles.dangerTitle}`}>
               Delete account
             </div>
-            <div style={{ fontSize: 12, color: "#666", marginBottom: 8 }}>
+            <div className={styles.helpText}>
               Permanently delete your account and data (past bookings are
               removed). This cannot be undone.
             </div>
             <form
               id='del-account'
               action={deleteAccount}
-              style={{ display: "none" }}
+              className={styles.hidden}
             />
             <ConfirmSubmit
               form='del-account'
@@ -266,73 +233,11 @@ export default async function SettingPage() {
 }
 
 /* ───────────── UI bits ───────────── */
-
 function Info({ label, value }: { label: string; value: React.ReactNode }) {
   return (
     <div>
-      <div style={{ fontSize: 12, color: "#666", marginBottom: 4 }}>
-        {label}
-      </div>
-      <div style={{ fontWeight: 500, wordBreak: "break-word" }}>{value}</div>
+      <div className={styles.infoLabel}>{label}</div>
+      <div className={styles.infoValue}>{value}</div>
     </div>
   );
 }
-
-/* ───────────── styles ───────────── */
-const h2: React.CSSProperties = {
-  fontSize: 16,
-  fontWeight: 600,
-  margin: "0 0 8px 0",
-};
-
-const card: React.CSSProperties = {
-  border: "1px solid #e5e5e5",
-  borderRadius: 8,
-  padding: 12,
-  background: "white",
-};
-
-const label: React.CSSProperties = {
-  display: "block",
-  fontSize: 12,
-  color: "#666",
-  marginBottom: 4,
-};
-
-const checkboxLabel: React.CSSProperties = {
-  display: "inline-flex",
-  alignItems: "center",
-  gap: 6,
-  padding: "8px 10px",
-  border: "1px solid #ddd",
-  borderRadius: 6,
-  background: "white",
-};
-
-const input: React.CSSProperties = {
-  width: "100%",
-  padding: "8px 12px",
-  border: "1px solid #ddd",
-  borderRadius: 6,
-  background: "white",
-};
-
-const primaryBtn: React.CSSProperties = {
-  padding: "8px 14px",
-  borderRadius: 6,
-  background: "#111",
-  color: "white",
-  border: "1px solid #111",
-  cursor: "pointer",
-  textDecoration: "none",
-};
-
-const outlineBtn: React.CSSProperties = {
-  padding: "8px 14px",
-  borderRadius: 6,
-  background: "white",
-  color: "#333",
-  border: "1px solid #ddd",
-  cursor: "pointer",
-  textDecoration: "none",
-};
