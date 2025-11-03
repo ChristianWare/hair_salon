@@ -1,9 +1,10 @@
+/* eslint-disable react-hooks/set-state-in-effect */
 "use client";
 
+import styles from "./AdminMonthlyCalendar.module.css";
 import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import Modal from "@/components/shared/Modal/Modal";
-import styles from "./AdminMonthlyCalendar.module.css";
 
 const TZ = process.env.NEXT_PUBLIC_SALON_TZ ?? "America/Phoenix";
 const WEEKDAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
@@ -331,7 +332,7 @@ export default function AdminMonthlyCalendar() {
                     ) : (
                       <>
                         <div className={styles.chipRow}>
-                          <Link
+                          {/* <Link
                             href={adminDayHref(d)}
                             className={styles.countChip}
                             title={`View ${list.length} appointment${
@@ -340,14 +341,33 @@ export default function AdminMonthlyCalendar() {
                           >
                             {list.length} appointment
                             {list.length === 1 ? "" : "s"}
+                          </Link> */}
+                          <Link
+                            href={adminDayHref(d)}
+                            className={styles.countChip}
+                          >
+                            <span className={styles.chipText}>
+                              {list.length} appointment
+                              {list.length === 1 ? "" : "s"}
+                            </span>
                           </Link>
-                          <button
+                          {/* <button
                             type='button'
                             className={styles.countChipMobile}
                             onClick={() => openModalForDay(d, list)}
                           >
                             {list.length} appointment
                             {list.length === 1 ? "" : "s"}
+                          </button> */}
+                          <button
+                            type='button'
+                            className={styles.countChipMobile}
+                            onClick={() => openModalForDay(d, list)}
+                          >
+                            <span className={styles.chipText}>
+                              {list.length} appointment
+                              {list.length === 1 ? "" : "s"}
+                            </span>
                           </button>
                         </div>
                       </>

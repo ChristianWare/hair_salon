@@ -156,45 +156,93 @@
   color: #aaa;
   font-size: 12px;
 }
+.dayCell,
+.chipRow,
+.countChip {
+  min-width: 0;
+}
 
+/* keep chips on one line so ellipsis can apply */
 .chipRow {
   margin-top: auto;
   display: flex;
   gap: 8px;
   align-items: center;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
 }
 
+/* make the chip a flex box and hide overflow on it */
 .countChip {
-  display: inline-block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1 1 auto; /* allow shrink/grow */
+  box-sizing: border-box;
   padding: 5px 10px;
   border-radius: 999px;
   background: green;
-  color: #fff;
+  color: #fff !important;
   border: 1px solid #111;
   text-decoration: none;
-  font-family: var(--interTight);
-  letter-spacing: 0.7px;
-  font-size: 13px;
-  font-weight: 400;
   line-height: 1;
-  touch-action: manipulation;
+  overflow: hidden; /* critical */
 }
 
+/* the actual ellipsis is applied to the inner span */
+.chipText {
+  font-family: var(--interTight);
+  letter-spacing: 0.7px;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 400;
+  white-space: nowrap;
+  color: #fff !important;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
 .countChip:active {
   transform: translateY(1px);
 }
 
+/* allow shrinking in flex context */
 .countChipMobile {
-  display: none;
-  padding: 10px 14px;
+  min-width: 0;
+}
+
+/* make mobile chip behave like the desktop chip */
+.countChipMobile {
+  display: none; /* same as .countChip */
+  align-items: center;
+  justify-content: center;
+  flex: 1 1 auto;
+  box-sizing: border-box;
+  padding: 5px 10px; /* match desktop chip padding */
   border-radius: 999px;
-  background: #111;
-  color: #fff;
+  background: green; /* same bg as .countChip */
+  color: #fff !important;
   border: 1px solid #111;
-  font-size: 13px;
-  font-weight: 700;
+  text-decoration: none;
   line-height: 1;
+  overflow: hidden; /* critical for ellipsis */
+}
+
+/* reuse the exact ellipsis rules */
+.countChipMobile .chipText {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+  font-family: var(--interTight);
+  letter-spacing: 0.7px;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 400;
+  color: #fff !important;
+}
+
+.countChipMobile:active {
+  transform: translateY(1px);
 }
 
 .loading {
@@ -367,15 +415,19 @@
   .inner {
     min-width: 100%;
   }
+
   .gridHead {
     display: none;
   }
+
   .gridDays {
     grid-template-columns: repeat(3, 1fr);
   }
+
   .dayCell {
     padding: 14px;
   }
+
   .dayLabel {
     display: inline;
     font-family: var(--interTight);
@@ -388,8 +440,12 @@
   .countChip {
     display: none;
   }
+
+  .countChip {
+    display: none;
+  }
   .countChipMobile {
-    display: inline-block;
+    display: flex;
   }
   .btn {
     padding: 10px 14px;
