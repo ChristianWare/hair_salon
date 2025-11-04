@@ -1,0 +1,261 @@
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 12px;
+}
+
+.heading {
+  font-family: var(--interTight);
+}
+
+.subheading {
+  margin-top: 0;
+  color: #666;
+}
+
+.headerActions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.btnOutline {
+  padding: 8px 14px;
+  border-radius: 6px;
+  background: #fff;
+  color: #333;
+  border: 1px solid #ddd;
+  cursor: pointer;
+  text-decoration: none;
+  font-family: var(--interTight);
+}
+
+.btnExport {
+  padding: 8px 14px;
+  border-radius: 6px;
+  text-decoration: none;
+  border: 1px solid #0366d6;
+  color: #0366d6;
+  background: #fff;
+  cursor: pointer;
+  font-weight: 600;
+  font-family: var(--interTight);
+}
+
+.flexSpacer {
+  flex: 1;
+}
+
+.pillsRow {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin: 12px 0 16px;
+}
+
+.pill {
+  padding: 6px 10px;
+  border-radius: 999px;
+  text-decoration: none;
+  border: 1px solid #ddd;
+  background: #fff;
+  color: #333;
+  font-size: 13px;
+  font-family: var(--interTight);
+}
+
+.pillCurrent {
+  background: #111;
+  color: #fff;
+}
+
+.kpiGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.card {
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+  padding: 12px;
+  background: #fff;
+}
+
+.cardLabel {
+  color: #666;
+  font-size: 12px;
+  margin-bottom: 6px;
+  font-family: var(--interTight);
+}
+
+.cardValue {
+  font-size: 20px;
+  font-weight: 600;
+  font-family: var(--interTight);
+}
+
+.tableScroll {
+  overflow-x: auto;
+  margin-bottom: 24px;
+  -webkit-overflow-scrolling: touch;
+  position: relative;
+}
+
+.tableWrap {
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
+  overflow: hidden;
+  border: 0;
+  border-bottom: 1px solid var(--darkBrown);
+}
+
+.table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  table-layout: fixed;
+}
+
+.tablethead .th,
+.table thead .th,
+.table thead th {
+  background: var(--brownii);
+  font-weight: 600;
+  text-align: left;
+  padding: 12px 10px;
+  white-space: nowrap;
+  border-top: 1px solid var(--darkBrown);
+  border-bottom: 1px solid var(--darkBrown);
+  border-left: 1px solid var(--brown);
+  border-right: none;
+  font-family: var(--interTight);
+}
+
+.table thead tr .th:first-child,
+.table thead tr th:first-child {
+  border-left: 1px solid var(--darkBrown);
+  border-top-left-radius: 10px;
+}
+
+.table thead tr .th:last-child,
+.table thead tr th:last-child {
+  border-right: 1px solid var(--darkBrown);
+  border-top-right-radius: 10px;
+}
+
+.th,
+.td {
+  padding: 8px;
+  vertical-align: middle;
+  background: var(--tan);
+  font-size: 14px;
+  font-family: var(--interTight);
+  letter-spacing: 0;
+  line-height: 1.35;
+  word-wrap: break-word;
+  border: 0;
+}
+
+.table tbody .td,
+.table tbody td {
+  border-left: 1px solid var(--brown);
+  border-right: none;
+}
+
+.table tbody tr .td:first-child,
+.table tbody tr td:first-child {
+  border-left: 1px solid var(--darkBrown);
+}
+
+.table tbody tr .td:last-child,
+.table tbody tr td:last-child {
+  border-right: 1px solid var(--darkBrown);
+}
+
+.table tbody tr:nth-child(even) .td,
+.table tbody tr:nth-child(even) td {
+  background-color: var(--white);
+}
+
+.center {
+  text-align: center;
+}
+
+.bold {
+  font-weight: 600;
+}
+
+.muted {
+  color: #666;
+  font-size: 12px;
+}
+
+/* Responsive */
+
+@media screen and (max-width: 1268px) {
+  .tableScroll {
+    overflow: visible;
+  }
+  .tableWrap {
+    border: 0;
+    border-radius: 0;
+    overflow: visible;
+    background: transparent;
+    box-shadow: none;
+  }
+  .table thead {
+    display: none;
+  }
+  .table,
+  .table tbody,
+  .table tr,
+  .table td {
+    display: block;
+    width: 100%;
+  }
+  .table tbody tr {
+    background: var(--tan);
+    border: 1px solid var(--darkBrown);
+    border-radius: 12px;
+    padding: 10px 12px;
+    margin-bottom: 2rem;
+  }
+  .table tbody tr .td,
+  .table tbody tr td {
+    border: 0;
+    background: transparent;
+    display: grid;
+    grid-template-columns: 128px 1fr;
+    gap: 10px;
+    align-items: baseline;
+    font-size: 14px;
+    line-height: 1.35;
+  }
+  .table tbody tr .td {
+    border-bottom: 1px solid var(--brown);
+  }
+  .table tbody tr .td::before,
+  .table tbody tr td::before {
+    content: attr(data-label);
+    color: #6b7280;
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 0.02em;
+  }
+}
+
+@media (max-width: 768px) {
+  .kpiGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 568px) {
+  .kpiGrid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,5 +1,5 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import styles from "./EarningsPage.module.css";
 import Link from "next/link";
 import { db } from "@/lib/db";
 import { requireGroomer } from "@/lib/rbac";
@@ -14,12 +14,6 @@ export const revalidate = 0;
 
 const TZ = process.env.SALON_TZ ?? "America/Phoenix";
 
-function toUSD(cents?: number | null) {
-  return (cents ?? 0 / 100).toLocaleString("en-US", {
-    style: "currency",
-    currency: "USD",
-  });
-}
 function usdFromCents(n?: number | null) {
   return ((n ?? 0) / 100).toLocaleString("en-US", {
     style: "currency",
@@ -99,38 +93,22 @@ export default async function EarningsPage({
   });
 
   return (
-    <section style={{ padding: "2rem" }}>
-      {/* Header */}
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          gap: 16,
-          marginBottom: 12,
-        }}
-      >
-        <h1 style={{ fontSize: 22, fontWeight: 600, margin: 0 }}>Earnings</h1>
-        <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
-          <Link href='/groomer' style={outlineBtn}>
+    <section className={styles.page}>
+      <div className={styles.header}>
+        <h1 className={`${styles.heading} adminHeading`}>Earnings</h1>
+        <div className={styles.headerActions}>
+          <Link href='/groomer' className={styles.btnOutline}>
             Dashboard
           </Link>
-          <Link href='/groomer/my-bookings' style={outlineBtn}>
+          <Link href='/groomer/my-bookings' className={styles.btnOutline}>
             My Bookings
           </Link>
         </div>
       </div>
-      <p style={{ marginTop: 0, color: "#666" }}>{label}</p>
 
-      {/* Filters */}
-      <nav
-        style={{
-          display: "flex",
-          gap: 8,
-          flexWrap: "wrap",
-          margin: "12px 0 16px",
-        }}
-      >
+      <p className={styles.subheading}>{label}</p>
+
+      <nav className={styles.pillsRow}>
         <Pill
           href='/groomer/earnings?range=today'
           current={rangeParam === "today"}
@@ -146,24 +124,18 @@ export default async function EarningsPage({
         <Pill href='/groomer/earnings' current={!rangeParam}>
           All Time
         </Pill>
-        <span style={{ flex: 1 }} />
+        <span className={styles.flexSpacer} />
         <Link
-          href={`/groomer/earnings/export${rangeParam ? `?range=${encodeURIComponent(rangeParam)}` : ""}`}
-          style={exportBtn}
+          href={`/groomer/earnings/export${
+            rangeParam ? `?range=${encodeURIComponent(rangeParam)}` : ""
+          }`}
+          className={styles.btnExport}
         >
           Export CSV
         </Link>
       </nav>
 
-      {/* KPI cards */}
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(220px,1fr))",
-          gap: 12,
-          marginBottom: 16,
-        }}
-      >
+      <div className={styles.kpiGrid}>
         <Kpi label='Completed Appointments' value={count.toLocaleString()} />
         <Kpi label='Tips' value={usdFromCents(agg._sum.tipCents)} />
         <Kpi
@@ -173,87 +145,76 @@ export default async function EarningsPage({
         <Kpi label='Gross (Revenue + Tips)' value={usdFromCents(grossCents)} />
       </div>
 
-      {/* Table */}
-      <div
-        style={{
-          overflowX: "auto",
-          border: "1px solid #e5e5e5",
-          borderRadius: 8,
-        }}
-      >
-        <table
-          style={{
-            width: "100%",
-            borderCollapse: "collapse",
-            background: "white",
-          }}
-        >
-          <thead
-            style={{
-              position: "sticky",
-              top: 0,
-              background: "#fafafa",
-              zIndex: 1,
-            }}
-          >
-            <tr>
-              <th style={th}>Date</th>
-              <th style={th}>Time</th>
-              <th style={th}>Service</th>
-              <th style={th}>Customer</th>
-              <th style={th}>Deposit</th>
-              <th style={th}>Tip</th>
-              <th style={th}>Total</th>
-            </tr>
-          </thead>
-          <tbody>
-            {rows.length === 0 ? (
+      <div className={styles.tableScroll}>
+        <div className={styles.tableWrap}>
+          <table className={styles.table}>
+            <thead className={styles.tablethead}>
               <tr>
-                <td
-                  colSpan={7}
-                  style={{ padding: 16, textAlign: "center", color: "#666" }}
-                >
-                  No completed appointments in this range.
-                </td>
+                <th className={styles.th}>Date</th>
+                <th className={styles.th}>Time</th>
+                <th className={styles.th}>Service</th>
+                <th className={styles.th}>Customer</th>
+                <th className={styles.th}>Deposit</th>
+                <th className={styles.th}>Tip</th>
+                <th className={styles.th}>Total</th>
               </tr>
-            ) : (
-              rows.map((b) => {
-                const d = new Date(b.start);
-                const totalCents = (b.depositCents ?? 0) + (b.tipCents ?? 0);
-                return (
-                  <tr key={b.id} style={{ borderTop: "1px solid #eee" }}>
-                    <td style={td}>{dateFmt.format(d)}</td>
-                    <td style={td}>{timeFmt.format(d)}</td>
-                    <td style={td}>{b.service?.name ?? "—"}</td>
-                    <td style={td}>
-                      {b.user?.name ?? "—"}
-                      <br />
-                      <small style={{ color: "#666" }}>{b.user?.email}</small>
-                    </td>
-                    <td style={td}>{usdFromCents(b.depositCents)}</td>
-                    <td style={td}>{usdFromCents(b.tipCents)}</td>
-                    <td style={{ ...td, fontWeight: 600 }}>
-                      {usdFromCents(totalCents)}
-                    </td>
-                  </tr>
-                );
-              })
-            )}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {rows.length === 0 ? (
+                <tr>
+                  <td className={`${styles.td} ${styles.center}`} colSpan={7}>
+                    No completed appointments in this range.
+                  </td>
+                </tr>
+              ) : (
+                rows.map((b) => {
+                  const d = new Date(b.start);
+                  const totalCents = (b.depositCents ?? 0) + (b.tipCents ?? 0);
+                  return (
+                    <tr key={b.id}>
+                      <td className={styles.td} data-label='Date'>
+                        {dateFmt.format(d)}
+                      </td>
+                      <td className={styles.td} data-label='Time'>
+                        {timeFmt.format(d)}
+                      </td>
+                      <td className={styles.td} data-label='Service'>
+                        {b.service?.name ?? "—"}
+                      </td>
+                      <td className={styles.td} data-label='Customer'>
+                        {b.user?.name ?? "—"}
+                        <br />
+                        <small className={styles.muted}>{b.user?.email}</small>
+                      </td>
+                      <td className={styles.td} data-label='Deposit'>
+                        {usdFromCents(b.depositCents)}
+                      </td>
+                      <td className={styles.td} data-label='Tip'>
+                        {usdFromCents(b.tipCents)}
+                      </td>
+                      <td
+                        className={`${styles.td} ${styles.bold}`}
+                        data-label='Total'
+                      >
+                        {usdFromCents(totalCents)}
+                      </td>
+                    </tr>
+                  );
+                })
+              )}
+            </tbody>
+          </table>
+        </div>
       </div>
     </section>
   );
 }
 
-/* Small UI helpers */
 function Kpi({ label, value }: { label: string; value: string | number }) {
   return (
-    <div style={card}>
-      <div style={{ color: "#666", fontSize: 12, marginBottom: 6 }}>
-        {label}
-      </div>
-      <div style={{ fontSize: 20, fontWeight: 600 }}>{value}</div>
+    <div className={styles.card}>
+      <div className={styles.cardLabel}>{label}</div>
+      <div className={styles.cardValue}>{value}</div>
     </div>
   );
 }
@@ -270,61 +231,9 @@ function Pill({
   return (
     <Link
       href={href}
-      style={{
-        padding: "6px 10px",
-        borderRadius: 999,
-        textDecoration: "none",
-        border: "1px solid #ddd",
-        background: current ? "#111" : "white",
-        color: current ? "white" : "#333",
-        fontSize: 13,
-      }}
+      className={`${styles.pill} ${current ? styles.pillCurrent : ""}`}
     >
       {children}
     </Link>
   );
 }
-
-/* Shared inline styles (match your pattern) */
-const card: React.CSSProperties = {
-  border: "1px solid #e5e5e5",
-  borderRadius: 8,
-  padding: 12,
-  background: "white",
-};
-
-const th: React.CSSProperties = {
-  borderBottom: "1px solid #e5e5e5",
-  padding: 10,
-  background: "#fafafa",
-  textAlign: "left",
-  position: "sticky",
-  top: 0,
-  zIndex: 1,
-};
-
-const td: React.CSSProperties = {
-  borderBottom: "1px solid #f0f0f0",
-  padding: 10,
-};
-
-const outlineBtn: React.CSSProperties = {
-  padding: "8px 14px",
-  borderRadius: 6,
-  background: "white",
-  color: "#333",
-  border: "1px solid #ddd",
-  cursor: "pointer",
-  textDecoration: "none",
-};
-
-const exportBtn: React.CSSProperties = {
-  padding: "8px 14px",
-  borderRadius: 6,
-  textDecoration: "none",
-  border: "1px solid #0366d6",
-  color: "#0366d6",
-  background: "white",
-  cursor: "pointer",
-  fontWeight: 600,
-};

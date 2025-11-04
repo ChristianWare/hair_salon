@@ -1,5 +1,5 @@
-// src/app/groomer/profile/page.tsx
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import styles from "./GroomerProfilePage.module.css";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import { revalidatePath } from "next/cache";
@@ -12,9 +12,6 @@ export const revalidate = 0;
 
 const BASE_PATH = "/groomer/profile";
 
-/* ────────────────────────────────────────────────
-   Server Action: Save Profile (bio + specialties)
-──────────────────────────────────────────────── */
 export async function saveProfile(formData: FormData) {
   "use server";
   const user = await requireGroomer();
@@ -33,13 +30,9 @@ export async function saveProfile(formData: FormData) {
     },
   });
 
-  // instant refresh
   revalidatePath(BASE_PATH);
 }
 
-/* ────────────────────────────────────────────────
-   Page
-──────────────────────────────────────────────── */
 export default async function GroomerProfilePage() {
   const user = await requireGroomer();
 
@@ -48,7 +41,7 @@ export default async function GroomerProfilePage() {
     select: {
       bio: true,
       specialties: true,
-      workingHours: true, // ProfileEditor expects this in props
+      workingHours: true,
       active: true,
     },
   });
@@ -68,111 +61,47 @@ export default async function GroomerProfilePage() {
     }).format(new Date(account.createdAt));
 
   return (
-    <section style={{ padding: "2rem" }}>
-      {/* Header */}
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          gap: 16,
-          marginBottom: 12,
-        }}
-      >
-        <h1 style={{ fontSize: 22, fontWeight: 600, margin: 0 }}>
-          Groomer Profile
-        </h1>
-        <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
-          <Link href='/groomer' style={outlineBtn}>
+    <section className={styles.container}>
+      <div className={styles.header}>
+        <h1 className={`${styles.heading} adminHeading`}>Groomer Profile</h1>
+        <div className={styles.headerActions}>
+          <Link href='/groomer' className={styles.btnOutline}>
             Dashboard
           </Link>
-          <Link href='/groomer/my-bookings' style={outlineBtn}>
+          <Link href='/groomer/my-bookings' className={styles.btnOutline}>
             My Bookings
           </Link>
-          <Link href='/groomer/availability' style={outlineBtn}>
+          <Link href='/groomer/availability' className={styles.btnOutline}>
             Availability
           </Link>
         </div>
       </div>
 
-      {/* Account summary */}
-      <div
-        style={{
-          ...card,
-          display: "grid",
-          gridTemplateColumns: "72px 1fr auto",
-          gap: 12,
-          alignItems: "center",
-          marginBottom: 16,
-        }}
-      >
-        {/* Avatar */}
-        <div
-          style={{
-            width: 56,
-            height: 56,
-            borderRadius: "50%",
-            background: "#f2f2f2",
-            overflow: "hidden",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            fontSize: 18,
-            fontWeight: 600,
-            border: "1px solid #eee",
-          }}
-          aria-label='Avatar'
-        >
-          {account?.image ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
-              src={account.image}
-              alt='Avatar'
-              style={{ width: "100%", height: "100%", objectFit: "cover" }}
-            />
-          ) : (
-            (account?.name?.[0] || account?.email?.[0] || "?")
-              .toString()
-              .toUpperCase()
-          )}
-        </div>
-
-        {/* Info */}
-        <div style={{ display: "grid", gap: 4 }}>
-          <div style={{ fontWeight: 600 }}>{account?.name ?? "—"}</div>
-          <div style={{ color: "#666" }}>{account?.email ?? "—"}</div>
-          <div style={{ color: "#666", fontSize: 12 }}>
+      <div className={`${styles.card} ${styles.accountCard}`}>
+        <div className={styles.infoGrid}>
+          <div className={styles.infoName}>{account?.name ?? "—"}</div>
+          <div className={styles.infoEmail}>{account?.email ?? "—"}</div>
+          <div className={styles.infoMeta}>
             Joined {joined ?? "—"} ·{" "}
             <span
-              style={{
-                padding: "2px 8px",
-                borderRadius: 999,
-                color: groomer.active ? "#065f46" : "#6b7280",
-                background: groomer.active ? "#d1fae5" : "#f3f4f6",
-                border: `1px solid ${groomer.active ? "#a7f3d0" : "#e5e7eb"}`,
-                fontSize: 12,
-              }}
+              className={`${styles.statusBadge} ${
+                groomer.active ? styles.statusActive : styles.statusInactive
+              }`}
             >
               {groomer.active ? "Active" : "Inactive"}
             </span>
           </div>
         </div>
-
-        {/* Quick links */}
-        <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
-          <Link href='/account/settings' style={outlineBtn}>
-            Update Avatar
-          </Link>
-          <Link href='/account/settings' style={outlineBtn}>
+        <div className={styles.quickLinks}>
+          <Link href='/account/settings' className={styles.btnOutline}>
             Change Password
           </Link>
         </div>
       </div>
 
-      {/* Profile editor card */}
-      <section style={card}>
-        <h2 style={h2}>Edit Profile</h2>
-        <p style={{ margin: "4px 0 12px 0", color: "#555" }}>
+      <section className={styles.card}>
+        <h2 className={styles.h2}>Edit Profile</h2>
+        <p className={styles.intro}>
           Update your bio and specialties. Your availability and breaks are
           managed separately on the Availability page.
         </p>
@@ -187,27 +116,3 @@ export default async function GroomerProfilePage() {
     </section>
   );
 }
-
-/* ───────────── inline styles (consistent) ───────────── */
-const h2: React.CSSProperties = {
-  fontSize: 16,
-  fontWeight: 600,
-  margin: "0 0 8px 0",
-};
-
-const card: React.CSSProperties = {
-  border: "1px solid #e5e5e5",
-  borderRadius: 8,
-  padding: 12,
-  background: "white",
-};
-
-const outlineBtn: React.CSSProperties = {
-  padding: "8px 14px",
-  borderRadius: 6,
-  background: "white",
-  color: "#333",
-  border: "1px solid #ddd",
-  cursor: "pointer",
-  textDecoration: "none",
-};

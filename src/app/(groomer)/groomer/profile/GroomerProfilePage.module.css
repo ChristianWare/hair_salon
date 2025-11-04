@@ -1,0 +1,157 @@
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 5rem;
+}
+
+.headerActions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.btnOutline {
+  padding: 8px 14px;
+  border-radius: 6px;
+  background: var(--tan);
+  color: #333;
+  border: 1px solid #ddd;
+  cursor: pointer;
+  text-decoration: none;
+  font-family: var(--interTight);
+}
+
+.card {
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+  padding: 12px;
+  background: #fff;
+}
+
+.accountCard {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+
+
+.infoGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+.infoName {
+  font-size: 2rem;
+  font-weight: 600;
+  font-family: var(--interTight);
+  letter-spacing: 0.5px;
+}
+
+.infoEmail {
+  color: #666;
+  font-family: var(--interTight);
+}
+
+.infoMeta {
+  color: #666;
+  font-size: 16px;
+  font-family: var(--interTight);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+}
+
+.statusBadge {
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-family: var(--interTight);
+  border: 1px solid transparent;
+}
+
+.statusActive {
+  color: #065f46;
+  background: #d1fae5;
+  border-color: #a7f3d0;
+}
+
+.statusInactive {
+  color: #6b7280;
+  background: #f3f4f6;
+  border-color: #e5e7eb;
+}
+
+.quickLinks {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.h2 {
+  font-size: 2rem;
+  letter-spacing: 0.5px;
+  font-weight: 600;
+  margin: 0 0 8px 0;
+  font-family: var(--interTight);
+}
+
+.intro {
+  margin: 4px 0 12px 0;
+  color: #555;
+  font-family: var(--interTight);
+  font-size: 1.6rem;
+}
+
+/* Responsive */
+
+@media screen and (max-width: 1268px) {
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 2rem;
+  }
+
+  .accountCard {
+   display: flex;
+   align-items: flex-start;
+   justify-content: space-between;
+   gap: 2rem;
+  }
+  .quickLinks {
+    justify-content: flex-start;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .header {
+    align-items: start;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .accountCard {
+    flex-direction: column;
+  }
+}
+
+@media screen and (max-width: 568px) {
+  .headerActions {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+  .quickLinks {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+}
