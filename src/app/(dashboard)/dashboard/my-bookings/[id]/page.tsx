@@ -1,4 +1,4 @@
-// app/dashboard/my-bookings/[id]/page.tsx
+import styles from "./BookingDetailsPage.module.css";
 import { redirect, notFound } from "next/navigation";
 import { auth } from "../../../../../../auth";
 import { db } from "@/lib/db";
@@ -23,7 +23,6 @@ export default async function BookingDetailsPage({
 
   const { id } = await params;
 
-  // Load booking (verify ownership)
   const booking = await db.booking.findUnique({
     where: { id },
     include: {
@@ -36,7 +35,6 @@ export default async function BookingDetailsPage({
   });
   if (!booking || booking.userId !== me) notFound();
 
-  // Pull refunds from Stripe by Payment Intent (if any)
   let refunds:
     | {
         id: string;
@@ -67,14 +65,12 @@ export default async function BookingDetailsPage({
     }
   }
 
-  // Settings: cancellation window (hrs)
   const cancelCfg = await db.config.findUnique({
     where: { key: "cancelWindow" },
     select: { value: true },
   });
   const cancelWindowHours = Number(cancelCfg?.value ?? 24);
 
-  // Formatters
   const dateFmt = new Intl.DateTimeFormat("en-US", {
     timeZone: TZ,
     year: "numeric",
@@ -94,13 +90,16 @@ export default async function BookingDetailsPage({
   const timeStr = end
     ? `${timeFmt.format(start)} – ${timeFmt.format(end)}`
     : timeFmt.format(start);
-  const createdStr = `${dateFmt.format(new Date(booking.createdAt))} ${timeFmt.format(new Date(booking.createdAt))}`;
-  const updatedStr = `${dateFmt.format(new Date(booking.updatedAt))} ${timeFmt.format(new Date(booking.updatedAt))}`;
+  const createdStr = `${dateFmt.format(
+    new Date(booking.createdAt)
+  )} ${timeFmt.format(new Date(booking.createdAt))}`;
+  const updatedStr = `${dateFmt.format(
+    new Date(booking.updatedAt)
+  )} ${timeFmt.format(new Date(booking.updatedAt))}`;
 
   const groomerName =
     booking.groomer?.user?.name || booking.groomer?.user?.email || "—";
 
-  // Payment breakdown
   const basePriceCents = booking.service?.priceCents ?? null;
   const depositCents = booking.depositCents ?? 0;
   const taxCents = booking.taxCents ?? 0;
@@ -112,7 +111,6 @@ export default async function BookingDetailsPage({
       : depositCents + taxCents;
   const totalChargedCents = chargedNowCents + tipCents;
 
-  // Cancellation logic
   const status = String(booking.status || "");
   const now = new Date();
   const cutoff = new Date(start.getTime() - cancelWindowHours * 60 * 60 * 1000);
@@ -128,60 +126,28 @@ export default async function BookingDetailsPage({
   )
     ? "This appointment can no longer be canceled online."
     : now > cutoff
-      ? `Cancellations must be at least ${cancelWindowHours} hour${
-          cancelWindowHours === 1 ? "" : "s"
-        } before the start time.`
-      : null;
+    ? `Cancellations must be at least ${cancelWindowHours} hour${
+        cancelWindowHours === 1 ? "" : "s"
+      } before the start time.`
+    : null;
 
   return (
-    <section style={{ padding: "2rem" }}>
-      {/* Breadcrumbs / Back */}
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          gap: 16,
-          marginBottom: "1rem",
-        }}
-      >
-        <Link
-          href={BASE_PATH}
-          style={{ color: "#0969da", textDecoration: "none" }}
-        >
+    <section className={styles.section}>
+      <div className={styles.breadcrumbs}>
+        <Link href={BASE_PATH} className={styles.backLink}>
           ← Back to My Bookings
         </Link>
-        <div style={{ fontSize: 14, color: "#666" }}>ID: {booking.id}</div>
+        <div className={styles.headerId}>ID: {booking.id}</div>
       </div>
 
-      {/* Title + Status */}
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          gap: 16,
-          marginBottom: 12,
-        }}
-      >
-        <h1 style={{ fontSize: 22, fontWeight: 600, margin: 0 }}>
-          Booking Details
-        </h1>
+      <div className={styles.header}>
+        <h1 className={`${styles.heading} adminHeading`}>Booking Details</h1>
         <StatusBadge status={status} />
       </div>
 
-      {/* Content */}
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "1fr",
-          gap: 12,
-          maxWidth: 960,
-        }}
-      >
-        {/* Appointment + People */}
-        <div style={cardSoft}>
-          <div style={{ ...sectionTitle, marginBottom: 8 }}>Appointment</div>
+      <div className={styles.grid}>
+        <div className={styles.card}>
+          <div className={styles.sectionTitle}>Appointment</div>
           <Row label='Date' value={dateStr} />
           <Row label='Time' value={timeStr} />
           {booking.service?.durationMin ? (
@@ -193,23 +159,20 @@ export default async function BookingDetailsPage({
           <Row label='Timezone' value={TZ} />
           <Row label='Status' value={<StatusBadge status={status} />} />
 
-          <div style={{ ...sectionTitle, marginTop: 12, marginBottom: 8 }}>
-            Service
-          </div>
+          <div className={`${styles.sectionTitle} ${styles.mt12}`}>Service</div>
           <Row label='Service' value={booking.service?.name ?? "—"} />
           {typeof basePriceCents === "number" ? (
             <Row label='Base price' value={fmt(basePriceCents)} />
           ) : null}
 
-          <div style={{ ...sectionTitle, marginTop: 12, marginBottom: 8 }}>
+          <div className={`${styles.sectionTitle} ${styles.mt12}`}>
             Your Pro
           </div>
           <Row label='Groomer' value={groomerName} />
         </div>
 
-        {/* Payment Summary */}
-        <div style={cardSoft}>
-          <div style={{ ...sectionTitle, marginBottom: 8 }}>Payment</div>
+        <div className={styles.card}>
+          <div className={styles.sectionTitle}>Payment</div>
 
           {typeof basePriceCents === "number" ? (
             <Row label='Service price' value={fmt(basePriceCents)} />
@@ -222,23 +185,9 @@ export default async function BookingDetailsPage({
           {taxCents > 0 && <Row label='Tax' value={fmt(taxCents)} />}
           {tipCents > 0 && <Row label='Tip' value={fmt(tipCents)} />}
 
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "140px 1fr",
-              gap: 8,
-              padding: "6px 0",
-              borderTop: "1px solid #f5f5f5",
-              marginTop: 6,
-              alignItems: "center",
-            }}
-          >
-            <div style={{ fontSize: 12, color: "#111", fontWeight: 600 }}>
-              Charged
-            </div>
-            <div style={{ fontSize: 14, fontWeight: 600 }}>
-              {fmt(totalChargedCents)}
-            </div>
+          <div className={`${styles.row} ${styles.rowTotal}`}>
+            <div className={styles.labelStrong}>Charged</div>
+            <div className={styles.valueStrong}>{fmt(totalChargedCents)}</div>
           </div>
 
           {booking.paymentIntentId ? (
@@ -255,7 +204,7 @@ export default async function BookingDetailsPage({
                   href={booking.receiptUrl}
                   target='_blank'
                   rel='noreferrer'
-                  style={{ color: "#0969da", textDecoration: "none" }}
+                  className={styles.link}
                 >
                   View payment receipt
                 </a>
@@ -264,37 +213,26 @@ export default async function BookingDetailsPage({
           ) : null}
         </div>
 
-        {/* Refunds (new) */}
         {refunds && refunds.length > 0 && (
-          <div style={cardSoft}>
-            <div style={{ ...sectionTitle, marginBottom: 8 }}>Refunds</div>
+          <div className={styles.card}>
+            <div className={styles.sectionTitle}>Refunds</div>
             {refunds.map((r) => {
               const dt = new Date(r.created * 1000);
               const date = dateFmt.format(dt);
               const time = timeFmt.format(dt);
               return (
-                <div
-                  key={r.id}
-                  style={{
-                    display: "grid",
-                    gridTemplateColumns: "140px 1fr",
-                    gap: 8,
-                    padding: "6px 0",
-                    borderBottom: "1px solid #f5f5f5",
-                    alignItems: "center",
-                  }}
-                >
-                  <div style={{ fontSize: 12, color: "#666" }}>Refunded</div>
-                  <div style={{ fontSize: 14 }}>
+                <div key={r.id} className={styles.row}>
+                  <div className={styles.label}>Refunded</div>
+                  <div className={styles.value}>
                     {fmt(r.amount)} • {r.status}
                     {r.reason ? ` • ${r.reason}` : ""}
-                    <div style={{ fontSize: 12, color: "#666", marginTop: 2 }}>
+                    <div className={styles.muted}>
                       {date} {time}
                     </div>
-                    <div style={{ marginTop: 4 }}>
+                    <div className={styles.mt6}>
                       <Link
                         href={`/receipt/refund/${r.id}`}
-                        style={{ color: "#0969da", textDecoration: "none" }}
+                        className={styles.link}
                       >
                         View refund receipt
                       </Link>
@@ -306,43 +244,23 @@ export default async function BookingDetailsPage({
           </div>
         )}
 
-        {/* Notes / Pet */}
         {(booking.notes || booking.petJson) && (
-          <div style={cardSoft}>
-            <div style={{ ...sectionTitle, marginBottom: 8 }}>Notes</div>
-            <div
-              style={{
-                fontSize: 14,
-                padding: "6px 0",
-                borderBottom: "1px solid #f5f5f5",
-                whiteSpace: "pre-wrap",
-              }}
-            >
+          <div className={styles.card}>
+            <div className={styles.sectionTitle}>Notes</div>
+            <div className={styles.notes}>
               {booking.notes ? (
                 booking.notes
               ) : (
-                <span style={{ color: "#666" }}>—</span>
+                <span className={styles.muted}>—</span>
               )}
             </div>
 
             {booking.petJson ? (
               <>
-                <div
-                  style={{ ...sectionTitle, marginTop: 12, marginBottom: 8 }}
-                >
+                <div className={`${styles.sectionTitle} ${styles.mt12}`}>
                   Pet Details
                 </div>
-                <pre
-                  style={{
-                    fontSize: 12,
-                    margin: 0,
-                    background: "#fafafa",
-                    border: "1px solid #eee",
-                    borderRadius: 6,
-                    padding: 8,
-                    overflowX: "auto",
-                  }}
-                >
+                <pre className={styles.pre}>
                   {JSON.stringify(booking.petJson, null, 2)}
                 </pre>
               </>
@@ -350,37 +268,24 @@ export default async function BookingDetailsPage({
           </div>
         )}
 
-        {/* Booked / Meta */}
-        <div style={cardSoft}>
-          <div style={{ ...sectionTitle, marginBottom: 8 }}>
-            Booking Timeline
-          </div>
+        <div className={styles.card}>
+          <div className={styles.sectionTitle}>Booking Timeline</div>
           <Row label='Booked On' value={createdStr} />
           <Row label='Last Updated' value={updatedStr} />
         </div>
 
-        {/* Actions */}
-        <div style={cardSoft}>
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: 12,
-              marginBottom: 8,
-            }}
-          >
-            <div style={{ fontWeight: 600 }}>Actions</div>
-            <span style={{ fontSize: 12, color: "#666" }}>
-              Manage this appointment
-            </span>
+        <div className={styles.card}>
+          <div className={styles.actionsHeader}>
+            <div className={styles.actionsTitle}>Actions</div>
+            <span className={styles.actionsHint}>Manage this appointment</span>
           </div>
 
           {status === "CANCELED" ? (
-            <div style={{ color: "#666" }}>This booking has been canceled.</div>
+            <div className={styles.muted}>This booking has been canceled.</div>
           ) : canCancel ? (
             <CancelBookingForm bookingId={booking.id} />
           ) : (
-            <div style={{ color: "#666" }}>
+            <div className={styles.muted}>
               {cancelReason ??
                 "Cancellation is not available for this booking."}
             </div>
@@ -391,86 +296,36 @@ export default async function BookingDetailsPage({
   );
 }
 
-/* ───────────── UI helpers ───────────── */
 function Row({ label, value }: { label: string; value: React.ReactNode }) {
   return (
-    <div
-      style={{
-        display: "grid",
-        gridTemplateColumns: "140px 1fr",
-        gap: 8,
-        padding: "6px 0",
-        borderBottom: "1px solid #f5f5f5",
-        alignItems: "center",
-      }}
-    >
-      <div style={{ fontSize: 12, color: "#666" }}>{label}</div>
-      <div style={{ fontSize: 14 }}>{value}</div>
+    <div className={styles.row}>
+      <div className={styles.label}>{label}</div>
+      <div className={styles.value}>{value}</div>
     </div>
   );
 }
 
 function Mono({ children }: { children: React.ReactNode }) {
-  return (
-    <code
-      style={{
-        fontFamily:
-          'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace',
-        fontSize: 12,
-        background: "#fafafa",
-        border: "1px solid #eee",
-        borderRadius: 4,
-        padding: "1px 6px",
-      }}
-    >
-      {children}
-    </code>
-  );
+  return <code className={styles.mono}>{children}</code>;
 }
 
 function StatusBadge({ status }: { status: string }) {
-  const color =
-    status === "CONFIRMED"
-      ? "#0a7"
+  const cls =
+    status === "COMPLETED"
+      ? styles.badge_completed
+      : status === "CONFIRMED"
+      ? styles.badge_confirmed
       : status === "PENDING" || status === "PENDING_PAYMENT"
-        ? "#d88a00"
-        : status === "COMPLETED"
-          ? "#0366d6"
-          : status === "CANCELED"
-            ? "#999"
-            : "#b33636";
+      ? styles.badge_pending
+      : status === "CANCELED"
+      ? styles.badge_canceled
+      : styles.badge_noshow;
   return (
-    <span
-      style={{
-        display: "inline-block",
-        padding: "2px 8px",
-        borderRadius: 999,
-        color: "white",
-        background: color,
-        fontSize: 12,
-      }}
-    >
-      {status.replace("_", " ")}
-    </span>
+    <span className={`${styles.badge} ${cls}`}>{status.replace("_", " ")}</span>
   );
 }
 
-/* shared inline tokens */
-const cardSoft: React.CSSProperties = {
-  border: "1px solid #e5e5e5",
-  borderRadius: 8,
-  padding: 12,
-  background: "white",
-};
-const sectionTitle: React.CSSProperties = {
-  fontWeight: 600,
-  marginBottom: 6,
-  color: "#111",
-  fontSize: 14,
-};
-
-/* small helper */
-function fmt(cents: number | null) {
+function fmt(cents: number | null | undefined) {
   if (typeof cents !== "number") return "—";
   return `$${(cents / 100).toFixed(2)}`;
 }
