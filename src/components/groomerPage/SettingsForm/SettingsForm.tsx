@@ -1,5 +1,6 @@
 "use client";
 
+import styles from "./SettingsForm.module.css";
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 
@@ -48,11 +49,11 @@ export default function SettingsForm({
   };
 
   return (
-    <form onSubmit={submit} style={{ display: "grid", gap: 20 }}>
-      {/* Booking behavior */}
-      <fieldset style={fs}>
-        <legend style={lg}>Booking Behavior</legend>
-        <label style={row}>
+    <form onSubmit={submit} className={styles.form}>
+      <fieldset className={styles.fieldset}>
+        <legend className={styles.legend}>Booking Behavior</legend>
+
+        <label className={styles.row}>
           <input
             type='checkbox'
             checked={autoConfirm}
@@ -61,44 +62,44 @@ export default function SettingsForm({
           <span>Automatically confirm new bookings</span>
         </label>
 
-        <div style={grid2}>
+        <div className={styles.grid2}>
           <label>
-            <div style={label}>Minimum lead time (minutes)</div>
+            <div className={styles.label}>Minimum lead time (minutes)</div>
             <input
+              className={styles.input}
               type='number'
               min={0}
               value={minLeadMinutes}
               onChange={(e) =>
                 setMinLeadMinutes(parseInt(e.target.value || "0", 10))
               }
-              style={input}
             />
           </label>
 
           <label>
-            <div style={label}>Buffer per appointment (minutes)</div>
+            <div className={styles.label}>Buffer per appointment (minutes)</div>
             <input
+              className={styles.input}
               type='number'
               min={0}
               value={bufferMin}
               onChange={(e) =>
                 setBufferMin(parseInt(e.target.value || "0", 10))
               }
-              style={input}
             />
           </label>
         </div>
-        <p style={hint}>
-          Lead time prevents last‑minute bookings. Buffer is added after each
+
+        <p className={styles.hint}>
+          Lead time prevents last-minute bookings. Buffer is added after each
           service to allow cleanup or prep.
         </p>
       </fieldset>
 
-      {/* Notifications */}
-      <fieldset style={fs}>
-        <legend style={lg}>Notifications</legend>
+      <fieldset className={styles.fieldset}>
+        <legend className={styles.legend}>Notifications</legend>
 
-        <label style={row}>
+        <label className={styles.row}>
           <input
             type='checkbox'
             checked={emailOptIn}
@@ -107,7 +108,7 @@ export default function SettingsForm({
           <span>Email notifications</span>
         </label>
 
-        <label style={row}>
+        <label className={styles.row}>
           <input
             type='checkbox'
             checked={smsOptIn}
@@ -117,55 +118,25 @@ export default function SettingsForm({
         </label>
 
         <label>
-          <div style={label}>Notification phone (E.164, e.g. +16025551234)</div>
+          <div className={styles.label}>
+            Notification phone (E.164, e.g. +16025551234)
+          </div>
           <input
+            className={styles.input}
             type='tel'
             value={notificationPhone}
             onChange={(e) => setNotificationPhone(e.target.value)}
             placeholder='+16025551234'
-            style={input}
             disabled={!smsOptIn}
           />
         </label>
       </fieldset>
 
-      <div>
-        <button type='submit' disabled={pending}>
+      <div className={styles.actions}>
+        <button type='submit' disabled={pending} className={styles.btnPrimary}>
           {pending ? "Updating…" : "Save Settings"}
         </button>
       </div>
     </form>
   );
 }
-
-/* Tiny style helpers */
-const fs: React.CSSProperties = {
-  border: "1px solid #eee",
-  borderRadius: 8,
-  padding: "12px 14px",
-};
-
-const lg: React.CSSProperties = { fontWeight: 600, padding: "0 6px" };
-const row: React.CSSProperties = {
-  display: "flex",
-  gap: 8,
-  alignItems: "center",
-  margin: "6px 0",
-};
-const grid2: React.CSSProperties = {
-  display: "grid",
-  gridTemplateColumns: "1fr 1fr",
-  gap: 12,
-};
-const label: React.CSSProperties = {
-  fontSize: 13,
-  color: "#555",
-  marginBottom: 4,
-};
-const hint: React.CSSProperties = { fontSize: 12, color: "#777", marginTop: 6 };
-const input: React.CSSProperties = {
-  padding: "8px 10px",
-  border: "1px solid #ddd",
-  borderRadius: 6,
-  width: "100%",
-};

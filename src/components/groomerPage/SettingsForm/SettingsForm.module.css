@@ -1,0 +1,97 @@
+.form {
+  display: grid;
+  gap: 20px;
+  padding-top: 1rem;
+  font-family: var(--interTight);
+}
+
+.form * {
+  font-family: var(--interTight);
+}
+
+.fieldset {
+  border: 1px solid #eee;
+  border-radius: 8px;
+  padding-top: 2rem;
+}
+
+.legend {
+  font-weight: 600;
+  padding: 0 6px;
+}
+
+.row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin: 6px 0;
+}
+
+.grid2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.label {
+  font-size: 13px;
+  color: #555;
+  margin-bottom: 4px;
+}
+
+.hint {
+  font-size: 12px;
+  color: #777;
+  margin-top: 6px;
+}
+
+.input {
+  padding: 8px 10px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  width: 100%;
+  background: #fff;
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+}
+
+.btnPrimary {
+  padding: 8px 14px;
+  border-radius: 6px;
+  background: #111;
+  color: #fff;
+  border: 1px solid #111;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.btnPrimary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+@media screen and (max-width: 1268px) {
+  .grid2 {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .fieldset {
+    padding: 12px;
+  }
+}
+
+@media screen and (max-width: 568px) {
+  .actions {
+    flex-direction: column;
+  }
+  .btnPrimary {
+    width: 100%;
+    text-align: center;
+  }
+}
