@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import styles from './MyBookingsPage.module.css'
+import styles from "./MyBookingsPage.module.css";
 import Link from "next/link";
 import { db } from "@/lib/db";
 import { requireGroomer } from "@/lib/rbac";
@@ -14,7 +14,6 @@ type SearchParamsPromise = Promise<{
 
 export const dynamic = "force-dynamic";
 
-/* timezone formatters (match other pages) */
 const TZ = process.env.SALON_TZ ?? "America/Phoenix";
 const dateFmt = new Intl.DateTimeFormat("en-US", {
   timeZone: TZ,
@@ -28,9 +27,6 @@ const timeFmt = new Intl.DateTimeFormat("en-US", {
   minute: "2-digit",
 });
 
-/* ──────────────────────────────────────────────────────────
-   Server Action: set booking status
-────────────────────────────────────────────────────────── */
 export async function setBookingStatus(formData: FormData) {
   "use server";
   const user = await requireGroomer();
@@ -38,7 +34,6 @@ export async function setBookingStatus(formData: FormData) {
   const id = formData.get("id") as string;
   const status = formData.get("status") as BookingStatus;
 
-  // Safety: only allow changing your own bookings
   const booking = await db.booking.findUnique({
     where: { id },
     select: { groomerId: true },
@@ -55,9 +50,6 @@ export async function setBookingStatus(formData: FormData) {
   revalidatePath("/groomer/my-bookings");
 }
 
-/* ──────────────────────────────────────────────────────────
-   Page
-────────────────────────────────────────────────────────── */
 export default async function MyBookingsPage({
   searchParams,
 }: {
@@ -65,7 +57,6 @@ export default async function MyBookingsPage({
 }) {
   const user = await requireGroomer();
 
-  // Next 15: searchParams is async
   const sp = await searchParams;
   const filterParam = Array.isArray(sp?.filter) ? sp?.filter[0] : sp?.filter;
   type Filter =
@@ -83,7 +74,6 @@ export default async function MyBookingsPage({
   const todayStart = startOfDay(now);
   const weekEnd = endOfDay(addDays(todayStart, 7));
 
-  // Build where clause based on filter
   const baseWhere = { groomerId: user.id };
   let where: any = { ...baseWhere };
 
@@ -135,18 +125,10 @@ export default async function MyBookingsPage({
   });
 
   return (
-    <section style={{ padding: "2rem" }}>
+    <section className={styles.section}>
       <h1 className={`${styles.heading} adminHeading`}>My Bookings</h1>
 
-      {/* Filters */}
-      <nav
-        style={{
-          marginBottom: "1rem",
-          display: "flex",
-          gap: "0.5rem",
-          flexWrap: "wrap",
-        }}
-      >
+      <nav className={styles.pillsRow}>
         <FilterLink
           href='/groomer/my-bookings'
           current={!filter || filter === "upcoming"}
@@ -191,83 +173,83 @@ export default async function MyBookingsPage({
         </FilterLink>
       </nav>
 
-      {/* Table */}
-      <div style={{ overflowX: "auto" }}>
-        <table style={{ width: "100%", borderCollapse: "collapse" }}>
-          <thead>
-            <tr>
-              <th style={th}>Date</th>
-              <th style={th}>Time</th>
-              <th style={th}>Booked</th>
-              <th style={th}>Service</th>
-              <th style={th}>Customer</th>
-              <th style={th}>Status</th>
-              <th style={th}>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {bookings.length === 0 ? (
+      <div className={styles.tableScroll}>
+        <div className={styles.tableWrap}>
+          <table className={styles.table}>
+            <thead className='tablethead'>
               <tr>
-                <td colSpan={7} style={{ padding: 12, textAlign: "center" }}>
-                  No bookings for this view.
-                </td>
+                <th className={styles.th}>Date</th>
+                <th className={styles.th}>Time</th>
+                <th className={styles.th}>Booked</th>
+                <th className={styles.th}>Service</th>
+                <th className={styles.th}>Customer</th>
+                <th className={styles.th}>Status</th>
+                <th className={styles.th}>Actions</th>
               </tr>
-            ) : (
-              bookings.map((b) => {
-                const start = new Date(b.start);
-                const created = new Date(b.createdAt);
+            </thead>
+            <tbody>
+              {bookings.length === 0 ? (
+                <tr>
+                  <td
+                    colSpan={7}
+                    className={`${styles.td} ${styles.center} ${styles.muted}`}
+                  >
+                    No bookings for this view.
+                  </td>
+                </tr>
+              ) : (
+                bookings.map((b) => {
+                  const start = new Date(b.start);
+                  const created = new Date(b.createdAt);
 
-                const dateStr = dateFmt.format(start);
-                const timeStr = timeFmt.format(start);
-                const bookedDate = dateFmt.format(created);
-                const bookedTime = timeFmt.format(created);
+                  const dateStr = dateFmt.format(start);
+                  const timeStr = timeFmt.format(start);
+                  const bookedDate = dateFmt.format(created);
+                  const bookedTime = timeFmt.format(created);
 
-                const canConfirm = b.status === "PENDING";
-                const canCancel =
-                  b.status === "PENDING" || b.status === "CONFIRMED";
-                const canComplete =
-                  b.status === "CONFIRMED" && start <= new Date();
-                const canNoShow =
-                  b.status === "CONFIRMED" && start <= new Date();
+                  const canConfirm = b.status === "PENDING";
+                  const canCancel =
+                    b.status === "PENDING" || b.status === "CONFIRMED";
+                  const canComplete =
+                    b.status === "CONFIRMED" && start <= new Date();
+                  const canNoShow =
+                    b.status === "CONFIRMED" && start <= new Date();
 
-                return (
-                  <tr key={b.id}>
-                    <td style={td}>{dateStr}</td>
-                    <td style={td}>{timeStr}</td>
-                    <td style={td}>
-                      {bookedDate}{" "}
-                      <small style={{ color: "#666" }}>{bookedTime}</small>
-                    </td>
-                    <td style={td}>
-                      {b.service.name} <small>({b.service.durationMin}m)</small>
-                    </td>
-                    <td style={td}>
-                      {b.user.name ?? "—"}
-                      <br />
-                      <small>{b.user.email}</small>
-                    </td>
-                    <td style={td}>
-                      <StatusBadge status={b.status as BookingStatus} />
-                    </td>
-                    <td style={td}>
-                      <div
-                        style={{
-                          display: "flex",
-                          gap: 8,
-                          flexWrap: "wrap",
-                          alignItems: "center",
-                        }}
+                  return (
+                    <tr key={b.id}>
+                      <td className={styles.td} data-label='Date'>
+                        {dateStr}
+                      </td>
+                      <td className={styles.td} data-label='Time'>
+                        {timeStr}
+                      </td>
+                      <td className={styles.td} data-label='Booked'>
+                        {bookedDate}{" "}
+                        <small className={styles.muted}>{bookedTime}</small>
+                      </td>
+                      <td className={styles.td} data-label='Service'>
+                        {b.service.name}{" "}
+                        <small>({b.service.durationMin}m)</small>
+                      </td>
+                      <td className={styles.td} data-label='Customer'>
+                        {b.user.name ?? "—"}
+                        <br />
+                        <small>{b.user.email}</small>
+                      </td>
+                      <td className={styles.td} data-label='Status'>
+                        <StatusBadge status={b.status as BookingStatus} />
+                      </td>
+                      <td
+                        className={`${styles.td} ${styles.rowActions}`}
+                        data-label='Actions'
                       >
-                        {/* NEW: View button linking to details page */}
                         <Link
                           href={`/groomer/my-bookings/${b.id}`}
-                          style={outlineBtnSmall}
+                          className={styles.btnOutlineSm}
                           title='View booking details'
                         >
                           View
                         </Link>
-
-                        {/* Existing row actions (confirm/cancel/complete/no-show) */}
                         <RowActions
                           bookingId={b.id}
                           onSetStatus={setBookingStatus}
@@ -276,20 +258,18 @@ export default async function MyBookingsPage({
                           canComplete={canComplete}
                           canNoShow={canNoShow}
                         />
-                      </div>
-                    </td>
-                  </tr>
-                );
-              })
-            )}
-          </tbody>
-        </table>
+                      </td>
+                    </tr>
+                  );
+                })
+              )}
+            </tbody>
+          </table>
+        </div>
       </div>
     </section>
   );
 }
-
-/* ───────────── UI helpers ───────────── */
 
 function FilterLink({
   href,
@@ -303,13 +283,7 @@ function FilterLink({
   return (
     <Link
       href={href}
-      style={{
-        padding: "6px 10px",
-        borderRadius: 6,
-        textDecoration: "none",
-        border: "1px solid #ddd",
-        background: current ? "#e6f0ff" : "white",
-      }}
+      className={`${styles.pill} ${current ? styles.pillCurrent : ""}`}
     >
       {children}
     </Link>
@@ -317,65 +291,21 @@ function FilterLink({
 }
 
 function Badge({ children }: { children: React.ReactNode }) {
-  return (
-    <span
-      style={{
-        marginLeft: 6,
-        padding: "0 6px",
-        borderRadius: 999,
-        background: "#e33",
-        color: "white",
-        fontSize: 12,
-      }}
-    >
-      {children}
-    </span>
-  );
+  return <span className={styles.pillBadge}>{children}</span>;
 }
 
 function StatusBadge({ status }: { status: BookingStatus }) {
-  const color =
-    status === "CONFIRMED"
-      ? "#0a7"
+  const cls =
+    status === "COMPLETED"
+      ? styles.badge_completed
+      : status === "CONFIRMED"
+      ? styles.badge_confirmed
       : status === "PENDING"
-        ? "#d88a00"
-        : status === "COMPLETED"
-          ? "#0366d6"
-          : status === "CANCELED"
-            ? "#999"
-            : "#b33636"; // NO_SHOW
+      ? styles.badge_pending
+      : status === "CANCELED"
+      ? styles.badge_canceled
+      : styles.badge_noshow;
   return (
-    <span
-      style={{
-        display: "inline-block",
-        padding: "2px 8px",
-        borderRadius: 999,
-        color: "white",
-        background: color,
-        fontSize: 12,
-      }}
-    >
-      {status.replace("_", " ")}
-    </span>
+    <span className={`${styles.badge} ${cls}`}>{status.replace("_", " ")}</span>
   );
 }
-
-/* simple table styles */
-const th: React.CSSProperties = {
-  border: "1px solid #ddd",
-  padding: 8,
-  background: "#fafafa",
-};
-const td: React.CSSProperties = { border: "1px solid #ddd", padding: 8 };
-
-/* NEW: compact outline button for inline table actions */
-const outlineBtnSmall: React.CSSProperties = {
-  padding: "6px 10px",
-  borderRadius: 6,
-  background: "white",
-  color: "#333",
-  border: "1px solid #ddd",
-  cursor: "pointer",
-  textDecoration: "none",
-  fontSize: 13,
-};

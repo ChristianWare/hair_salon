@@ -1,5 +1,6 @@
 "use client";
 
+import styles from "./AvailabilitySettings.module.css";
 import { useMemo, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import AvailabilityEditor from "../AvailabilityEditor/AvailabilityEditor";
@@ -9,7 +10,7 @@ export default function AvailabilitySettings({
   onSave,
 }: {
   initialWorking: Record<string, [string, string][]>;
-  onSave: (fd: FormData) => Promise<void>; // server action from page
+  onSave: (fd: FormData) => Promise<void>;
 }) {
   const router = useRouter();
   const [pending, start] = useTransition();
@@ -41,24 +42,25 @@ export default function AvailabilitySettings({
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div style={{ marginBottom: 12 }}>
+    <form className={styles.form} onSubmit={handleSubmit}>
+      <div className={styles.editorWrap}>
         <AvailabilityEditor initial={initialWorking} onChange={setWorking} />
       </div>
 
-      <div style={{ display: "flex", gap: 8 }}>
+      <div className={styles.actions}>
         <button
           type='submit'
+          className={styles.btnPrimary}
           disabled={pending || !dirty}
-          style={{ ...primaryBtn, opacity: pending || !dirty ? 0.6 : 1 }}
+          aria-busy={pending}
         >
           {pending ? "Saving…" : "Save Availability"}
         </button>
         <button
           type='button'
           onClick={handleReset}
+          className={styles.btnOutline}
           disabled={pending || !dirty}
-          style={{ ...outlineBtn, opacity: pending || !dirty ? 0.6 : 1 }}
         >
           Reset
         </button>
@@ -66,22 +68,3 @@ export default function AvailabilitySettings({
     </form>
   );
 }
-
-/* inline styles to match the rest of your UI */
-const primaryBtn: React.CSSProperties = {
-  padding: "8px 14px",
-  borderRadius: 6,
-  background: "#111",
-  color: "white",
-  border: "1px solid #111",
-  cursor: "pointer",
-};
-
-const outlineBtn: React.CSSProperties = {
-  padding: "8px 14px",
-  borderRadius: 6,
-  background: "white",
-  color: "#333",
-  border: "1px solid #ddd",
-  cursor: "pointer",
-};

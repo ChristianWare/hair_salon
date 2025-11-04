@@ -12,11 +12,6 @@
   gap: 2rem;
 }
 
-.heading {
-  color: var(--blue);
-  font-size: 5rem;
-}
-
 .copy {
   color: var(--blue);
   width: 375px;

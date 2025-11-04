@@ -1,0 +1,94 @@
+.form {
+  display: grid;
+  gap: 12px;
+}
+
+.editorWrap {
+  margin-bottom: 12px;
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+/* Buttons */
+.btnPrimary,
+.btnOutline {
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  text-decoration: none;
+  font-family: var(--interTight);
+  line-height: 1.2;
+  transition: transform 0.06s ease, opacity 0.15s ease;
+  will-change: transform, opacity;
+}
+
+.btnPrimary {
+  background: #111;
+  color: #fff;
+  border: 1px solid #111;
+}
+
+.btnPrimary:active {
+  transform: translateY(1px);
+}
+
+.btnOutline {
+  background: #fff;
+  color: #333;
+  border: 1px solid #ddd;
+}
+
+.btnOutline:active {
+  transform: translateY(1px);
+}
+
+.btnPrimary:disabled,
+.btnOutline:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* ───────── Breakpoints ───────── */
+
+/* ≤1268px: keep row layout but allow full-width buttons when wrapping */
+@media screen and (max-width: 1268px) {
+  .actions {
+    gap: 10px;
+  }
+  .btnPrimary,
+  .btnOutline {
+    min-width: 180px;
+  }
+}
+
+/* ≤768px: stack controls more comfortably */
+@media screen and (max-width: 768px) {
+  .actions {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+  .btnPrimary,
+  .btnOutline {
+    width: 100%;
+    min-width: 0;
+    text-align: center;
+  }
+}
+
+/* ≤568px: single column for maximum tap targets */
+@media screen and (max-width: 568px) {
+  .actions {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  .editorWrap {
+    margin-bottom: 8px;
+  }
+}

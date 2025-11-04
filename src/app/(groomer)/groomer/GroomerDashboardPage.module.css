@@ -1,39 +1,119 @@
-.pillsRow {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-  margin-top: 5rem;
-  margin-bottom: 2rem;
+
+
+.subheading {
+  font-family: var(--interTight);
+  font-size: 2rem;
+  letter-spacing: .5px;
+  font-weight: 600;
+  margin: 0 0 8px 0;
 }
-.pill {
-  padding: 6px 10px;
-  border-radius: 6px;
-  text-decoration: none;
+
+.kpiCards {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 1rem;
+  margin-top: 2rem;
+  margin-bottom: 5rem;
+}
+
+.mb12 {
+  margin-bottom: 12px;
+}
+
+.sectionBlock {
+  margin-bottom: 16px;
+}
+
+.sectionHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.quickActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 5rem;
+}
+
+.card {
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+  padding: 12px;
+  background: #fff;
+}
+
+.alert {
+  border-color: #f3d1d1;
+  background: #fff5f5;
+  color: #b33636;
+  margin-bottom: 16px;
+}
+
+.alertLink {
+  color: #b33636;
+  text-decoration: underline;
+}
+
+.label {
+  display: block;
+  font-size: 12px;
+  color: #666;
+  margin-bottom: 4px;
+}
+
+.input {
+  width: 200px;
+  padding: 8px 12px;
   border: 1px solid #ddd;
+  border-radius: 6px;
+  background: #fff;
+}
+
+.btnPrimary {
+  padding: 8px 14px;
+  border-radius: 6px;
+  background: #111;
+  color: #fff;
+  border: 1px solid #111;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.btnOutline {
+  padding: 8px 14px;
+  border-radius: 6px;
   background: #fff;
   color: #333;
+  border: 1px solid #ddd;
+  cursor: pointer;
+  text-decoration: none;
+  font-family: var(--interTight);
+}
+
+.btnOutlineSm {
+  padding: 6px 10px;
+  border-radius: 6px;
+  background: #fff;
+  color: #333;
+  border: 1px solid #ddd;
+  cursor: pointer;
+  text-decoration: none;
   font-size: 13px;
   font-family: var(--interTight);
 }
-.pillCurrent {
-  background: #e6f0ff;
-}
-.pillBadge {
-  margin-left: 6px;
-  padding: 0 6px;
-  border-radius: 999px;
-  background: #e33;
-  color: #fff;
-  font-size: 12px;
-}
 
-/* Table (shared admin style) */
+/* Table */
 .tableScroll {
   overflow-x: auto;
   margin-bottom: 24px;
   -webkit-overflow-scrolling: touch;
   position: relative;
 }
+
 .tableWrap {
   border-top-right-radius: 10px;
   border-top-left-radius: 10px;
@@ -41,12 +121,14 @@
   border: 0;
   border-bottom: 1px solid var(--darkBrown);
 }
+
 .table {
   width: 100%;
   border-collapse: separate;
   border-spacing: 0;
   table-layout: fixed;
 }
+
 .th,
 .td {
   padding: 8px;
@@ -54,15 +136,17 @@
   background: var(--tan);
   font-size: 14px;
   font-family: var(--interTight);
-  letter-spacing: 0px;
+  letter-spacing: 0;
   line-height: 1.35;
   word-wrap: break-word;
   border: 0;
 }
+
 .table tbody tr:nth-child(even) .td,
 .table tbody tr:nth-child(even) td {
   background-color: var(--white);
 }
+
 .tablethead .th,
 .table thead .th,
 .table thead th {
@@ -76,25 +160,30 @@
   border-left: 1px solid var(--brown);
   border-right: none;
 }
+
 .table thead tr .th:first-child,
 .table thead tr th:first-child {
   border-left: 1px solid var(--darkBrown);
   border-top-left-radius: 10px;
 }
+
 .table thead tr .th:last-child,
 .table thead tr th:last-child {
   border-right: 1px solid var(--darkBrown);
   border-top-right-radius: 10px;
 }
+
 .table tbody .td,
 .table tbody td {
   border-left: 1px solid var(--brown);
   border-right: none;
 }
+
 .table tbody tr .td:first-child,
 .table tbody tr td:first-child {
   border-left: 1px solid var(--darkBrown);
 }
+
 .table tbody tr .td:last-child,
 .table tbody tr td:last-child {
   border-right: 1px solid var(--darkBrown);
@@ -112,6 +201,7 @@
   line-height: 1.5;
   width: 100%;
 }
+
 .badge_confirmed {
   background: var(--badge_confirmed);
 }
@@ -128,19 +218,6 @@
   background: var(--badge_noshow);
 }
 
-/* Buttons */
-.btnOutlineSm {
-  padding: 6px 10px;
-  border-radius: 6px;
-  background: #fff;
-  color: #333;
-  border: 1px solid #ddd;
-  cursor: pointer;
-  text-decoration: none;
-  font-size: 13px;
-  font-family: var(--interTight);
-}
-
 /* Helpers */
 .center {
   text-align: center;
@@ -148,17 +225,37 @@
 .muted {
   color: #666;
 }
+.mt12 {
+  margin-top: 12px;
+}
+.mb24 {
+  margin-bottom: 24px;
+}
+.hiddenForm {
+  display: none;
+}
 .rowActions {
   display: flex;
   gap: 8px;
   flex-wrap: wrap;
 }
 
+.addBreakRow {
+  display: flex;
+  gap: 8px;
+  align-items: end;
+}
+
 /* Responsive */
 @media screen and (max-width: 1268px) {
+  .kpiCards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
   .tableScroll {
     overflow: visible;
   }
+
   .tableWrap {
     border: 0;
     border-radius: 0;
@@ -166,9 +263,11 @@
     background: transparent;
     box-shadow: none;
   }
+
   .table thead {
     display: none;
   }
+
   .table,
   .table tbody,
   .table tr,
@@ -176,13 +275,14 @@
     display: block;
     width: 100%;
   }
+
   .table tbody tr {
     background: var(--tan);
     border: 1px solid var(--darkBrown);
     border-radius: 12px;
     padding: 10px 12px;
-    margin-bottom: 2rem;
   }
+
   .table tbody tr .td,
   .table tbody tr td {
     border: 0;
@@ -194,9 +294,11 @@
     font-size: 14px;
     line-height: 1.35;
   }
+
   .table tbody tr .td {
     border-bottom: 1px solid var(--brown);
   }
+
   .table tbody tr .td::before,
   .table tbody tr td::before {
     content: attr(data-label);
@@ -206,11 +308,13 @@
     letter-spacing: 0.02em;
     text-transform: none;
   }
+
   .table tbody tr .td:first-child,
   .table tbody tr td:first-child {
     padding-top: 2px;
     border-left: none;
   }
+
   .table tbody tr > .td:last-child,
   .table tbody tr > td:last-child {
     padding: 2rem;
@@ -222,6 +326,7 @@
     grid-template-columns: 1fr;
     border-radius: 10px;
   }
+
   .table tbody tr > .td:last-child::before,
   .table tbody tr > td:last-child::before {
     content: "Actions";
@@ -230,11 +335,21 @@
     color: #6b7280;
     margin-right: 8px;
   }
+
+  .table tbody tr > td:nth-last-child(2) {
+    margin-bottom: 1rem;
+  }
 }
 
 @media (max-width: 400px) {
   .table tbody tr .td,
   .table tbody tr td {
     grid-template-columns: 108px 1fr;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .kpiCards {
+    grid-template-columns: 1fr;
   }
 }

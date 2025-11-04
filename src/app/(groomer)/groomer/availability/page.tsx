@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import styles from "./AvailabilityPage.module.css";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import { revalidatePath } from "next/cache";
@@ -76,50 +77,37 @@ export default async function AvailabilityPage() {
   }));
 
   return (
-    <section style={{ padding: "2rem" }}>
-      {/* Header */}
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          gap: 16,
-          marginBottom: 12,
-        }}
-      >
-        <h1 style={{ fontSize: 22, fontWeight: 600, margin: 0 }}>
-          Availability
-        </h1>
-        <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
-          <Link href='/groomer' style={outlineBtn}>
+    <section className={styles.section}>
+      <div className={styles.header}>
+        <h1 className={`${styles.heading} adminHeading`}>Availability</h1>
+        <div className={styles.headerActions}>
+          <Link href='/groomer' className={styles.btnOutline}>
             Dashboard
           </Link>
-          <Link href='/groomer/my-bookings' style={outlineBtn}>
+          <Link href='/groomer/my-bookings' className={styles.btnOutline}>
             My Bookings
           </Link>
-          <Link href='/groomer/earnings' style={outlineBtn}>
+          <Link href='/groomer/earnings' className={styles.btnOutline}>
             Earnings
           </Link>
         </div>
       </div>
 
-      <p style={{ marginBottom: 12, color: "#555" }}>
+      <p className={styles.intro}>
         Set your weekly working hours and block off full days you’re
         unavailable. Customers will only see openings inside these windows.
       </p>
 
-      {/* Weekly availability editor */}
-      <section style={{ ...card, marginBottom: 16 }}>
-        <h2 style={h2}>Weekly Hours</h2>
+      <section className={`${styles.card} ${styles.mb16}`}>
+        <h2 className={styles.h2}>Weekly Hours</h2>
         <AvailabilitySettings
           initialWorking={groomer.workingHours as any}
           onSave={saveWorkingHours}
         />
       </section>
 
-      {/* Blocked dates (vacation / closed days) */}
-      <section style={card}>
-        <h2 style={h2}>Blocked Dates</h2>
+      <section className={styles.card}>
+        <h2 className={styles.h2}>Blocked Dates</h2>
         <BlockedDatesEditor
           initialDates={blockedDates}
           onAddBreak={addBreak}
@@ -129,25 +117,3 @@ export default async function AvailabilityPage() {
     </section>
   );
 }
-
-/* ───────────── inline styles ───────────── */
-const h2: React.CSSProperties = {
-  fontSize: 16,
-  fontWeight: 600,
-  margin: "0 0 8px 0",
-};
-const card: React.CSSProperties = {
-  border: "1px solid #e5e5e5",
-  borderRadius: 8,
-  padding: 12,
-  background: "white",
-};
-const outlineBtn: React.CSSProperties = {
-  padding: "8px 14px",
-  borderRadius: 6,
-  background: "white",
-  color: "#333",
-  border: "1px solid #ddd",
-  cursor: "pointer",
-  textDecoration: "none",
-};

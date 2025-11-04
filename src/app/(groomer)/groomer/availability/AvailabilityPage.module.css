@@ -1,0 +1,74 @@
+.heading {
+  font-family: var(--interTight);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 12px;
+}
+
+.headerActions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.intro {
+  margin-bottom: 5rem;
+  color: #555;
+  font-family: var(--interTight);
+  line-height: 1.5;
+}
+
+.h2 {
+  font-size: 2rem;
+  font-weight: 600;
+  letter-spacing: .5px;
+  margin: 0 0 8px 0;
+  font-family: var(--interTight);
+}
+
+.card {
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+  padding: 12px;
+  background: #fff;
+}
+
+.mb16 {
+  margin-bottom: 16px;
+}
+
+/* Buttons */
+.btnOutline {
+  padding: 8px 14px;
+  border-radius: 6px;
+  background: #fff;
+  color: #333;
+  border: 1px solid #ddd;
+  cursor: pointer;
+  text-decoration: none;
+  font-family: var(--interTight);
+}
+
+@media screen and (max-width: 1268px) {
+    .header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+
+/* Responsive helpers to match the rest of your admin styles */
+@media screen and (max-width: 768px) {
+  .header {
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .headerActions {
+    width: 100%;
+  }
+}

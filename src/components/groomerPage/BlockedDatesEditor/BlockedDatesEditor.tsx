@@ -1,5 +1,6 @@
 "use client";
 
+import styles from "./BlockedDatesEditor.module.css";
 import { useMemo, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 
@@ -16,7 +17,6 @@ export default function BlockedDatesEditor({
   const [pending, start] = useTransition();
   const [date, setDate] = useState("");
 
-  // Sort ascending; build a Set for duplicate checks
   const sorted = useMemo(
     () =>
       [...initialDates].sort(
@@ -78,138 +78,71 @@ export default function BlockedDatesEditor({
     });
 
   return (
-    <section>
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          gap: 8,
-          marginBottom: 8,
-        }}
-      >
-        <h3 style={{ margin: 0, fontSize: 16, fontWeight: 600 }}>
-          Blocked Dates
-        </h3>
-        <div style={{ display: "flex", gap: 8 }}>
+    <section className={styles.container}>
+      <div className={styles.headerRow}>
+        <h3 className={styles.title}>Blocked Dates</h3>
+        <div className={styles.actions}>
           <input
+            className={styles.input}
             type='date'
             value={date}
             min={todayISO}
             onChange={(e) => setDate(e.target.value)}
             disabled={pending}
-            style={input}
           />
           <button
+            className={styles.btnPrimary}
             onClick={handleAdd}
             disabled={pending || !date}
-            style={{ ...primaryBtn, opacity: pending || !date ? 0.6 : 1 }}
+            aria-disabled={pending || !date}
           >
             {pending ? "Adding…" : "Add Date"}
           </button>
         </div>
       </div>
 
-      <div
-        style={{
-          overflowX: "auto",
-          border: "1px solid #e5e5e5",
-          borderRadius: 8,
-        }}
-      >
-        <table
-          style={{
-            width: "100%",
-            borderCollapse: "collapse",
-            background: "white",
-          }}
-        >
-          <thead
-            style={{
-              position: "sticky",
-              top: 0,
-              background: "#fafafa",
-              zIndex: 1,
-            }}
-          >
-            <tr>
-              <th style={th}>Date</th>
-              <th style={th}>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {sorted.length === 0 ? (
+      <div className={styles.tableScroll}>
+        <div className={styles.tableWrap}>
+          <table className={styles.table}>
+            <thead>
               <tr>
-                <td
-                  colSpan={2}
-                  style={{ padding: 16, textAlign: "center", color: "#666" }}
-                >
-                  No blocked dates.
-                </td>
+                <th className={styles.th}>Date</th>
+                <th className={styles.th}>Actions</th>
               </tr>
-            ) : (
-              sorted.map((b) => {
-                const label = fmt(b.date);
-                return (
-                  <tr key={b.id} style={{ borderTop: "1px solid #eee" }}>
-                    <td style={td}>{label}</td>
-                    <td style={td}>
-                      <button
-                        onClick={() => handleRemove(b.id, label)}
-                        disabled={pending}
-                        style={{ ...outlineBtn, opacity: pending ? 0.6 : 1 }}
-                      >
-                        {pending ? "Removing…" : "Remove"}
-                      </button>
-                    </td>
-                  </tr>
-                );
-              })
-            )}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {sorted.length === 0 ? (
+                <tr>
+                  <td className={styles.tdCenter} colSpan={2}>
+                    No blocked dates.
+                  </td>
+                </tr>
+              ) : (
+                sorted.map((b) => {
+                  const label = fmt(b.date);
+                  return (
+                    <tr key={b.id}>
+                      <td className={styles.td} data-label='Date'>
+                        {label}
+                      </td>
+                      <td className={styles.td} data-label='Actions'>
+                        <button
+                          className={styles.btnOutline}
+                          onClick={() => handleRemove(b.id, label)}
+                          disabled={pending}
+                          aria-disabled={pending}
+                        >
+                          {pending ? "Removing…" : "Remove"}
+                        </button>
+                      </td>
+                    </tr>
+                  );
+                })
+              )}
+            </tbody>
+          </table>
+        </div>
       </div>
     </section>
   );
 }
-
-/* inline styles consistent with your app */
-const input: React.CSSProperties = {
-  padding: "8px 12px",
-  border: "1px solid #ddd",
-  borderRadius: 6,
-  background: "white",
-};
-
-const primaryBtn: React.CSSProperties = {
-  padding: "8px 14px",
-  borderRadius: 6,
-  background: "#111",
-  color: "white",
-  border: "1px solid #111",
-  cursor: "pointer",
-};
-
-const outlineBtn: React.CSSProperties = {
-  padding: "8px 14px",
-  borderRadius: 6,
-  background: "white",
-  color: "#333",
-  border: "1px solid #ddd",
-  cursor: "pointer",
-};
-
-const th: React.CSSProperties = {
-  borderBottom: "1px solid #e5e5e5",
-  padding: 10,
-  background: "#fafafa",
-  textAlign: "left",
-  position: "sticky",
-  top: 0,
-  zIndex: 1,
-};
-
-const td: React.CSSProperties = {
-  borderBottom: "1px solid #f0f0f0",
-  padding: 10,
-};
