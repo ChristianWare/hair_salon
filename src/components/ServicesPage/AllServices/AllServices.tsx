@@ -112,7 +112,7 @@ export default function AllServices() {
                 </div>
 
                 <div className={styles.modalCta}>
-                  <Button href='#' text='Book Now' btnType='brown' />
+                  <Button href='/book-appointment' text='Book Now' btnType='brown' />
                 </div>
               </div>
             </div>

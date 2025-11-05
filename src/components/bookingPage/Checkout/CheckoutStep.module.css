@@ -1,0 +1,202 @@
+.wrap {
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: 1fr 1fr;
+  font-family: var(--interTight);
+  width: 100%;
+}
+
+.card {
+  border: 1px solid #e5e5e5;
+  border-radius: 10px;
+  padding: 2rem;
+  background: #fff;
+}
+
+.title {
+  font-weight: 600;
+  margin-bottom: 8px;
+  font-size: 16px;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 14px;
+  padding: 1rem 0rem 1.5rem;
+  border-bottom: 1px dashed var(--darkGrayii);
+}
+
+.row:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.muted {
+  font-family: var(--interTight);
+  font-size: 1.6rem;
+}
+
+.mutedDetail {
+  font-family: var(--interTight);
+  font-size: 1.6rem;
+  color: #666;
+}
+
+.breakdown {
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid #eee;
+  display: grid;
+  gap: 6px;
+}
+
+.totalRow {
+  border-top: 1px solid #eee;
+  padding-top: 8px;
+  margin-top: 4px;
+}
+
+.title,
+.totalLabel {
+  font-family: var(--interTight);
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.small {
+  font-size: 12px;
+  color: #666;
+}
+
+.textMuted {
+  color: #666;
+}
+
+.textError {
+  color: #b33636;
+  margin-bottom: 8px;
+}
+
+.mt8 {
+  margin-top: 8px;
+}
+
+.mb6 {
+  margin-bottom: 1rem;
+}
+
+.mt6 {
+  margin-top: 6px;
+}
+
+.tipBlock {
+  margin-bottom: 10px;
+}
+
+.tipChips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 2rem 0rem;
+}
+
+.chipBtn {
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: #fff;
+  color: #333;
+  border: 1px solid #ddd;
+  cursor: pointer;
+  font: inherit;
+}
+
+.chipBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.chipSelected {
+  background: #111;
+  color: #fff;
+  border-color: #111;
+}
+
+.customTip {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.dollar {
+  font-size: 14px;
+  color: #333;
+}
+
+.inputMini {
+  padding: 6px 8px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  background: #fff;
+  width: 90px;
+  font: inherit;
+}
+
+.inputMiniSelected {
+  border-color: #111;
+  box-shadow: inset 0 0 0 1px #111;
+}
+
+.btnSm {
+  padding: 6px 10px;
+  border-radius: 6px;
+  background: #fff;
+  color: #333;
+  border: 1px solid #ddd;
+  cursor: pointer;
+  font: inherit;
+}
+
+.btnSmSelected {
+  background: #111;
+  color: #fff;
+  border-color: #111;
+}
+
+.paymentEl {
+  margin-bottom: 12px;
+}
+
+.btnPrimary {
+  padding: 10px 14px;
+  border-radius: 8px;
+  background: #111;
+  color: #fff;
+  font-family: var(--interTight) !important;
+  font-weight: 700 !important;
+  font-size: 1.8rem !important;
+  letter-spacing: .5px !important;
+  border: 1px solid #111;
+  cursor: pointer;
+  font: inherit;
+  margin-top: 2rem;
+}
+
+.btnPrimary:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.mt8 {
+  margin-top: 8px;
+}
+
+@media screen and (max-width: 968px) {
+  .wrap {
+    grid-template-columns: 1fr;
+    /* max-width: 920px; */
+  }
+}
